@@ -1,0 +1,47 @@
+# ── Monitor capabilities ─────────────────────────────────────────────────────
+
+classes: {
+  phase: {
+    shape: rectangle
+    style: {
+      border-radius: 8
+      bold: true
+      font-size: 13
+      fill: "#0f172a"
+      stroke: "#38bdf8"
+      stroke-width: 2
+      font-color: "#e2e8f0"
+      shadow: true
+    }
+  }
+  cap: {
+    shape: rectangle
+    style: {
+      border-radius: 6
+      font-size: 11
+      fill: "#0f1f35"
+      stroke: "#1d4ed8"
+      stroke-width: 1
+      font-color: "#93c5fd"
+    }
+  }
+  arrow-phase: {
+    style: {
+      stroke: "#38bdf8"
+      stroke-width: 1
+      stroke-dash: 3
+    }
+  }
+}
+
+M: {label: "🔍 Monitor"; class: phase}
+
+m1: {label: "Multi-protocol ingestion\n(OPC-UA · MQTT · REST · Modbus)"; class: cap}
+m2: {label: "Edge buffering &\ndurable message streaming"; class: cap}
+m3: {label: "AAS semantic translation"; class: cap}
+m4: {label: "Brownfield bridging"; class: cap}
+
+M -> m1: {class: arrow-phase}
+M -> m2: {class: arrow-phase}
+M -> m3: {class: arrow-phase}
+M -> m4: {class: arrow-phase}

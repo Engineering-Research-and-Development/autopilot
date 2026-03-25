@@ -1,0 +1,47 @@
+# ── Execute capabilities ─────────────────────────────────────────────────────
+
+classes: {
+  phase: {
+    shape: rectangle
+    style: {
+      border-radius: 8
+      bold: true
+      font-size: 13
+      fill: "#0f172a"
+      stroke: "#38bdf8"
+      stroke-width: 2
+      font-color: "#e2e8f0"
+      shadow: true
+    }
+  }
+  cap-execute: {
+    shape: rectangle
+    style: {
+      border-radius: 6
+      font-size: 11
+      fill: "#0f1f1a"
+      stroke: "#065f46"
+      stroke-width: 1
+      font-color: "#6ee7b7"
+    }
+  }
+  arrow-execute: {
+    style: {
+      stroke: "#065f46"
+      stroke-width: 1
+      stroke-dash: 3
+    }
+  }
+}
+
+E: { label: "⚙️ Execute"; class: phase }
+
+e1: { label: "Device command dispatch\n& actuation feedback";              class: cap-execute }
+e2: { label: "Operator alert routing\n& escalation management";            class: cap-execute }
+e3: { label: "External service invocation\n& downstream pipeline trigger"; class: cap-execute }
+e4: { label: "Rollback & compensation\non actuation failure";              class: cap-execute }
+
+E -> e1: { class: arrow-execute }
+E -> e2: { class: arrow-execute }
+E -> e3: { class: arrow-execute }
+E -> e4: { class: arrow-execute }

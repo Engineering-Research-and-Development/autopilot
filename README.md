@@ -6,13 +6,59 @@
 
 # 💡 AutoPilot
 
+## 🏭 Operational Showcase: A "Smart Factory" Orchestration
+
+To understand how AutoPilot operates in practice, consider a **multi-stage integrated production line** consisting of automated manufacturing, autonomous logistics, and smart quality control.
+
+![AutoPilot Smart Factory Dashboard](./docs/imgs/showcase.png)
+
+### **Scenario Breakdown**
+
+In this environment, AutoPilot acts as the "cognitive orchestrator" across three distinct zones, utilizing the full **MAPE-K loop**:
+
+#### **Phase 1: Factory A (Production)**
+* **Monitor:** Ingests real-time telemetry from *Machine A* and *Machine B* via protocols like **OPC-UA** and **Modbus**.
+* **Analyze (Level 1):** Performs **Edge Analytics** to compute throughput (e.g., 1.2m/p) and monitor critical thresholds for anomaly detection.
+* **Event:** If a "Maintenance Simulation" is triggered, AutoPilot detects the performance drift immediately via real-time alerting.
+
+#### **Phase 2: AMR Logistics (Inter-stage Transport)**
+* **Plan (Level 2):** Performs **Meta-Analytics** on the production trend of Phase 1, monitoring model health and performance.
+* **Adaptive Reasoning:** Using **RAG-grounded LLMs**, the system determines that a slowdown in Phase 1 requires a "Normal" or "Energy Saving" mode for the **Autonomous Mobile Robots (AMR)**.
+* **Spatial Coordination:** AutoPilot manages the **spatial path planning** for AMRs to ensure the loading area (buffer) does not overflow.
+
+#### **Phase 3: Factory B (Packaging & Quality Control)**
+* **Execute:** The *Robot Palletizer* receives **actuation commands** to synchronize its speed (e.g., 80 pcs/min) with the incoming supply.
+* **Advanced Analysis:** A *QC Vision System* performs **image analysis** to identify "Scrap" (waste) vs. "Good Packages".
+* **Knowledge (Level 3):** All QC results and operational metadata are stored in a **time-series and vector store** for **Long-Term Analytics**. This allows the system to correlate Phase 3 waste with Phase 1 machine settings over time.
+
+### **The Value of Autonomous Coordination**
+This cross-domain synchronization ensures that a bottleneck in *Factory A* doesn't result in wasted energy in *Logistics* or idle machinery in *Factory B*. 
+
+**Human-in-the-Loop (HITL):** The operator is engaged for **massive validation** only when the system detects high-impact anomalies, such as a sudden spike in "Scrap" (72 units), providing the **explainable root-cause** (XAI) needed to adjust QC sensitivity or machine parameters safely.
+
+---
+
 ## Overview
 
+**What problems does AutoPilot solve?**
+In modern Industrial IoT environments, factories struggle with fragmented data silos, reactive maintenance, and the inability to adapt to operational drift in real-time. AutoPilot solves this by bridging the gap between raw shop-floor telemetry and high-level strategic planning. Instead of merely alerting operators to a problem, AutoPilot analyzes the root cause, plans a corrective action across multiple interconnected systems, and can autonomously execute the solution while preserving a clear audit trail.
 **AutoPilot** is the central engine for autonomous decision-making and process coordination in complex **Industrial Internet of Things (IIoT)** environments. It acts as the cognitive core of the ecosystem, orchestrating **AI-driven reasoning** and **Digital Twin (DT)** semantics to interpret operational data, trigger analytical workflows, and coordinate industrial tools, with or without human intervention.
 
 The system is built around a **MAPE-K loop** (Monitor, Analyze, Plan, Execute, Knowledge), which serves as the architectural foundation. This loop continuously ingests data from the shop floor, evaluates the current state of assets through their digital representations, generates actionable decisions, and executes them across the connected infrastructure.
 
 ---
+
+
+## ✨ Key Features
+
+* **🧠 AI-Driven Reasoning:** Utilizes LLMs and constraint-based scheduling to derive adaptation strategies from real-time context.
+* **🔁 Autonomous Orchestration (MAPE-K):** A continuous loop of Monitoring, Analyzing, Planning, and Executing to keep your factory running optimally.
+* **🌐 Digital Twin Semantics (AAS):** Uses the Asset Administration Shell standard to ensure every asset and its data are consistently described and interoperable.
+* **⚡ Edge-to-Cloud Analytics:** From low-latency ML-at-the-edge for immediate physical responses, to long-term MLOps and metadata accumulation in the cloud.
+* **🛡️ Explainable AI & HITL:** High-impact decisions are surfaced to human operators with clear explanations before execution.
+
+---
+
 ## Application Levels
 
 AutoPilot scales across three distinct functional tiers to address the complexity of modern industrial environments:
@@ -35,7 +81,7 @@ While AutoPilot is designed for high autonomy, it incorporates a robust **Human-
 * **Active Intervention:** Operators can mass-override autonomous decisions or adjust policy constraints in real-time, feeding human expertise back into the Knowledge layer to refine future autonomous behavior.
 
 ---
-## System Architecture: The MAPE-K Loop
+## System Data Flow: The MAPE-K Loop
 
 The architecture is defined by the **MAPE-K** cycle, where data flows in from industrial assets, is processed through a semantic reasoning layer, and actionable outputs are routed back to the field.
 
@@ -79,33 +125,3 @@ The knowledge layer provides the unified "source of truth". It integrates time-s
 ![Knowledge](https://kroki.io/d2/svg/eNrNU8GK2zAQvfsrhizsqYZVnHZdFwqBQg85FNqlp1zG1thWI1tGUmrSEug_tKde-m_9gn7CjmMn6yzeXUovBRnkpzdv5mlGF_D7xzdesKpNq0kWBBk2mCqtvCI3nP6HKwgyjc6RS-BrANCU6KjfArgSG_6xlHmsC0096Hf6xABIjZVkQ4tSbVkjPsFaJuDtlgYgN7UPnfrCoSI6YkrrBGYXgkS6SGcD6rw1G-rwWMRZHp_jYaukLxOYj3Uzo43tIuiKrvP8FFGiNO2ojH3Qf9yacHNs1D-4fTFhTtw3F4mr-YS5RSbky-fT5sSkObyO0xxnZ07QWtNOeDkv---yDqhEx2A0SrcPghWLakyps_bn1_efd_M-ewWHSUr6GWLuRozIN6qi0JHtHoPzxmJB69rk0M2eB0-aKvJ2d6dy1qN9sJmPxD5yj4w96BBfkl3X75dvuXOe5T-jhktwVGHtVcYbtFn5sGw0kl0uP4DbppWRpFmtMU5xht26voQ3qlCelW9aVfNRodyjxS5Gqu_ST1zu0XRf7iGFewZyWzWOy0XrVY6Zdw9KBisIX8PhSgfCvdbvB8b8SUb0JGPxCOMWNmy60w==)
 
 ---
-
-## 🏭 Operational Showcase: A "Smart Factory" Orchestration
-
-To understand how AutoPilot operates in practice, consider a **multi-stage integrated production line** consisting of automated manufacturing, autonomous logistics, and smart quality control.
-
-![AutoPilot Smart Factory Dashboard](./docs/imgs/showcase.png)
-
-### **Scenario Breakdown**
-
-In this environment, AutoPilot acts as the "cognitive orchestrator" across three distinct zones, utilizing the full **MAPE-K loop**:
-
-#### **Phase 1: Factory A (Production)**
-* **Monitor:** Ingests real-time telemetry from *Machine A* and *Machine B* via protocols like **OPC-UA** and **Modbus**.
-* **Analyze (Level 1):** Performs **Edge Analytics** to compute throughput (e.g., 1.2m/p) and monitor critical thresholds for anomaly detection.
-* **Event:** If a "Maintenance Simulation" is triggered, AutoPilot detects the performance drift immediately via real-time alerting.
-
-#### **Phase 2: AMR Logistics (Inter-stage Transport)**
-* **Plan (Level 2):** Performs **Meta-Analytics** on the production trend of Phase 1, monitoring model health and performance.
-* **Adaptive Reasoning:** Using **RAG-grounded LLMs**, the system determines that a slowdown in Phase 1 requires a "Normal" or "Energy Saving" mode for the **Autonomous Mobile Robots (AMR)**.
-* **Spatial Coordination:** AutoPilot manages the **spatial path planning** for AMRs to ensure the loading area (buffer) does not overflow.
-
-#### **Phase 3: Factory B (Packaging & Quality Control)**
-* **Execute:** The *Robot Palletizer* receives **actuation commands** to synchronize its speed (e.g., 80 pcs/min) with the incoming supply.
-* **Advanced Analysis:** A *QC Vision System* performs **image analysis** to identify "Scrap" (waste) vs. "Good Packages".
-* **Knowledge (Level 3):** All QC results and operational metadata are stored in a **time-series and vector store** for **Long-Term Analytics**. This allows the system to correlate Phase 3 waste with Phase 1 machine settings over time.
-
-### **The Value of Autonomous Coordination**
-This cross-domain synchronization ensures that a bottleneck in *Factory A* doesn't result in wasted energy in *Logistics* or idle machinery in *Factory B*. 
-
-**Human-in-the-Loop (HITL):** The operator is engaged for **massive validation** only when the system detects high-impact anomalies, such as a sudden spike in "Scrap" (72 units), providing the **explainable root-cause** (XAI) needed to adjust QC sensitivity or machine parameters safely.

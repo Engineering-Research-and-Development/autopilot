@@ -1,0 +1,49 @@
+# ── Analyze capabilities ─────────────────────────────────────────────────────
+
+classes: {
+  phase: {
+    shape: rectangle
+    style: {
+      border-radius: 8
+      bold: true
+      font-size: 13
+      fill: "#0f172a"
+      stroke: "#38bdf8"
+      stroke-width: 2
+      font-color: "#e2e8f0"
+      shadow: true
+    }
+  }
+  cap-analyze: {
+    shape: rectangle
+    style: {
+      border-radius: 6
+      font-size: 11
+      fill: "#0f1f2b"
+      stroke: "#0369a1"
+      stroke-width: 1
+      font-color: "#7dd3fc"
+    }
+  }
+  arrow-analyze: {
+    style: {
+      stroke: "#0369a1"
+      stroke-width: 1
+      stroke-dash: 3
+    }
+  }
+}
+
+A: {label: "📊 Analyze"; class: phase}
+
+a1: {label: "Real-time anomaly detection\n& threshold alerting"; class: cap-analyze}
+a2: {label: "KPI computation\n& trend analysis"; class: cap-analyze}
+a3: {label: "Process conformance checking\n& drift detection"; class: cap-analyze}
+a4: {label: "Querying\nof operational and historical data"; class: cap-analyze}
+a5: {label: "On-premise inference"; class: cap-analyze}
+
+A -> a1: {class: arrow-analyze}
+A -> a2: {class: arrow-analyze}
+A -> a3: {class: arrow-analyze}
+A -> a4: {class: arrow-analyze}
+A -> a5: {class: arrow-analyze}

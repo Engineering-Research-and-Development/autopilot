@@ -1,0 +1,177 @@
+direction: down
+
+# ─── Stili globali ────────────────────────────────────────────────────────────
+
+classes: {
+  loop-node: {
+    shape: rectangle
+    style: {
+      border-radius: 12
+      font-size: 15
+      bold: true
+      fill: "#1e293b"
+      stroke: "#38bdf8"
+      stroke-width: 2
+      font-color: "#e2e8f0"
+      shadow: true
+    }
+  }
+  knowledge-node: {
+    shape: cylinder
+    style: {
+      font-size: 14
+      bold: true
+      fill: "#312e81"
+      stroke: "#818cf8"
+      stroke-width: 2
+      font-color: "#e0e7ff"
+      shadow: true
+    }
+  }
+  field-node: {
+    shape: hexagon
+    style: {
+      font-size: 14
+      bold: true
+      fill: "#14532d"
+      stroke: "#4ade80"
+      stroke-width: 2
+      font-color: "#dcfce7"
+      shadow: true
+    }
+  }
+  arrow-main: {
+    style: {
+      stroke: "#38bdf8"
+      stroke-width: 2
+      animated: true
+    }
+  }
+  arrow-knowledge: {
+    style: {
+      stroke: "#818cf8"
+      stroke-width: 1
+      stroke-dash: 4
+    }
+  }
+  arrow-field: {
+    style: {
+      stroke: "#4ade80"
+      stroke-width: 2
+      animated: true
+    }
+  }
+}
+
+# ─── Container: MAPE-K Loop ───────────────────────────────────────────────────
+
+mapek: {
+  label: "⟳  MAPE-K Autonomic Control Loop"
+  style: {
+    border-radius: 16
+    fill: "#0f172a"
+    stroke: "#38bdf8"
+    stroke-width: 2
+    font-size: 16
+    bold: true
+    font-color: "#7dd3fc"
+    double-border: true
+  }
+
+  monitor: {
+    label: "🔍 Monitor\n──────────────\nCollect & filter\nraw telemetry"
+    class: loop-node
+  }
+
+  analyze: {
+    label: "📊 Analyze\n──────────────\nDetect anomalies\n& assess state"
+    class: loop-node
+  }
+
+  plan: {
+    label: "🧠 Plan\n──────────────\nSelect adaptation\nstrategy"
+    class: loop-node
+  }
+
+  execute: {
+    label: "⚙️ Execute\n──────────────\nApply actuation\ncommands"
+    class: loop-node
+  }
+
+  # Flusso principale del loop
+  monitor -> analyze: {
+    label: "Symptoms"
+    class: arrow-main
+  }
+  analyze -> plan: {
+    label: "Diagnosis"
+    class: arrow-main
+  }
+  plan -> execute: {
+    label: "Action Plan"
+    class: arrow-main
+  }
+}
+
+# ─── Container: Knowledge Layer ───────────────────────────────────────────────
+
+knowledge: {
+  label: "🗄️  Knowledge Layer — AAS"
+  style: {
+    border-radius: 16
+    fill: "#1e1b4b"
+    stroke: "#818cf8"
+    stroke-width: 2
+    font-size: 16
+    bold: true
+    font-color: "#a5b4fc"
+    double-border: true
+  }
+
+  aas: {
+    label: "📚 Asset Administration Shell\n────────────────────────────\nDigital Twin · Submodels\nHistorical Data · Policies\nAdaptation Rules"
+    class: knowledge-node
+  }
+}
+
+# ─── Field ────────────────────────────────────────────────────────────────────
+
+field: {
+  label: "🏭  Industrial Shop Floor\n──────────────────────────\nPLC · Sensors · Actuators\nOPC-UA / MQTT endpoints"
+  class: field-node
+}
+
+# ─── Connessioni Knowledge <-> Loop ───────────────────────────────────────────
+
+mapek.analyze <-> knowledge.aas: {
+  label: "Query / Update"
+  class: arrow-knowledge
+}
+
+mapek.plan <-> knowledge.aas: {
+  label: "Rules / Constraints"
+  class: arrow-knowledge
+}
+
+mapek.execute <-> knowledge.aas: {
+  label: "Action Log"
+  class: arrow-knowledge
+}
+
+# ─── Connessioni Field <-> Loop ───────────────────────────────────────────────
+
+field -> mapek.monitor: {
+  label: "📡 Telemetry\n(OPC-UA / MQTT)"
+  class: arrow-field
+}
+
+mapek.execute -> field: {
+  label: "⚡ Actuation Commands"
+  style: {
+    stroke: "#f59e0b"
+    stroke-width: 2
+    animated: true
+    font-color: "#fcd34d"
+    bold: true
+  }
+}

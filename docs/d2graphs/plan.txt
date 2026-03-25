@@ -1,0 +1,45 @@
+# ── Plan capabilities ────────────────────────────────────────────────────────
+
+classes: {
+  phase: {
+    shape: rectangle
+    style: {
+      border-radius: 8
+      bold: true
+      font-size: 13
+      fill: "#0f172a"
+      stroke: "#38bdf8"
+      stroke-width: 2
+      font-color: "#e2e8f0"
+      shadow: true
+    }
+  }
+  cap-plan: {
+    shape: rectangle
+    style: {
+      border-radius: 6
+      font-size: 11
+      fill: "#160f2b"
+      stroke: "#7c3aed"
+      stroke-width: 1
+      font-color: "#c4b5fd"
+    }
+  }
+  arrow-plan: {
+    style: {
+      stroke: "#7c3aed"
+      stroke-width: 1
+      stroke-dash: 3
+    }
+  }
+}
+
+P: {label: "🧠 Plan"; class: phase}
+
+p1: {label: "LLM reasoning\non asset context"; class: cap-plan}
+p3: {label: "Constraint-based scheduling\n& resource optimization"; class: cap-plan}
+p5: {label: "Durable long-running\nworkflow orchestration"; class: cap-plan}
+
+P -> p1: {class: arrow-plan}
+P -> p3: {class: arrow-plan}
+P -> p5: {class: arrow-plan}

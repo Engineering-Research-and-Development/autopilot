@@ -1,0 +1,47 @@
+# ── Knowledge capabilities ───────────────────────────────────────────────────
+
+classes: {
+  phase: {
+    shape: rectangle
+    style: {
+      border-radius: 8
+      bold: true
+      font-size: 13
+      fill: "#1e1b4b"
+      stroke: "#818cf8"
+      stroke-width: 2
+      font-color: "#e0e7ff"
+      shadow: true
+    }
+  }
+  cap-knowledge: {
+    shape: rectangle
+    style: {
+      border-radius: 6
+      font-size: 11
+      fill: "#13102b"
+      stroke: "#4c1d95"
+      stroke-width: 1
+      font-color: "#a78bfa"
+    }
+  }
+  arrow-knowledge: {
+    style: {
+      stroke: "#4c1d95"
+      stroke-width: 1
+      stroke-dash: 3
+    }
+  }
+}
+
+K: {label: "📚 Knowledge"; class: phase}
+
+k1: {label: "Time-series storage\nof asset telemetry"; class: cap-knowledge}
+k2: {label: "Vector store for\nRAG retrieval & semantic search"; class: cap-knowledge}
+k3: {label: "AAS submodel repository\n& Digital Twin registry"; class: cap-knowledge}
+k4: {label: "Object storage for\nmodels, dumps & artifacts"; class: cap-knowledge}
+
+K -> k1: {class: arrow-knowledge}
+K -> k2: {class: arrow-knowledge}
+K -> k3: {class: arrow-knowledge}
+K -> k4: {class: arrow-knowledge}
