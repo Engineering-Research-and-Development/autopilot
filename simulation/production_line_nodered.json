@@ -1,0 +1,1592 @@
+[
+    {
+        "id": "fa8472568da2935d",
+        "type": "tab",
+        "label": "Production Line 4 IndX",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "224986079db11814",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== PRODUCTION LINE: Initial Configuration =====",
+        "info": "",
+        "x": 220,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "ca624090e54e2e79",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "🔧 Global Config & Init",
+        "func": "if (!global.get('initialized')) {\n    global.set('initialized', true);\n\n    global.set('q_load_out',   []);\n    global.set('q_pallet_out', []);\n    global.set('q_robot_out',  []);\n    global.set('q_camera_out', []);\n    global.set('q_watch_out',  []);\n\n    global.set('status_load',       'idle');\n    global.set('status_loadpallet', 'idle');\n    global.set('status_robot',      'idle');\n    global.set('status_camera',     'idle');\n    global.set('status_watch',      'idle');\n    global.set('status_label',      'idle');\n\n    global.set('lock_load',       false);\n    global.set('lock_loadpallet', false);\n    global.set('lock_robot',      false);\n    global.set('lock_camera',     false);\n    global.set('lock_watch',      false);\n    global.set('lock_label',      false);\n\n    global.set('ts_blocked_load',    null);\n    global.set('ts_blocked_robot',   null);\n    global.set('ts_starving_robot',  null);\n\n    global.set('package_counter', 0);\n    global.set('pallet_counter',  0);\n    global.set('n_scrap',  0);\n    global.set('n_good',   0);\n    global.set('ready_pallets',  10);\n    global.set('loaded_pallets', 0);\n\n    global.set('energy_load_kwh',   0);\n    global.set('energy_pallet_kwh', 0);\n    global.set('energy_robot_kwh',  0);\n\n    global.set('config', {\n        load_speed:          5,\n        pallet_speed:        10,\n        robot_speed:         4,\n        max_queue_size:      20,\n        ready_packages:      500,\n        pulsar_url:          'http://broker:9553'\n    });\n\n    node.warn('✅ Global state initialized (v6)');\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "907641eb03b99133"
+            ]
+        ]
+    },
+    {
+        "id": "907641eb03b99133",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "init log",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "08e183b25289d677",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "▶ Init on Deploy",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.5,
+        "topic": "",
+        "payload": "init",
+        "payloadType": "str",
+        "x": 160,
+        "y": 100,
+        "wires": [
+            [
+                "ca624090e54e2e79"
+            ]
+        ]
+    },
+    {
+        "id": "f9371b27be32991f",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== Auto-Unlocker: Unlocks queues when unlocking condition is met =====",
+        "info": "",
+        "x": 290,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1a363f056eb1aa5a",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Watchdog (3s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "7abd62d7e490e96e"
+            ]
+        ]
+    },
+    {
+        "id": "7abd62d7e490e96e",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "🔓 Auto-Unlock Watchdog",
+        "func": "const cfg       = global.get('config') || {};\nconst threshold = cfg.max_queue_size \n\nconst qLoad   = (global.get('q_load_out')   || []).length;\nconst qPallet = (global.get('q_pallet_out') || []).length;\nconst qRobot  = (global.get('q_robot_out')  || []).length;\nconst qCamera = (global.get('q_camera_out') || []).length;\nconst qWatch  = (global.get('q_watch_out')  || []).length;\n\nconst events = [];\n\nif (global.get('lock_load') && qLoad < threshold) {\n    global.set('lock_load', false);\n    global.set('ts_blocked_load', null);\n    events.push({ machine: 'LoadPackage', reason: 'q_load_out=' + qLoad });\n}\nif (global.get('lock_loadpallet') && qPallet < threshold) {\n    global.set('lock_loadpallet', false);\n    events.push({ machine: 'LoadPallets', reason: 'q_pallet_out=' + qPallet });\n}\nif (global.get('lock_robot') && qRobot < threshold) {\n    global.set('lock_robot', false);\n    global.set('ts_blocked_robot', null);\n    events.push({ machine: 'Robot', reason: 'q_robot_out=' + qRobot });\n}\n\n\nif (events.length > 0) {\n    //node.warn('🔓 ' + JSON.stringify(events));\n    msg.payload = { type: 'auto_unlock', events, ts: new Date().toISOString() };\n    return msg;\n}\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 240,
+        "wires": [
+            [
+                "51831bf8d926034d"
+            ]
+        ]
+    },
+    {
+        "id": "51831bf8d926034d",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "🔓 Unlock Events",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "2242018f17d2f27a",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== 1. Load Package: loads an empty package every t0 seconds =====",
+        "info": "",
+        "x": 280,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "da2a388ec5eeb890",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "▶ Start Load Timer (once)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "payload": "start",
+        "payloadType": "str",
+        "x": 205,
+        "y": 390,
+        "wires": [
+            [
+                "2f641832a4de12d0"
+            ]
+        ]
+    },
+    {
+        "id": "2f641832a4de12d0",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Load Self-Timer",
+        "func": "// Reads load_speed from global config on every cycle.\n// Triggers load_package_fn immediately, then reschedules itself.\n// Changing load_speed via REST takes effect on the next setTimeout fire.\nconst cfg        = global.get('config') || {};\nconst loadSpeed  = Math.max(0.1, cfg.load_speed || 5);  // pkg/min, floor at 0.1\nconst intervalMs = Math.round(60000 / loadSpeed);\n\nawait new Promise(r => setTimeout(r, intervalMs));\n\n// Trigger load logic immediately this cycle\nnode.send([{ payload: Date.now() }, null]);\n\n// Status output so we can see the active interval\nnode.send([null, { payload: {\n    machine:     'LoadTimer',\n    load_speed:  loadSpeed,\n    interval_ms: intervalMs,\n    ts:          new Date().toISOString()\n}}]);\nreturn null;",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 390,
+        "wires": [
+            [
+                "bbf46eba65794df3",
+                "a645bcc84661b905"
+            ],
+            [
+                "98808472cdc6a1c4"
+            ]
+        ]
+    },
+    {
+        "id": "98808472cdc6a1c4",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Load Timer",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "bbf46eba65794df3",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "📦 Load Package Logic",
+        "func": "const cfg          = global.get('config') || {};\nconst maxQ         = cfg.max_queue_size || 20;\nconst loadSpeed    = Math.max(0.1, cfg.load_speed || 5);\nlet   ready_packages = cfg.ready_packages !== undefined ? cfg.ready_packages : 500;\nlet   pkgCounter   = global.get('package_counter') || 0;\nconst processingMs = Math.round(60000 / loadSpeed);\n\n// ── Energetic consumption (exponential: 1 KWh @ speed=1, 3 KWh @ speed=20) ──\nconst LOAD_E_MIN = 1.0, LOAD_E_MAX = 3.0, LOAD_SPEED_MAX = 20;\nconst loadPowerKw  = LOAD_E_MIN * Math.pow(LOAD_E_MAX / LOAD_E_MIN, (loadSpeed - 1) / (LOAD_SPEED_MAX - 1));\nconst loadEnergyKwh = loadPowerKw * (processingMs / 3600000);   // kW × h\nlet   totalEnergyLoad = (global.get('energy_load_kwh') || 0) + loadEnergyKwh;\nglobal.set('energy_load_kwh', totalEnergyLoad);\n\nif (global.get('lock_load')) {\n    if (!global.get('ts_blocked_load')) global.set('ts_blocked_load', Date.now());\n    const blockedMs = Date.now() - global.get('ts_blocked_load');\n    const qLen = (global.get('q_load_out') || []).length;\n    global.set('status_load', 'blocked');\n    node.send([null, { payload: { machine: 'LoadPackage', status: 'blocked', duration_ms: blockedMs, producing_status: 'blocked', q_load_out_size: qLen, ts: new Date().toISOString() }}]);\n    return null;\n}\n\nconst qCheck = (global.get('q_load_out') || []).length;\nif (qCheck >= maxQ) {\n    global.set('lock_load', true);\n    global.set('ts_blocked_load', Date.now());\n    global.set('status_load', 'blocked');\n    node.send([null, { payload: { machine: 'LoadPackage', status: 'blocked', duration_ms: 0, producing_status: 'blocked', q_load_out_size: qCheck, ts: new Date().toISOString() }}]);\n    return null;\n}\n\nglobal.set('ts_blocked_load', null);\npkgCounter++;\nready_packages--;\n\nconst tsStart = new Date().toISOString();\nconst tsEnd   = new Date(Date.now() + processingMs).toISOString();\n\nconst pkg = {\n    package_id:     'PKG-' + String(pkgCounter).padStart(5, '0'),\n    ts_created:     tsStart,\n    ts_load_done:   tsEnd,\n    charger_speed:  loadSpeed,\n    machine_status: 'producing',\n    load_power_kw:  Math.round(loadPowerKw * 1000) / 1000,\n    load_energy_kwh: Math.round(loadEnergyKwh * 1e6) / 1e6\n};\n\nconst q = global.get('q_load_out') || [];\nq.push(pkg);\nglobal.set('q_load_out',      q);\nglobal.set('package_counter', pkgCounter);\ncfg.ready_packages = ready_packages;\nglobal.set('config', cfg);\nglobal.set('status_load', 'producing');\n\n\nconst statusMsg = { payload: {\n    machine: 'LoadPackage', status: 'producing',\n    charger_speed: loadSpeed, ready_packages,\n    processing_ms: processingMs,\n    q_load_out_size: q.length, ts: tsStart\n}};\n\nnode.send([statusMsg]);\nnode.status({fill:\"blue\",shape:\"dot\",text: q.length});\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 400,
+        "wires": [
+            [
+                "6c4f0f148dc2a7cb"
+            ]
+        ]
+    },
+    {
+        "id": "6c4f0f148dc2a7cb",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Load Status",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 930,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "3a8feafe71de4728",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== 2. Robot: consumes a package and a pallet to produced a packaged product. Its speed determines package quality (min 90%, max 99%) =====",
+        "info": "",
+        "x": 520,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "1c306e9c82c3f459",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "▶ Start Robot Timer (once)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "payload": "start",
+        "payloadType": "str",
+        "x": 205,
+        "y": 580,
+        "wires": [
+            [
+                "6e733a421eea443b"
+            ]
+        ]
+    },
+    {
+        "id": "6e733a421eea443b",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Robot Self-Timer",
+        "func": "// Reads robot_speed from global config on every cycle.\n// Triggers robot_fn immediately, then reschedules itself.\n// Changing robot_speed via REST takes effect on the next setTimeout fire.\nconst cfg        = global.get('config') || {};\nconst robotSpeed = Math.max(0.1, cfg.robot_speed || 4);  // pcs/min, floor at 0.1\nconst intervalMs = Math.round(60000 / robotSpeed);\n\n\nawait new Promise(r => setTimeout(r, intervalMs));\n\n\n// Trigger robot logic immediately this cycle\nnode.send([{ payload: Date.now() }, null]);\n\n// Status output\nnode.send([null, { payload: {\n    machine:     'RobotTimer',\n    robot_speed: robotSpeed,\n    interval_ms: intervalMs,\n    ts:          new Date().toISOString()\n}}]);\nreturn null;",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 580,
+        "wires": [
+            [
+                "f76df94f4f913d5e",
+                "c501c2269fcc0c80"
+            ],
+            [
+                "3034d1b3749329b1"
+            ]
+        ]
+    },
+    {
+        "id": "3034d1b3749329b1",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Robot Timer",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "f76df94f4f913d5e",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "🤖 Robot Logic (pops q_load_out)",
+        "func": "const cfg          = global.get('config') || {};\nconst maxQ         = cfg.max_queue_size || 20;\nconst robotSpeed   = Math.max(0.1, cfg.robot_speed || 4);\nlet   qIn      = global.get('q_load_out')   || [];\nlet   qPallet  = global.get('q_pallet_out') || [];\nlet   qOut     = global.get('q_robot_out')  || [];\nlet   loadedPallets = global.get('loaded_pallets') || 0;\nconst processingMs  = Math.round(60000 / robotSpeed);\n\n// ── Energetic consumption (exponential: 1 KWh @ speed=1, 10 KWh @ speed=20) ──\nconst ROBOT_E_MIN = 1.0, ROBOT_E_MAX = 10.0, ROBOT_SPEED_MAX = 20;\nconst robotPowerKw   = ROBOT_E_MIN * Math.pow(ROBOT_E_MAX / ROBOT_E_MIN, (robotSpeed - 1) / (ROBOT_SPEED_MAX - 1));\nconst robotEnergyKwh = robotPowerKw * (processingMs / 3600000);   // kW × h\nlet   totalEnergyRobot = (global.get('energy_robot_kwh') || 0) + robotEnergyKwh;\nglobal.set('energy_robot_kwh', totalEnergyRobot);\n\nif (global.get('lock_robot')) {\n    if (!global.get('ts_blocked_robot')) global.set('ts_blocked_robot', Date.now());\n    const blockedMs = Date.now() - global.get('ts_blocked_robot');\n    global.set('status_robot', 'blocked');\n    node.send([null, { payload: { machine: 'Robot', status: 'blocked', producing_status: 'blocked', duration_ms: blockedMs, q_in: qIn.length, q_pallet: qPallet.length, q_out: qOut.length, ts: new Date().toISOString() }}]);\n    return null;\n}\nif (qOut.length >= maxQ) {\n    global.set('lock_robot', true);\n    global.set('ts_blocked_robot', Date.now());\n    global.set('status_robot', 'blocked');\n    node.send([null, { payload: { machine: 'Robot', status: 'blocked', producing_status: 'blocked', duration_ms: 0, q_out: qOut.length, ts: new Date().toISOString() }}]);\n    return null;\n}\n\nif (qIn.length === 0 || qPallet.length === 0) {\n    if (!global.get('ts_starving_robot')) global.set('ts_starving_robot', Date.now());\n    const starvingMs = Date.now() - global.get('ts_starving_robot');\n    const reason = qIn.length === 0 && qPallet.length === 0 ? 'no_packages_no_pallets'\n                 : qIn.length === 0 ? 'no_packages' : 'no_pallets';\n    global.set('status_robot', 'starving');\n    node.send([null, { payload: { machine: 'Robot', status: 'starving', producing_status: 'starving', duration_ms: starvingMs, reason, q_in: qIn.length, q_pallet: qPallet.length, ts: new Date().toISOString() }}]);\n    return null;\n}\n\nglobal.set('ts_blocked_robot',  null);\nglobal.set('ts_starving_robot', null);\n\nconst pkg    = qIn.shift();\nconst pallet = qPallet.shift();\nloadedPallets++;\nglobal.set('q_load_out',    qIn);\nglobal.set('q_pallet_out',  qPallet);\nglobal.set('loaded_pallets', loadedPallets);\n\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst quality = minQ + (maxQuality - minQ) / (1 + Math.exp(steepness * (robotSpeed - midSpeed)));\n\nconst tsStart = new Date().toISOString();\nconst tsEnd   = new Date(Date.now() + processingMs).toISOString();\n\npkg.ts_robot_start    = tsStart;\npkg.ts_robot_done     = tsEnd;\npkg.robot_quality_pct = Math.round(quality * 10000) / 100;\npkg.robot_speed       = robotSpeed;\npkg.pallet_id         = pallet.pallet_id;\npkg.robot_power_kw    = Math.round(robotPowerKw * 1000) / 1000;\npkg.robot_energy_kwh  = Math.round(robotEnergyKwh * 1e6) / 1e6;\n\nqOut.push(pkg);\nglobal.set('q_robot_out', qOut);\nglobal.set('status_robot', 'producing');\n\nconst statusMsg = { payload: {\n    machine: 'Robot', status: 'producing',\n    robot_speed: robotSpeed,\n    processing_ms: processingMs,\n    produced_quality_pct: pkg.robot_quality_pct,\n    loaded_pallets: loadedPallets,\n    q_in: qIn.length, q_pallet: qPallet.length, q_out: qOut.length,\n    ts: tsStart\n}};\n\nnode.status({fill:\"green\",shape:\"dot\",text: (qIn.length+1) + '/' + (qPallet.length+1) + '->' + qOut.length});\nnode.send([statusMsg]);\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 580,
+        "wires": [
+            [
+                "2bb136e11e08aa7f"
+            ]
+        ]
+    },
+    {
+        "id": "2bb136e11e08aa7f",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Robot Status",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 970,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "47ed0215d52ac3d5",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== 3. Camera: picks a package from robot and makes first quality check =====",
+        "info": "",
+        "x": 310,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "11bc2f4c9da63581",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Camera Ticker (5s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 195,
+        "y": 760,
+        "wires": [
+            [
+                "4d11261a715acc2a"
+            ]
+        ]
+    },
+    {
+        "id": "4d11261a715acc2a",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "📷 Camera Logic (pops q_robot_out)",
+        "func": "const cfg    = global.get('config') || {};\nconst maxQ   = cfg.max_queue_size || 20;\nconst fixedMs = 1000;  // Camera fixed at 1 piece per 20s\nlet   qIn    = global.get('q_robot_out')  || [];\nlet   qOut   = global.get('q_camera_out') || [];\nlet   nScrap = global.get('n_scrap') || 0;\n\nif (global.get('lock_camera')) {\n    global.set('status_camera', 'blocked');\n    node.send([null, null, { payload: { machine: 'Camera', status: 'blocked', ts: new Date().toISOString() }}]);\n    return null;\n}\nif (qOut.length >= maxQ) {\n    global.set('lock_camera', true);\n    global.set('status_camera', 'blocked');\n    node.send([null, null, { payload: { machine: 'Camera', status: 'blocked', q_out: qOut.length, ts: new Date().toISOString() }}]);\n    return null;\n}\nif (qIn.length === 0) {\n    global.set('status_camera', 'starving');\n    node.send([null, null, { payload: { machine: 'Camera', status: 'starving', reason: 'q_robot_out empty', ts: new Date().toISOString() }}]);\n    return null;\n}\n\nconst pkg = qIn.shift();\nglobal.set('q_robot_out', qIn);\nglobal.set('status_camera', 'producing');\n\n//const tsStart = new Date().toISOString();\n//const tsEnd   = new Date(Date.now() + fixedMs).toISOString();\nconst delay_ms = 1000;\nconst start_time = pkg.ts_robot_done;\nconst tsStart = new Date(Date.parse(start_time) + delay_ms).toISOString();\nconst tsEnd = new Date(Date.parse(start_time) + delay_ms + fixedMs).toISOString();\npkg.ts_camera_start = tsStart;\npkg.ts_camera_done  = tsEnd;\n\nconst qualityOk = Math.random() < ((pkg.robot_quality_pct || 95) / 100);\npkg.camera_quality_ok = qualityOk;\n\nconst statusMsg = { payload: { machine: 'Camera', status: qualityOk ? 'producing' : 'scrapping', quality_ok: qualityOk, q_in: qIn.length, q_out: qOut.length, ts: tsStart }};\n\nif (qualityOk) {\n    qOut.push(pkg);\n    global.set('q_camera_out', qOut);\n    node.send([null, statusMsg]);\n} else {\n    nScrap++;\n    global.set('n_scrap', nScrap);\n    pkg.scrap_reason = 'camera_quality_fail';\n    let lp = Math.max(0, (global.get('loaded_pallets') || 0) - 1);\n    global.set('loaded_pallets', lp);\n    node.send([{ payload: pkg }, statusMsg]);\n}\nnode.status({ fill: \"blue\", shape: \"dot\", text: qIn.length+1 + \"->\" + qOut.length});\nreturn null;",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 760,
+        "wires": [
+            [
+                "461d4632c459e960"
+            ],
+            [
+                "1e5b320c961d8fb7"
+            ]
+        ]
+    },
+    {
+        "id": "1e5b320c961d8fb7",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Camera Status",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "8cedf11a103dd060",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== 4. Smartwatch: if the first check is passed, makes a second quality check =====",
+        "info": "",
+        "x": 320,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "30df9c96e69f714e",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Smartwatch Ticker (5s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 198,
+        "y": 940,
+        "wires": [
+            [
+                "08f791f2a2d55558"
+            ]
+        ]
+    },
+    {
+        "id": "08f791f2a2d55558",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "⌚ Smartwatch Logic (pops q_camera_out)",
+        "func": "const cfg    = global.get('config') || {};\nconst maxQ   = cfg.max_queue_size || 20;\nconst fixedMs = 1000;\nlet   qIn    = global.get('q_camera_out') || [];\nlet   qOut   = global.get('q_watch_out')  || [];\nlet   nScrap = global.get('n_scrap') || 0;\n\nif (global.get('lock_watch')) {\n    global.set('status_watch', 'blocked');\n    node.send([null, null, { payload: { machine: 'Smartwatch', status: 'blocked', ts: new Date().toISOString() }}]);\n    return null;\n}\nif (qOut.length >= maxQ) {\n    global.set('lock_watch', true);\n    global.set('status_watch', 'blocked');\n    node.send([null, null, { payload: { machine: 'Smartwatch', status: 'blocked', q_out: qOut.length, ts: new Date().toISOString() }}]);\n    return null;\n}\nif (qIn.length === 0) {\n    global.set('status_watch', 'starving');\n    node.send([null, null, { payload: { machine: 'Smartwatch', status: 'starving', reason: 'q_camera_out empty', ts: new Date().toISOString() }}]);\n    return null;\n}\n\nconst pkg = qIn.shift();\nglobal.set('q_camera_out', qIn);\nglobal.set('status_watch', 'producing');\n\nconst delay_ms = 1000;\nconst start_time = pkg.ts_camera_done;\nconst tsStart = new Date(Date.parse(start_time) + delay_ms).toISOString();\nconst tsEnd = new Date(Date.parse(start_time) + delay_ms + fixedMs).toISOString();\npkg.ts_watch_start = tsStart;\npkg.ts_watch_done  = tsEnd;\n\nconst qualityOk = Math.random() < ((pkg.robot_quality_pct || 95) / 100);\npkg.watch_quality_ok = qualityOk;\n\n\nconst statusMsg = { payload: { machine: 'Smartwatch', status: qualityOk ? 'producing' : 'scrapping', quality_ok: qualityOk, q_in: qIn.length, q_out: qOut.length, ts: tsStart }};\n\nif (qualityOk) {\n    qOut.push(pkg);\n    global.set('q_watch_out', qOut);\n    node.send([null, statusMsg]);\n} else {\n    nScrap++;\n    global.set('n_scrap', nScrap);\n    pkg.scrap_reason = 'smartwatch_quality_fail';\n    let lp = Math.max(0, (global.get('loaded_pallets') || 0) - 1);\n    global.set('loaded_pallets', lp);\n    node.send([{ payload: pkg }, statusMsg]);\n}\nnode.status({fill:\"blue\",shape:\"dot\",text: qIn.length+1 + \"->\" + qOut.length});\nreturn null;",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 940,
+        "wires": [
+            [
+                "461d4632c459e960"
+            ],
+            [
+                "3a86e0b9ccb173a2"
+            ]
+        ]
+    },
+    {
+        "id": "3a86e0b9ccb173a2",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Watch Status",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 830,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "68e2c266f591dc78",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== 5. Labeler: if second quality check is passed, makes last quality check =====",
+        "info": "",
+        "x": 310,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "b9722cb788951bff",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Labeler Ticker (5s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 182,
+        "y": 1120,
+        "wires": [
+            [
+                "55a16867037645d0"
+            ]
+        ]
+    },
+    {
+        "id": "55a16867037645d0",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "🏷️ Labeler Logic (pops q_watch_out)",
+        "func": "const cfg    = global.get('config') || {};\nconst fixedMs = 1000;\nlet   qIn    = global.get('q_watch_out') || [];\nlet   nScrap = global.get('n_scrap') || 0;\nlet   nGood  = global.get('n_good')  || 0;\n\nif (global.get('lock_label')) {\n    global.set('status_label', 'blocked');\n    node.send([null, null, null, { payload: { machine: 'Labeler', status: 'blocked', ts: new Date().toISOString() }}]);\n    return null;\n}\nif (qIn.length === 0) {\n    global.set('status_label', 'starving');\n    node.send([null, null, null, { payload: { machine: 'Labeler', status: 'starving', reason: 'q_watch_out empty', ts: new Date().toISOString() }}]);\n    return null;\n}\n\nglobal.set('status_label', 'producing');\nconst pkg = qIn.shift();\nglobal.set('q_watch_out', qIn);\n\nconst delay_ms = 1000;\nconst start_time = pkg.ts_watch_done;\nconst tsStart = new Date(Date.parse(start_time) + delay_ms).toISOString();\nconst tsEnd = new Date(Date.parse(start_time) + delay_ms + fixedMs).toISOString();\npkg.ts_label_start = tsStart;\npkg.ts_label_done  = tsEnd;\n\nconst qualityOk = Math.random() < ((pkg.robot_quality_pct || 95) / 100);\npkg.label_quality_ok = qualityOk;\n\n// Free pallet slot regardless of outcome\nlet lp = Math.max(0, (global.get('loaded_pallets') || 0) - 1);\nglobal.set('loaded_pallets', lp);\n\nconst statusMsg = { payload: { machine: 'Labeler', status: qualityOk ? 'producing' : 'scrapping', quality_ok: qualityOk, q_in: qIn.length, ts: tsStart }};\n\nif (qualityOk) {\n    nGood++;\n    global.set('n_good', nGood);\n    pkg.outcome = 'good';\n    node.send([{payload: pkg}, null, statusMsg]);\n} else {\n    nScrap++;\n    global.set('n_scrap', nScrap);\n    pkg.scrap_reason = 'label_verify_fail';\n    pkg.outcome = 'scrap';\n    node.send([null, { payload: pkg }, statusMsg]);\n}\nreturn null;",
+        "outputs": 3,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 1120,
+        "wires": [
+            [
+                "cef2ccaf8bece8c1"
+            ],
+            [
+                "461d4632c459e960"
+            ],
+            [
+                "1977c6ac278024fc"
+            ]
+        ]
+    },
+    {
+        "id": "1977c6ac278024fc",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Labeler Status",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 820,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "d2b8f4ffda156464",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== 6. Good & Scrap Areas =====",
+        "info": "",
+        "x": 170,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "cef2ccaf8bece8c1",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "✅ Good Area",
+        "func": "const pkg   = msg.payload;\nconst nGood = global.get('n_good') || 0;\n\nconst start_time = pkg.ts_label_done\nconst delay_ms = 1000;\nconst tsEnd = new Date(Date.parse(start_time) + delay_ms).toISOString();\n\nmsg.eventLog = {\n    case_id: pkg.package_id, activity: 'Pick Area', machine: 'GoodArea',\n    ts_start: tsEnd, ts_end: tsEnd, duration_ms: 0,\n    attributes: { n_good: nGood, outcome: 'good' }\n};\nmsg.payload = { machine: 'GoodArea', package_id: pkg.package_id, n_good: nGood, ts: tsEnd, full_package: pkg };\nmsg.topic = 'pick-area';\nnode.status({fill:\"green\",shape:\"dot\",text: nGood});\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1300,
+        "wires": [
+            [
+                "217b5fdff0cd7c5a"
+            ]
+        ]
+    },
+    {
+        "id": "461d4632c459e960",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "🗑️ Scrap Area",
+        "func": "const pkg = msg.payload;\nconst nScrap = global.get('n_scrap') || 0;\n\nvar start_time = 0\nvar fro = \"\"\nif (pkg.ts_label_done){\n    start_time = pkg.ts_label_done;\n} else {\n    if (pkg.ts_watch_done){\n        start_time = pkg.ts_watch_done;\n    } else {\n        start_time = pkg.ts_camera_done;\n    }\n}\nconst delay_ms = 1000;\nconsole.debug(start_time);\nconst tsEnd = new Date(Date.parse(start_time) + delay_ms).toISOString();\nconsole.debug(tsEnd);\n\nmsg.eventLog = {\n    case_id: pkg.package_id, activity: 'Scrap Area', machine: 'ScrapArea',\n    ts_start: tsEnd, ts_end: tsEnd, duration_ms: 0,\n    attributes: { n_scrap: nScrap, scrap_reason: pkg.scrap_reason || 'unknown', outcome: 'scrap' }\n};\nmsg.payload = { machine: 'ScrapArea', package_id: pkg.package_id, n_scrap: nScrap, scrap_reason: pkg.scrap_reason, ts: tsEnd, full_package: pkg};\nmsg.topic = 'scrap-area';\nnode.status({fill:\"red\",shape:\"dot\",text: nScrap});\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1360,
+        "wires": [
+            [
+                "400c93c59f95dee5"
+            ]
+        ]
+    },
+    {
+        "id": "217b5fdff0cd7c5a",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "✅ Good",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 570,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "400c93c59f95dee5",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "🗑️ Scrap",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 560,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "38256c481671197a",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== Pallet Refill Logic =====",
+        "info": "",
+        "x": 150,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "243ae3a4aaa7867e",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "▶ Start Pallet Timer (once)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "payload": "start",
+        "payloadType": "str",
+        "x": 180,
+        "y": 1500,
+        "wires": [
+            [
+                "5bae9b3322608d04"
+            ]
+        ]
+    },
+    {
+        "id": "8c045396edd8ccbd",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "🪤 Load Pallets Logic",
+        "func": "const cfg          = global.get('config') || {};\nconst maxQ         = cfg.max_queue_size || 20;\nconst palletSpeed  = Math.max(0.1, cfg.pallet_speed || 3);\nlet   readyPallets  = global.get('ready_pallets') || 0;\nlet   palletCounter = global.get('pallet_counter') || 0;\nconst processingMs  = Math.round(60000 / palletSpeed);\n\n// ── Energetic consumption (exponential: 1 KWh @ speed=1, 3 KWh @ speed=20) ──\nconst PALLET_E_MIN = 1.0, PALLET_E_MAX = 3.0, PALLET_SPEED_MAX = 20;\nconst palletPowerKw   = PALLET_E_MIN * Math.pow(PALLET_E_MAX / PALLET_E_MIN, (palletSpeed - 1) / (PALLET_SPEED_MAX - 1));\nconst palletEnergyKwh = palletPowerKw * (processingMs / 3600000);   // kW × h\nlet   totalEnergyPallet = (global.get('energy_pallet_kwh') || 0) + palletEnergyKwh;\nglobal.set('energy_pallet_kwh', totalEnergyPallet);\n\nif (global.get('lock_loadpallet')) {\n    const qLen = (global.get('q_pallet_out') || []).length;\n    global.set('status_loadpallet', 'blocked');\n    node.send([null, { payload: { machine: 'LoadPallets', status: 'blocked', producing_status: 'blocked', duration_ms: 0, q_pallet_out_size: qLen, ts: new Date().toISOString() }}]);\n    return null;\n}\n\nconst qCheck = (global.get('q_pallet_out') || []).length;\nif (qCheck >= maxQ) {\n    global.set('lock_loadpallet', true);\n    global.set('status_loadpallet', 'blocked');\n    node.send([null, { payload: { machine: 'LoadPallets', status: 'blocked', producing_status: 'blocked', duration_ms: 0, q_pallet_out_size: qCheck, ts: new Date().toISOString() }}]);\n    return null;\n}\n\nif (readyPallets <= 0) {\n    global.set('status_loadpallet', 'starving');\n    node.send([null, { payload: { machine: 'LoadPallets', status: 'starving', producing_status: 'starving', reason: 'no_ready_pallets', ts: new Date().toISOString() }}]);\n    return null;\n}\n\npalletCounter++;\n// readyPallets--; -> Never reduce ready pallets for now\n\nconst tsStart = new Date().toISOString();\nconst tsEnd   = new Date(Date.now() + processingMs).toISOString();\n\nconst pallet = {\n    pallet_id:        'PLT-' + String(palletCounter).padStart(5, '0'),\n    ts_created:       tsStart,\n    ts_load_done:     tsEnd,\n    pallet_speed:     palletSpeed,\n    machine_status:   'producing',\n    pallet_power_kw:  Math.round(palletPowerKw * 1000) / 1000,\n    pallet_energy_kwh: Math.round(palletEnergyKwh * 1e6) / 1e6\n};\n\nconst q = global.get('q_pallet_out') || [];\nq.push(pallet);\nglobal.set('q_pallet_out',   q);\nglobal.set('pallet_counter', palletCounter);\nglobal.set('ready_pallets',  readyPallets);\nglobal.set('status_loadpallet', 'producing');\n\n\nconst statusMsg = { payload: {\n    machine: 'LoadPallets', status: 'producing',\n    pallet_speed: palletSpeed,\n    ready_pallets: readyPallets,\n    processing_ms: processingMs,\n    q_pallet_out_size: q.length, ts: tsStart\n}};\n\nnode.send([statusMsg]);\nnode.status({fill:\"blue\",shape:\"dot\",text: q.length});\nreturn null;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 1500,
+        "wires": [
+            [
+                "3b8db9f80c942198"
+            ]
+        ]
+    },
+    {
+        "id": "3b8db9f80c942198",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "Pallet status",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 910,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "5ee85d5d908e9305",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== Summary Ticker =====",
+        "info": "",
+        "x": 160,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "3ba194fbd496bcae",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Summary (10s)",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 1640,
+        "wires": [
+            [
+                "49c7700145b5d6c7"
+            ]
+        ]
+    },
+    {
+        "id": "49c7700145b5d6c7",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "📊 Line Summary",
+        "func": "const cfg        = global.get('config') || {};\nconst nGood      = global.get('n_good')  || 0;\nconst nScrap     = global.get('n_scrap') || 0;\nconst total      = nGood + nScrap;\nconst robotSpeed = Math.max(0.1, cfg.robot_speed || 4);\nconst loadSpeed  = Math.max(0.1, cfg.load_speed  || 5);\n\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst quality = minQ + (maxQuality - minQ) / (1 + Math.exp(steepness * (robotSpeed - midSpeed)));\n\nmsg.payload = {\n    timestamp: new Date().toISOString(),\n    summary: { n_good: nGood, n_scrap: nScrap, total, yield_pct: total > 0 ? Math.round(nGood/total*10000)/100 : 0 },\n    rates: {\n        load_speed:        loadSpeed,\n        load_interval_ms:  Math.round(60000 / loadSpeed),\n        robot_speed:       robotSpeed,\n        robot_interval_ms: Math.round(60000 / robotSpeed),\n        camera_interval_ms:  20000,\n        watch_interval_ms:   20000,\n        labeler_interval_ms: 20000\n    },\n    queues: {\n        q_load_out:   (global.get('q_load_out')   || []).length,\n        q_robot_out:  (global.get('q_robot_out')  || []).length,\n        q_camera_out: (global.get('q_camera_out') || []).length,\n        q_watch_out:  (global.get('q_watch_out')  || []).length\n    },\n    machines: {\n        LoadPackage: { status: global.get('status_load'),   locked: global.get('lock_load')   },\n        Robot:       { status: global.get('status_robot'),  locked: global.get('lock_robot')  },\n        Camera:      { status: global.get('status_camera'), locked: global.get('lock_camera') },\n        Smartwatch:  { status: global.get('status_watch'),  locked: global.get('lock_watch')  },\n        Labeler:     { status: global.get('status_label'),  locked: global.get('lock_label')  }\n    },\n    pallets: { ready: global.get('ready_pallets')||0, loaded: global.get('loaded_pallets')||0, max: cfg.max_loadable_pallet||8 },\n    robot_quality_pct: Math.round(quality * 10000) / 100,\n    config: cfg\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 1640,
+        "wires": [
+            [
+                "6a34a68adfd17903"
+            ]
+        ]
+    },
+    {
+        "id": "6a34a68adfd17903",
+        "type": "debug",
+        "z": "fa8472568da2935d",
+        "name": "📊 LINE SUMMARY",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "complete": "payload",
+        "x": 630,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "c7d35c20784ba9b2",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "===== Interaction Section =====",
+        "info": "",
+        "x": 150,
+        "y": 1720,
+        "wires": []
+    },
+    {
+        "id": "8981097460ce2858",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "GET /status",
+        "url": "/status",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 1780,
+        "wires": [
+            [
+                "cf6bb33467384149"
+            ]
+        ]
+    },
+    {
+        "id": "cf6bb33467384149",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Build Status Response",
+        "func": "const cfg        = global.get('config') || {};\nconst nGood      = global.get('n_good')  || 0;\nconst nScrap     = global.get('n_scrap') || 0;\nconst total      = nGood + nScrap;\nconst robotSpeed = Math.max(0.1, cfg.robot_speed || 4);\nconst loadSpeed  = Math.max(0.1, cfg.load_speed  || 5);\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst quality = minQ + (maxQuality - minQ) / (1 + Math.exp(steepness * (robotSpeed - midSpeed)));\n\nmsg.payload = {\n    ts: new Date().toISOString(),\n    summary: { n_good: nGood, n_scrap: nScrap, total, yield_pct: total > 0 ? Math.round(nGood/total*10000)/100 : 0 },\n    rates: {\n        load_speed: loadSpeed, load_interval_ms: Math.round(60000/loadSpeed),\n        robot_speed: robotSpeed, robot_interval_ms: Math.round(60000/robotSpeed),\n        camera_interval_ms: 20000, watch_interval_ms: 20000, labeler_interval_ms: 20000\n    },\n    machines: {\n        LoadPackage: { status: global.get('status_load'),   locked: global.get('lock_load')   },\n        Robot:       { status: global.get('status_robot'),  locked: global.get('lock_robot')  },\n        Camera:      { status: global.get('status_camera'), locked: global.get('lock_camera') },\n        Smartwatch:  { status: global.get('status_watch'),  locked: global.get('lock_watch')  },\n        Labeler:     { status: global.get('status_label'),  locked: global.get('lock_label')  }\n    },\n    queues: {\n        q_load_out:   (global.get('q_load_out')   || []).length,\n        q_robot_out:  (global.get('q_robot_out')  || []).length,\n        q_camera_out: (global.get('q_camera_out') || []).length,\n        q_watch_out:  (global.get('q_watch_out')  || []).length\n    },\n    pallets: { ready: global.get('ready_pallets')||0, loaded: global.get('loaded_pallets')||0, max: cfg.max_loadable_pallet||8 },\n    robot_quality_pct: Math.round(quality*10000)/100,\n    config: cfg\n};\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1780,
+        "wires": [
+            [
+                "cbf5d17ddc7d0ee8"
+            ]
+        ]
+    },
+    {
+        "id": "cbf5d17ddc7d0ee8",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 620,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "bcb0b60ac02b6fbc",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /config",
+        "url": "/config",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 1840,
+        "wires": [
+            [
+                "67b3037352f67a97"
+            ]
+        ]
+    },
+    {
+        "id": "67b3037352f67a97",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Update Config Handler",
+        "func": "const update = msg.payload || {};\nlet cfg = global.get('config') || {};\nconst numericFields = ['load_speed','pallet_speed','robot_speed','max_queue_size','ready_packages','unlock_threshold'];\nnumericFields.forEach(f => { if (update[f] !== undefined) { const v = parseFloat(update[f]); if (!isNaN(v) && v > 0) cfg[f] = v; } });\nif (update.pulsar_url && typeof update.pulsar_url === 'string') cfg.pulsar_url = update.pulsar_url.replace(/\\/$/, '');\nglobal.set('config', cfg);\nnode.warn('⚙️ Config: ' + JSON.stringify(cfg));\nconst loadSpeed   = cfg.load_speed   || 5;\nconst palletSpeed = cfg.pallet_speed || 3;\nconst robotSpeed  = cfg.robot_speed  || 4;\nmsg.payload = {\n    success: true,\n    config: cfg,\n    effective_intervals: {\n        load_interval_ms:   Math.round(60000 / loadSpeed),\n        pallet_interval_ms: Math.round(60000 / palletSpeed),\n        robot_interval_ms:  Math.round(60000 / robotSpeed)\n    },\n    note: 'Speed changes take effect on next self-timer cycle (within current interval)',\n    ts: new Date().toISOString()\n};\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 1840,
+        "wires": [
+            [
+                "55929d0d5ff3593d"
+            ]
+        ]
+    },
+    {
+        "id": "55929d0d5ff3593d",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 630,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "942a5117542347af",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /robot/speed",
+        "url": "/robot/speed",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 2280,
+        "wires": [
+            [
+                "562e29ca8bfced19"
+            ]
+        ]
+    },
+    {
+        "id": "562e29ca8bfced19",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Set Robot Speed",
+        "func": "const speed = parseFloat((msg.payload || {}).speed);\nif (isNaN(speed) || speed < 1 || speed > 20) {\n    msg.payload = { success: false, error: 'speed must be 1-20' }; msg.statusCode = 400; return msg;\n}\nlet cfg = global.get('config') || {};\ncfg.robot_speed = speed;\nglobal.set('config', cfg);\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst quality = minQ + (maxQuality - minQ) / (1 + Math.exp(steepness * (speed - midSpeed)));\nconst qPct    = Math.round(quality * 10000) / 100;\nconst intMs   = Math.round(60000 / speed);\nnode.warn('🤖 robot_speed=' + speed + ' interval=' + intMs + 'ms quality=' + qPct + '%');\nmsg.payload = { success: true, robot_speed: speed, robot_interval_ms: intMs, duration_ms_in_eventlog: intMs, expected_quality_pct: qPct, note: 'Takes effect on next cycle', ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 2280,
+        "wires": [
+            [
+                "3d484fbc750c2f02"
+            ]
+        ]
+    },
+    {
+        "id": "ee7f59db76ae3e0f",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /robot/speed/low",
+        "url": "/robot/speed/low",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 1900,
+        "wires": [
+            [
+                "73b46694ba158897"
+            ]
+        ]
+    },
+    {
+        "id": "a2013107d1747145",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /robot/speed/high",
+        "url": "/robot/speed/high",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 1940,
+        "wires": [
+            [
+                "73b46694ba158897"
+            ]
+        ]
+    },
+    {
+        "id": "73b46694ba158897",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Speed Preset Handler",
+        "func": "const isLow = (msg.req.url || '').includes('/low');\nconst speed = isLow ? 2 : 18;\nlet cfg = global.get('config') || {};\ncfg.robot_speed = speed;\nglobal.set('config', cfg);\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst quality = minQ + (maxQuality - minQ) / (1 + Math.exp(steepness * (speed - midSpeed)));\nconst qPct  = Math.round(quality * 10000) / 100;\nconst intMs = Math.round(60000 / speed);\nconst preset = isLow ? 'LOW (high quality)' : 'HIGH (low quality)';\nnode.warn('🤖 Preset ' + preset + ' speed=' + speed + ' interval=' + intMs + 'ms quality=' + qPct + '%');\nmsg.payload = { success: true, preset, robot_speed: speed, robot_interval_ms: intMs, duration_ms_in_eventlog: intMs, expected_quality_pct: qPct, note: 'Takes effect on next self-timer cycle', ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 425,
+        "y": 1920,
+        "wires": [
+            [
+                "6521884035fb610a"
+            ]
+        ]
+    },
+    {
+        "id": "6521884035fb610a",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 685,
+        "y": 1920,
+        "wires": []
+    },
+    {
+        "id": "61622e80756195fc",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /unlock/:machine",
+        "url": "/unlock/:machine",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 2000,
+        "wires": [
+            [
+                "eaf0387b6f7f0761"
+            ]
+        ]
+    },
+    {
+        "id": "eaf0387b6f7f0761",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Manual Unlock Handler",
+        "func": "const machine = (msg.req.params.machine || '').toLowerCase();\nconst map = {\n    'load':   ['lock_load',   'status_load'],\n    'robot':  ['lock_robot',  'status_robot'],\n    'camera': ['lock_camera', 'status_camera'],\n    'watch':  ['lock_watch',  'status_watch'],\n    'label':  ['lock_label',  'status_label']\n};\nconst unlocked = [];\nconst targets = machine === 'all' ? Object.keys(map) : [machine];\nfor (const m of targets) {\n    if (!map[m]) { msg.payload = { success: false, error: 'Unknown: ' + m + '. Valid: load|robot|camera|watch|label|all' }; msg.statusCode = 400; return msg; }\n    global.set(map[m][0], false);\n    global.set(map[m][1], 'idle');\n    unlocked.push(m);\n}\nnode.warn('🔓 Manual unlock: ' + unlocked.join(', '));\nmsg.payload = { success: true, unlocked, ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 415,
+        "y": 2000,
+        "wires": [
+            [
+                "fc74a0301c084f6a"
+            ]
+        ]
+    },
+    {
+        "id": "fc74a0301c084f6a",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 675,
+        "y": 2000,
+        "wires": []
+    },
+    {
+        "id": "9d06ad4674ccb5e1",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /pallets/refill",
+        "url": "/pallets/refill",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 2060,
+        "wires": [
+            [
+                "a1c0b7a5b4543c77"
+            ]
+        ]
+    },
+    {
+        "id": "a1c0b7a5b4543c77",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Pallet Refill Handler",
+        "func": "const amount = parseInt((msg.payload || {}).amount) || 5;\nlet rp = (global.get('ready_pallets') || 0) + amount;\nglobal.set('ready_pallets', rp);\nnode.warn('🔄 +' + amount + ' pallets → ready_pallets: ' + rp);\nmsg.payload = { success: true, added: amount, ready_pallets: rp, ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 405,
+        "y": 2060,
+        "wires": [
+            [
+                "ac1954ff1ce31618"
+            ]
+        ]
+    },
+    {
+        "id": "ac1954ff1ce31618",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 665,
+        "y": 2060,
+        "wires": []
+    },
+    {
+        "id": "dc7188d46151ed43",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /reset",
+        "url": "/reset",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 2180,
+        "wires": [
+            [
+                "f1415192342d8d28"
+            ]
+        ]
+    },
+    {
+        "id": "f1415192342d8d28",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Full Reset Handler",
+        "func": "['n_good', 'n_scrap', 'package_counter', 'pallet_counter'].forEach(k => global.set(k, 0));\nglobal.set('ready_pallets', 10);\nglobal.set('loaded_pallets', 0);\nglobal.set('energy_load_kwh', 0);\nglobal.set('energy_pallet_kwh', 0);\nglobal.set('energy_robot_kwh', 0);\n['q_load_out', 'q_pallet_out', 'q_robot_out', 'q_camera_out', 'q_watch_out'].forEach(k => global.set(k, []));\n['lock_load', 'lock_loadpallet', 'lock_robot', 'lock_camera', 'lock_watch', 'lock_label'].forEach(k => global.set(k, false));\n['status_load', 'status_loadpallet', 'status_robot', 'status_camera', 'status_watch', 'status_label'].forEach(k => global.set(k, 'idle'));\n['ts_blocked_load', 'ts_blocked_robot', 'ts_starving_robot'].forEach(k => global.set(k, null));\nlet cfg = global.get('config') || {}; cfg.ready_packages = 500; global.set('config', cfg);\nnode.warn('🔁 Full reset');\nmsg.payload = { success: true, message: 'Full reset.', ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 365,
+        "y": 2180,
+        "wires": [
+            [
+                "87cbbf89608920c1"
+            ]
+        ]
+    },
+    {
+        "id": "87cbbf89608920c1",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 615,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "c501c2269fcc0c80",
+        "type": "link out",
+        "z": "fa8472568da2935d",
+        "name": "robot_timeout",
+        "mode": "link",
+        "links": [
+            "fe41c277e45f379e"
+        ],
+        "x": 555,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "fe41c277e45f379e",
+        "type": "link in",
+        "z": "fa8472568da2935d",
+        "name": "robot_timein",
+        "links": [
+            "c501c2269fcc0c80"
+        ],
+        "x": 285,
+        "y": 640,
+        "wires": [
+            [
+                "6e733a421eea443b"
+            ]
+        ]
+    },
+    {
+        "id": "a645bcc84661b905",
+        "type": "link out",
+        "z": "fa8472568da2935d",
+        "name": "package_timeout",
+        "mode": "link",
+        "links": [
+            "249542df022114e5"
+        ],
+        "x": 595,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "249542df022114e5",
+        "type": "link in",
+        "z": "fa8472568da2935d",
+        "name": "package_timein",
+        "links": [
+            "a645bcc84661b905"
+        ],
+        "x": 295,
+        "y": 460,
+        "wires": [
+            [
+                "2f641832a4de12d0"
+            ]
+        ]
+    },
+    {
+        "id": "bd0982962499f5ca",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "/POST APIs with message {\"speed\": n}, 0 < n < 20",
+        "info": "",
+        "x": 250,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "9ed5739351848421",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /load/speed",
+        "url": "/load/speed",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 2320,
+        "wires": [
+            [
+                "879ace20f6337bc7"
+            ]
+        ]
+    },
+    {
+        "id": "879ace20f6337bc7",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Set Package Loader Speed",
+        "func": "const speed = parseFloat((msg.payload || {}).speed);\nif (isNaN(speed) || speed < 1 || speed > 20) {\n    msg.payload = { success: false, error: 'speed must be 1-20' }; msg.statusCode = 400; return msg;\n}\nlet cfg = global.get('config') || {};\ncfg.load_speed = speed;\nglobal.set('config', cfg);\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst intMs   = Math.round(60000 / speed);\nnode.warn('📦 load_speed=' + speed + ' interval=' + intMs + 'ms');\nmsg.payload = { success: true, load_speed: speed, package_load_interval_ms: intMs, duration_ms_in_eventlog: intMs, note: 'Takes effect on next cycle', ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 2320,
+        "wires": [
+            [
+                "06bdebeacc09c734"
+            ]
+        ]
+    },
+    {
+        "id": "06bdebeacc09c734",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 690,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "5bae9b3322608d04",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "⏱ Pallet Self-Timer",
+        "func": "const cfg         = global.get('config') || {};\nconst palletSpeed = Math.max(0.1, cfg.pallet_speed || 3);\nconst intervalMs  = Math.round(60000 / palletSpeed);\n\nawait new Promise(r => setTimeout(r, intervalMs));\n\nnode.send([{ payload: Date.now() }, null]);\nnode.send([null, { payload: {\n    machine:      'PalletTimer',\n    pallet_speed: palletSpeed,\n    interval_ms:  intervalMs,\n    ts:           new Date().toISOString()\n}}]);\nreturn null;",
+        "outputs": 2,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 1500,
+        "wires": [
+            [
+                "8c045396edd8ccbd",
+                "66bf8d35259e39a8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "66bf8d35259e39a8",
+        "type": "link out",
+        "z": "fa8472568da2935d",
+        "name": "pallet_timeout",
+        "mode": "link",
+        "links": [
+            "f386ab0db16603e4"
+        ],
+        "x": 595,
+        "y": 1470,
+        "wires": []
+    },
+    {
+        "id": "f386ab0db16603e4",
+        "type": "link in",
+        "z": "fa8472568da2935d",
+        "name": "pallet_timein",
+        "links": [
+            "66bf8d35259e39a8"
+        ],
+        "x": 285,
+        "y": 1550,
+        "wires": [
+            [
+                "5bae9b3322608d04"
+            ]
+        ]
+    },
+    {
+        "id": "4fa459ebe43a2a6f",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /packages/refill",
+        "url": "/packages/refill",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 2120,
+        "wires": [
+            [
+                "d0ee7042e499fabf"
+            ]
+        ]
+    },
+    {
+        "id": "d0ee7042e499fabf",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Pallet Refill Handler",
+        "func": "const amount = parseInt((msg.payload || {}).amount) || 200;\nlet rp = (global.get('ready_packages') || 0) + amount;\nglobal.set('ready_packages', rp);\nnode.warn('🔄 +' + amount + ' packages → ready_packages: ' + rp);\nmsg.payload = { success: true, added: amount, ready_pallets: rp, ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 405,
+        "y": 2120,
+        "wires": [
+            [
+                "5b69922a0d29070b"
+            ]
+        ]
+    },
+    {
+        "id": "5b69922a0d29070b",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 665,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "0947d56e8ac6e479",
+        "type": "http in",
+        "z": "fa8472568da2935d",
+        "name": "POST /pallet/speed",
+        "url": "/pallet/speed",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 2360,
+        "wires": [
+            [
+                "58d4433ef67d7876"
+            ]
+        ]
+    },
+    {
+        "id": "58d4433ef67d7876",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Set Pallet Loader Speed",
+        "func": "const speed = parseFloat((msg.payload || {}).speed);\nif (isNaN(speed) || speed < 1 || speed > 20) {\n    msg.payload = { success: false, error: 'speed must be 1-20' }; msg.statusCode = 400; return msg;\n}\nlet cfg = global.get('config') || {};\ncfg.pallet_speed = speed;\nglobal.set('config', cfg);\nconst minQ = 0.90, maxQuality = 0.99, midSpeed = 10, steepness = 0.3;\nconst intMs   = Math.round(60000 / speed);\nnode.warn('pallet_speed=' + speed + ' interval=' + intMs + 'ms');\nmsg.payload = { success: true, pallet_speed: speed, pallet_load_interval_ms: intMs, duration_ms_in_eventlog: intMs, note: 'Takes effect on next cycle', ts: new Date().toISOString() };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 2360,
+        "wires": [
+            [
+                "1a76b1681286c3fb"
+            ]
+        ]
+    },
+    {
+        "id": "1a76b1681286c3fb",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 690,
+        "y": 2360,
+        "wires": []
+    },
+    {
+        "id": "3d484fbc750c2f02",
+        "type": "http response",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "statusCode": "",
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "x": 680,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "afb05fa33a2ddbeb",
+        "type": "comment",
+        "z": "fa8472568da2935d",
+        "name": "Robot Cycle Speed ================",
+        "info": "",
+        "x": 220,
+        "y": 2460,
+        "wires": []
+    },
+    {
+        "id": "e001da02a8fde4b2",
+        "type": "inject",
+        "z": "fa8472568da2935d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 2540,
+        "wires": [
+            [
+                "84da38336eeee480"
+            ]
+        ]
+    },
+    {
+        "id": "84da38336eeee480",
+        "type": "function",
+        "z": "fa8472568da2935d",
+        "name": "Cycle Speeds",
+        "func": "\nlet cfg = global.get('config') || {};\nconst robot_speed = cfg.robot_speed;\n\nfunction randomIntFromInterval(min, max) { // min and max included \n  return Math.floor(Math.random() * (max - min + 1) + min);\n}\n\nvar new_speed = randomIntFromInterval(1, 20);\n\nreturn {payload: {speed: new_speed}}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 2540,
+        "wires": [
+            [
+                "e1f0b9c2cfa8ad50"
+            ]
+        ]
+    },
+    {
+        "id": "6424ccc78ef6db2e",
+        "type": "http request",
+        "z": "fa8472568da2935d",
+        "name": "POST Robot Speed",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://nodered.sicuro.duckdns.org/robot/speed",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 570,
+        "y": 2500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3433b208cd77ffbd",
+        "type": "http request",
+        "z": "fa8472568da2935d",
+        "name": "POST Charger Speed",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://nodered.sicuro.duckdns.org/load/speed",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 580,
+        "y": 2540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e1f0b9c2cfa8ad50",
+        "type": "http request",
+        "z": "fa8472568da2935d",
+        "name": "POST Pallet Speed",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://nodered.sicuro.duckdns.org/pallet/speed",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 570,
+        "y": 2580,
+        "wires": [
+            []
+        ]
+    }
+]
