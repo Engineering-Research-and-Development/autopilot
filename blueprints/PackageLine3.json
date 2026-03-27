@@ -8,69 +8,13 @@
         "globalAssetId": "urn:factory-b:phase3:asset:packaging-line"
       },
       "submodels": [
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:load-package"
-            }
-          ]
-        },
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:robot"
-            }
-          ]
-        },
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:camera"
-            }
-          ]
-        },
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:smartwatch"
-            }
-          ]
-        },
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:labeler"
-            }
-          ]
-        },
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:scrap-area"
-            }
-          ]
-        },
-        {
-          "type": "ModelReference",
-          "keys": [
-            {
-              "type": "Submodel",
-              "value": "urn:factory-b:phase3:submodel:pick-area"
-            }
-          ]
-        }
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:load-package" } ] },
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:robot" } ] },
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:camera" } ] },
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:smartwatch" } ] },
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:labeler" } ] },
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:scrap-area" } ] },
+        { "type": "ModelReference", "keys": [ { "type": "Submodel", "value": "urn:factory-b:phase3:submodel:pick-area" } ] }
       ],
       "modelType": "AssetAdministrationShell"
     }
@@ -81,99 +25,24 @@
       "id": "urn:factory-b:phase3:submodel:load-package",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "PackageChargerSpeed",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:speed"
-              }
-            ]
-          },
-          "valueType": "xs:integer",
-          "value": "0",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "MachineStatus",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:machine-status"
-              }
-            ]
-          },
-          "valueType": "xs:string",
-          "value": "Operative",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "ChargerSpeed", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:charger-speed" } ] }, "valueType": "xs:integer", "value": "0", "modelType": "Property" },
+        { "idShort": "MachineStatus", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine-status" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "PowerKw", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:power-kw" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "EnergyKwh", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:energy-kwh" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "TotalEnergyLoadKwh", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:total-energy-load-kwh" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "ConsumptionNote", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:consumption-note" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "LoadPackage",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -185,144 +54,27 @@
       "id": "urn:factory-b:phase3:submodel:robot",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "RobotSpeed",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:speed"
-              }
-            ]
-          },
-          "valueType": "xs:integer",
-          "value": "0",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "MaxLoadablePallet",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:count"
-              }
-            ]
-          },
-          "valueType": "xs:integer",
-          "value": "0",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "ReadyPallets",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:count"
-              }
-            ]
-          },
-          "valueType": "xs:integer",
-          "value": "0",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "MachineStatus",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:machine-status"
-              }
-            ]
-          },
-          "valueType": "xs:string",
-          "value": "Operative",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "ProducedQuality",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:percentage"
-              }
-            ]
-          },
-          "valueType": "xs:double",
-          "value": "100.0",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "RobotSpeed", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:robot-speed" } ] }, "valueType": "xs:integer", "value": "0", "modelType": "Property" },
+        { "idShort": "ProducedQualityPct", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:produced-quality-pct" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "PalletId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:pallet-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "ReadyPallets", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ready-pallets" } ] }, "valueType": "xs:integer", "value": "0", "modelType": "Property" },
+        { "idShort": "ReadyPackages", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ready-packages" } ] }, "valueType": "xs:integer", "value": "0", "modelType": "Property" },
+        { "idShort": "PowerKw", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:power-kw" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "EnergyKwh", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:energy-kwh" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "TotalEnergyRobotKwh", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:total-energy-robot-kwh" } ] }, "valueType": "xs:double", "value": "0.0", "modelType": "Property" },
+        { "idShort": "ConsumptionNote", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:consumption-note" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "RobotPackaging",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -334,114 +86,19 @@
       "id": "urn:factory-b:phase3:submodel:camera",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "MachineStatus",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:machine-status"
-              }
-            ]
-          },
-          "valueType": "xs:string",
-          "value": "Operative",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "CameraSensitivity",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:sensitivity"
-              }
-            ]
-          },
-          "valueType": "xs:double",
-          "value": "1.0",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "QualityOk",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:boolean-flag"
-              }
-            ]
-          },
-          "valueType": "xs:boolean",
-          "value": "true",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "QualityOk", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:quality-ok" } ] }, "valueType": "xs:boolean", "value": "false", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "CameraInspection",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -453,99 +110,19 @@
       "id": "urn:factory-b:phase3:submodel:smartwatch",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "MachineStatus",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:machine-status"
-              }
-            ]
-          },
-          "valueType": "xs:string",
-          "value": "Operative",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "QualityOk",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:boolean-flag"
-              }
-            ]
-          },
-          "valueType": "xs:boolean",
-          "value": "true",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "QualityOk", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:quality-ok" } ] }, "valueType": "xs:boolean", "value": "false", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "SmartwatchInspection",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -557,99 +134,20 @@
       "id": "urn:factory-b:phase3:submodel:labeler",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "MachineStatus",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:machine-status"
-              }
-            ]
-          },
-          "valueType": "xs:string",
-          "value": "Operative",
-          "modelType": "Property"
-        },
-        {
-          "idShort": "QualityOk",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:boolean-flag"
-              }
-            ]
-          },
-          "valueType": "xs:boolean",
-          "value": "true",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "QualityOk", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:quality-ok" } ] }, "valueType": "xs:boolean", "value": "false", "modelType": "Property" },
+        { "idShort": "Outcome", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:outcome" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "ApplyVerifyLabel",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -661,84 +159,21 @@
       "id": "urn:factory-b:phase3:submodel:scrap-area",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "ScrapCount",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:count"
-              }
-            ]
-          },
-          "valueType": "xs:integer",
-          "value": "0",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "NScrap", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:n-scrap" } ] }, "valueType": "xs:integer", "value": "0", "modelType": "Property" },
+        { "idShort": "ScrapReason", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:scrap-reason" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "Outcome", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:outcome" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "RouteToScrap",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -750,84 +185,20 @@
       "id": "urn:factory-b:phase3:submodel:pick-area",
       "kind": "Instance",
       "submodelElements": [
-        {
-          "idShort": "GoodCount",
-          "semanticId": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "urn:factory-b:concept:count"
-              }
-            ]
-          },
-          "valueType": "xs:integer",
-          "value": "0",
-          "modelType": "Property"
-        },
+        { "idShort": "Topic", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:topic" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "TimestampMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:timestamp-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" },
+        { "idShort": "PublishedAt", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:published-at" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+        { "idShort": "Machine", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:machine" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+        { "idShort": "NGood", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:n-good" } ] }, "valueType": "xs:integer", "value": "0", "modelType": "Property" },
+        { "idShort": "Outcome", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:outcome" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
         {
           "idShort": "ProcessEventLog",
           "value": [
-            {
-              "idShort": "TimestampStart",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:52:42Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "TimestampEnd",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:timestamp"
-                  }
-                ]
-              },
-              "valueType": "xs:dateTime",
-              "value": "2026-02-19T11:53:00Z",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "ActivityName",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:activity-name"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "RouteToPick",
-              "modelType": "Property"
-            },
-            {
-              "idShort": "CaseId",
-              "semanticId": {
-                "type": "ExternalReference",
-                "keys": [
-                  {
-                    "type": "GlobalReference",
-                    "value": "urn:factory-b:concept:case-id"
-                  }
-                ]
-              },
-              "valueType": "xs:string",
-              "value": "Pallet_001",
-              "modelType": "Property"
-            }
+            { "idShort": "CaseId", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:case-id" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "Activity", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:activity" } ] }, "valueType": "xs:string", "value": "", "modelType": "Property" },
+            { "idShort": "TsStart", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-start" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "TsEnd", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:ts-end" } ] }, "valueType": "xs:dateTime", "value": "1970-01-01T00:00:00Z", "modelType": "Property" },
+            { "idShort": "DurationMs", "semanticId": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "urn:factory-b:concept:duration-ms" } ] }, "valueType": "xs:long", "value": "0", "modelType": "Property" }
           ],
           "modelType": "SubmodelElementCollection"
         }
@@ -837,273 +208,45 @@
   ],
   "conceptDescriptions": [
     {
-      "idShort": "MachineStatus",
-      "id": "urn:factory-b:concept:machine-status",
+      "idShort": "Topic",
+      "id": "urn:factory-b:concept:topic",
       "embeddedDataSpecifications": [
         {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Machine Status"
-              }
-            ],
-            "dataType": "STRING",
-            "definition": [
-              {
-                "language": "en",
-                "text": "Current operational state of the machine (e.g., Operative, Stopped)"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Topic" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Message broker topic destination" } ], "modelType": "DataSpecificationIec61360" }
         }
       ],
       "modelType": "ConceptDescription"
     },
     {
-      "idShort": "Speed",
-      "id": "urn:factory-b:concept:speed",
+      "idShort": "TimestampMs",
+      "id": "urn:factory-b:concept:timestamp-ms",
       "embeddedDataSpecifications": [
         {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Operational Speed"
-              }
-            ],
-            "dataType": "INTEGER_MEASURE",
-            "definition": [
-              {
-                "language": "en",
-                "text": "Processing speed measured in units per minute"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Timestamp (ms)" } ], "dataType": "INTEGER_MEASURE", "definition": [ { "language": "en", "text": "Epoch timestamp in milliseconds" } ], "modelType": "DataSpecificationIec61360" }
         }
       ],
       "modelType": "ConceptDescription"
     },
     {
-      "idShort": "Count",
-      "id": "urn:factory-b:concept:count",
+      "idShort": "PublishedAt",
+      "id": "urn:factory-b:concept:published-at",
       "embeddedDataSpecifications": [
         {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Item Count"
-              }
-            ],
-            "dataType": "INTEGER_COUNT",
-            "definition": [
-              {
-                "language": "en",
-                "text": "Generic counter for tracking quantity of items (e.g., pallets, scrap, goods)"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Published At" } ], "dataType": "TIMESTAMP", "definition": [ { "language": "en", "text": "ISO 8601 publication datetime" } ], "modelType": "DataSpecificationIec61360" }
         }
       ],
       "modelType": "ConceptDescription"
     },
     {
-      "idShort": "Percentage",
-      "id": "urn:factory-b:concept:percentage",
+      "idShort": "Machine",
+      "id": "urn:factory-b:concept:machine",
       "embeddedDataSpecifications": [
         {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Percentage Value"
-              }
-            ],
-            "dataType": "REAL_MEASURE",
-            "definition": [
-              {
-                "language": "en",
-                "text": "A value representing a proportion out of 100"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
-        }
-      ],
-      "modelType": "ConceptDescription"
-    },
-    {
-      "idShort": "BooleanFlag",
-      "id": "urn:factory-b:concept:boolean-flag",
-      "embeddedDataSpecifications": [
-        {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Boolean Indicator"
-              }
-            ],
-            "dataType": "BOOLEAN",
-            "definition": [
-              {
-                "language": "en",
-                "text": "True/False flag for status checks like Quality Ok"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
-        }
-      ],
-      "modelType": "ConceptDescription"
-    },
-    {
-      "idShort": "Sensitivity",
-      "id": "urn:factory-b:concept:sensitivity",
-      "embeddedDataSpecifications": [
-        {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Sensor Sensitivity"
-              }
-            ],
-            "dataType": "REAL_MEASURE",
-            "definition": [
-              {
-                "language": "en",
-                "text": "Multiplier or setpoint for vision/QC sensor detection sensitivity"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
-        }
-      ],
-      "modelType": "ConceptDescription"
-    },
-    {
-      "idShort": "Timestamp",
-      "id": "urn:factory-b:concept:timestamp",
-      "embeddedDataSpecifications": [
-        {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Event Timestamp"
-              }
-            ],
-            "dataType": "TIMESTAMP",
-            "definition": [
-              {
-                "language": "en",
-                "text": "Date and time marking the occurrence of a process event"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
-        }
-      ],
-      "modelType": "ConceptDescription"
-    },
-    {
-      "idShort": "ActivityName",
-      "id": "urn:factory-b:concept:activity-name",
-      "embeddedDataSpecifications": [
-        {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Process Activity Name"
-              }
-            ],
-            "dataType": "STRING",
-            "definition": [
-              {
-                "language": "en",
-                "text": "The standard name of the activity currently being executed in the process model"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Machine" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Target machine identifier" } ], "modelType": "DataSpecificationIec61360" }
         }
       ],
       "modelType": "ConceptDescription"
@@ -1113,34 +256,241 @@
       "id": "urn:factory-b:concept:case-id",
       "embeddedDataSpecifications": [
         {
-          "dataSpecification": {
-            "type": "ExternalReference",
-            "keys": [
-              {
-                "type": "GlobalReference",
-                "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
-              }
-            ]
-          },
-          "dataSpecificationContent": {
-            "preferredName": [
-              {
-                "language": "en",
-                "text": "Process Case ID"
-              }
-            ],
-            "dataType": "STRING",
-            "definition": [
-              {
-                "language": "en",
-                "text": "Unique identifier for the specific production batch or entity flowing through the process"
-              }
-            ],
-            "modelType": "DataSpecificationIec61360"
-          }
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Process Case ID" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Unique identifier for the production entity" } ], "modelType": "DataSpecificationIec61360" }
         }
       ],
       "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Activity",
+      "id": "urn:factory-b:concept:activity",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Activity" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Name of the process mining activity" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "TsStart",
+      "id": "urn:factory-b:concept:ts-start",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Start Timestamp" } ], "dataType": "TIMESTAMP", "definition": [ { "language": "en", "text": "Event start time" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "TsEnd",
+      "id": "urn:factory-b:concept:ts-end",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "End Timestamp" } ], "dataType": "TIMESTAMP", "definition": [ { "language": "en", "text": "Event end time" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "DurationMs",
+      "id": "urn:factory-b:concept:duration-ms",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Duration (ms)" } ], "dataType": "INTEGER_MEASURE", "definition": [ { "language": "en", "text": "Total duration in milliseconds" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "QualityOk",
+      "id": "urn:factory-b:concept:quality-ok",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Quality Ok" } ], "dataType": "BOOLEAN", "definition": [ { "language": "en", "text": "Boolean flag for successful quality check" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Outcome",
+      "id": "urn:factory-b:concept:outcome",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Outcome" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Process operation result description" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "MachineStatus",
+      "id": "urn:factory-b:concept:machine-status",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Machine Status" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Current operational state of the machine" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ChargerSpeed",
+      "id": "urn:factory-b:concept:charger-speed",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Charger Speed" } ], "dataType": "INTEGER_MEASURE", "definition": [ { "language": "en", "text": "Operating speed of the package charger" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "PowerKw",
+      "id": "urn:factory-b:concept:power-kw",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Power (kW)" } ], "dataType": "REAL_MEASURE", "definition": [ { "language": "en", "text": "Instantaneous active power in kilowatts" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "EnergyKwh",
+      "id": "urn:factory-b:concept:energy-kwh",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Energy (kWh)" } ], "dataType": "REAL_MEASURE", "definition": [ { "language": "en", "text": "Energy consumed during the cycle in kWh" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "TotalEnergyLoadKwh",
+      "id": "urn:factory-b:concept:total-energy-load-kwh",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Total Energy Load (kWh)" } ], "dataType": "REAL_MEASURE", "definition": [ { "language": "en", "text": "Cumulative energy for the package loader" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "TotalEnergyRobotKwh",
+      "id": "urn:factory-b:concept:total-energy-robot-kwh",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Total Energy Robot (kWh)" } ], "dataType": "REAL_MEASURE", "definition": [ { "language": "en", "text": "Cumulative energy for the robot" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ConsumptionNote",
+      "id": "urn:factory-b:concept:consumption-note",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Consumption Note" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Contextual note regarding energy consumption" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "NGood",
+      "id": "urn:factory-b:concept:n-good",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Number of Good Pieces" } ], "dataType": "INTEGER_COUNT", "definition": [ { "language": "en", "text": "Count of successfully processed and picked pieces" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "NScrap",
+      "id": "urn:factory-b:concept:n-scrap",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Number of Scraps" } ], "dataType": "INTEGER_COUNT", "definition": [ { "language": "en", "text": "Count of discarded/scrapped pieces" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ScrapReason",
+      "id": "urn:factory-b:concept:scrap-reason",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Scrap Reason" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "The operational failure mode leading to the scrap" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "RobotSpeed",
+      "id": "urn:factory-b:concept:robot-speed",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Robot Speed" } ], "dataType": "INTEGER_MEASURE", "definition": [ { "language": "en", "text": "Speed setting of the robotic packaging arm" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ProducedQualityPct",
+      "id": "urn:factory-b:concept:produced-quality-pct",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Produced Quality (%)" } ], "dataType": "REAL_MEASURE", "definition": [ { "language": "en", "text": "Percentage metric defining packaging quality relative to speed" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "PalletId",
+      "id": "urn:factory-b:concept:pallet-id",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Pallet ID" } ], "dataType": "STRING", "definition": [ { "language": "en", "text": "Unique identifier of the currently processed pallet" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ReadyPallets",
+      "id": "urn:factory-b:concept:ready-pallets",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Ready Pallets" } ], "dataType": "INTEGER_COUNT", "definition": [ { "language": "en", "text": "Count of empty/available pallets ready for packaging" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ReadyPackages",
+      "id": "urn:factory-b:concept:ready-packages",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": { "type": "ExternalReference", "keys": [ { "type": "GlobalReference", "value": "http://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0" } ] },
+          "dataSpecificationContent": { "preferredName": [ { "language": "en", "text": "Ready Packages" } ], "dataType": "INTEGER_COUNT", "definition": [ { "language": "en", "text": "Count of items loaded and ready to be processed by the robot" } ], "modelType": "DataSpecificationIec61360" }
+        }
+      ]
     }
   ]
 }
