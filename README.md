@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/imgs/logo.jpg" alt="AutoPilot Logo" width="250">
+  <img src="./docs/imgs/logo.png" alt="AutoPilot Logo" width="250">
 </p>
 
 ---
