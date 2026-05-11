@@ -131,14 +131,13 @@ Labeler
 Good Area / Scrap Area
 ```
 
-<img width="2487" height="1373" alt="image" src="https://github.com/user-attachments/assets/eeb48860-3c5b-45ff-996d-071e07266e63" />
-
-
 The Node-RED flow simulates a smart industrial packaging line where packages and pallets move through multiple sequential processing stages connected by queues. The simulation starts with package and pallet loaders that periodically generate new items based on configurable production speeds while tracking energy consumption and machine status. A robot stage combines packages and pallets into packaged products, with production speed directly affecting product quality through a probabilistic quality model. The produced items then pass through three consecutive inspection stages - camera inspection, smartwatch inspection, and label verification - each capable of rejecting defective products and routing them to a scrap area. Successfully validated products are sent to the good area. During the process, the system continuously manages queue capacities, detects blocking and starvation conditions, automatically unlocks stalled machines, logs detailed event data for each operation, and maintains production KPIs such as good products, scrap count, energy usage, pallet utilization, and machine states, effectively behaving as a discrete-event digital twin of a real packaging production line.
 
----
+
+<img width="2487" height="1373" alt="image" src="https://github.com/user-attachments/assets/eeb48860-3c5b-45ff-996d-071e07266e63" />
 
 ---
+
 
 #### Industrial Simulation Characteristics
 
@@ -192,7 +191,7 @@ On deploy, an inject node (`▶ Init on Deploy`) fires once after a 0.5 s delay 
 
 A separate `⏱ Watchdog (3s)` inject runs every 3 seconds and feeds `🔓 Auto-Unlock Watchdog`, which checks each locked machine's output queue against `max_queue_size`. Any machine whose queue has drained below the threshold is automatically unlocked and its block timestamp cleared, preventing indefinite deadlocks without operator intervention.
 
----
+
 
 #### Stage 1.A: Pallet
 
@@ -202,7 +201,7 @@ The core logic node (`🪤 Load Pallets Logic`) runs on every timer tick and pro
 
 Event log topic: `load-pallets`. Key attributes: `pallet_speed`, `ready_pallets`, `machine_status`, `power_kw`, `energy_kwh`, `total_energy_pallet_kwh`.
 
----
+
 
 #### Stage 1.B: Package
 
@@ -212,7 +211,7 @@ The logic node applies the same blocking and starvation guards as Stage 1.A. Whe
 
 Event log topic: `load-package`. Key attributes: `remaining_packages`, `charger_speed`, `machine_status`, `power_kw`, `energy_kwh`, `total_energy_load_kwh`.
 
----
+
 
 #### Stage 2: Robot
 
@@ -224,7 +223,7 @@ The quality model is: `quality = 0.90 + (0.99 − 0.90) / (1 + exp(0.3 × (speed
 
 Event log topic: `robot`. Key attributes: `robot_speed`, `machine_status`, `produced_quality_pct`, `pallet_id`, `ready_pallets`, `ready_packages`, `prepared_packages`, `power_kw`, `energy_kwh`, `total_energy_robot_kwh`.
 
----
+
 
 #### Stage 3: Camera
 
@@ -234,7 +233,6 @@ The quality gate is probabilistic: `Math.random() < (pkg.robot_quality_pct / 100
 
 Event log topic: `camera`. Key attributes: `quality_ok`.
 
----
 
 #### Stage 4: Smartwatch
 
@@ -244,7 +242,6 @@ Products failing here are routed to the Scrap Area with `scrap_reason: "smartwat
 
 Event log topic: `smartwatch`. Key attributes: `quality_ok`.
 
----
 
 #### Stage 5: Labeler
 
@@ -254,7 +251,6 @@ Regardless of outcome, `loaded_pallets` is decremented here (freeing the pallet 
 
 Event log topic: `labeler`. Key attributes: `quality_ok`, `outcome`.
 
----
 
 #### Stage 6.A: Good
 
@@ -262,7 +258,7 @@ The Good Area (`✅ Good Area`) is the terminal stage for accepted products. It 
 
 Event log topic: `pick-area`. Key attributes: `n_good`, `outcome: "good"`.
 
----
+
 
 #### Stage 6.B: Scrap
 
@@ -270,6 +266,7 @@ The Scrap Area (`🗑️ Scrap Area`) collects rejected products from any of the
 
 Event log topic: `scrap-area`. Key attributes: `n_scrap`, `scrap_reason`, `outcome: "scrap"`.
 
+---
 
 
 ### Analysis Flow
