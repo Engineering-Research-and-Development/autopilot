@@ -118,7 +118,7 @@ The core of the flow simulates a manufacturing pipeline.
 The stages are:
 
 ```text
-Load Package + Load Pallet
+Load Package / Load Pallet
     ↓
 Robot Processing
     ↓
@@ -131,7 +131,8 @@ Labeler
 Good Area / Scrap Area
 ```
 
-[INSERT UI IMAGE]
+<img width="2487" height="1373" alt="image" src="https://github.com/user-attachments/assets/eeb48860-3c5b-45ff-996d-071e07266e63" />
+
 
 The Node-RED flow simulates a smart industrial packaging line where packages and pallets move through multiple sequential processing stages connected by queues. The simulation starts with package and pallet loaders that periodically generate new items based on configurable production speeds while tracking energy consumption and machine status. A robot stage combines packages and pallets into packaged products, with production speed directly affecting product quality through a probabilistic quality model. The produced items then pass through three consecutive inspection stages - camera inspection, smartwatch inspection, and label verification - each capable of rejecting defective products and routing them to a scrap area. Successfully validated products are sent to the good area. During the process, the system continuously manages queue capacities, detects blocking and starvation conditions, automatically unlocks stalled machines, logs detailed event data for each operation, and maintains production KPIs such as good products, scrap count, energy usage, pallet utilization, and machine states, effectively behaving as a discrete-event digital twin of a real packaging production line.
 
