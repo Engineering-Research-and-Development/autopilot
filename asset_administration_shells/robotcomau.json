@@ -1,0 +1,1625 @@
+{
+  "assetAdministrationShells": [
+    {
+      "modelType": "AssetAdministrationShell",
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "https://eng.it/product-description/CMU/R3"
+      },
+      "submodels": [
+        {
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://eng.it/shells/CMU/R3/submodels/nameplate"
+            }
+          ],
+          "type": "ModelReference"
+        },
+        {
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://eng.it/shells/CMU/R3/submodels/technicaldata"
+            }
+          ],
+          "type": "ModelReference"
+        },
+        {
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://eng.it/shells/CMU/R3/submodels/operationaldata"
+            }
+          ],
+          "type": "ModelReference"
+        }
+      ],
+      "id": "https://eng.it/shells/CMU/R3",
+      "idShort": "RobotComau"
+    }
+  ],
+  "conceptDescriptions": [
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "dataType": "INTEGER_MEASURE",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "AdditionalArmLoad"
+              }
+            ],
+            "unit": "kg"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/AdditionalArmLoad",
+      "description": [
+        {
+          "language": "en",
+          "text": "Extra load allowed on the robot’s forearm (non-wrist area) in kg."
+        }
+      ],
+      "idShort": "AdditionalArmLoad"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Weight"
+              }
+            ],
+            "unit": "kg"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/Weight",
+      "description": [
+        {
+          "language": "en",
+          "text": "Total weight of the robot."
+        }
+      ],
+      "idShort": "Weight"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "MountingPosition"
+              }
+            ]
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/MountingPosition",
+      "description": [
+        {
+          "language": "en",
+          "text": "Allowed mounting configurations (floor, ceiling, wall...)."
+        }
+      ],
+      "idShort": "MountingPosition"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "WorkspaceAreaA"
+              }
+            ],
+            "unit": "mm"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaA",
+      "description": [
+        {
+          "language": "en",
+          "text": "Dimension of operational zone A in mm."
+        }
+      ],
+      "idShort": "WorkspaceAreaA"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "WorkspaceAreaB"
+              }
+            ],
+            "unit": "mm"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaB",
+      "description": [
+        {
+          "language": "en",
+          "text": "Dimension of operational zone B in mm."
+        }
+      ],
+      "idShort": "WorkspaceAreaB"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "WorkspaceAreaC"
+              }
+            ],
+            "unit": "mm"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaC",
+      "description": [
+        {
+          "language": "en",
+          "text": "Dimension of operational zone C in mm."
+        }
+      ],
+      "idShort": "WorkspaceAreaC"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "WorkspaceAreaD"
+              }
+            ],
+            "unit": "mm"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaD",
+      "description": [
+        {
+          "language": "en",
+          "text": "Dimension of operational zone D in mm."
+        }
+      ],
+      "idShort": "WorkspaceAreaD"
+    },
+    {
+      "modelType": "ConceptDescription",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIec61360/3/0"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "WorkspaceAreaE"
+              }
+            ],
+            "unit": "mm"
+          }
+        }
+      ],
+      "id": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaE",
+      "description": [
+        {
+          "language": "en",
+          "text": "Dimension of operational zone E in mm."
+        }
+      ],
+      "idShort": "WorkspaceAreaE"
+    }
+  ],
+  "submodels": [
+    {
+      "modelType": "Submodel",
+      "kind": "Instance",
+      "semanticId": {
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/nameplate/3/0/Nameplate"
+          }
+        ],
+        "type": "ExternalReference"
+      },
+      "id": "https://eng.it/shells/CMU/R3/submodels/nameplate",
+      "description": [
+        {
+          "language": "en",
+          "text": "Contains the nameplate information attached to the product"
+        }
+      ],
+      "idShort": "Nameplate",
+      "submodelElements": [
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABN590#002"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-ABH173#003"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "unique global identification of the product instance using an universal resource identifier (URI)"
+            }
+          ],
+          "idShort": "URIOfTheProduct"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA950#008 "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAO227#004"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "unique combination of numbers and letters issued by the manufacturer that is used to identify the device for ordering"
+            }
+          ],
+          "idShort": "OrderCodeOfManufacturer"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA951#009 "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAM556#004"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "unique combination of numbers and letters used to identify the device once it has been manufactured"
+            }
+          ],
+          "idShort": "SerialNumber"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABP000#002 "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAP906#003"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "year in which the manufacturing process is completed"
+            }
+          ],
+          "idShort": "YearOfConstruction"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABP462#001 "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAO259#007"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "country where the product was manufactured accord. to DIN EN ISO 31661 alpha-2 codes"
+            }
+          ],
+          "idShort": "CountryOfOrigin"
+        },
+        {
+          "modelType": "MultiLanguageProperty",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA565#009 "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAO677#004"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "value": [
+            {
+              "language": "en",
+              "text": "required"
+            }
+          ],
+          "description": [
+            {
+              "language": "en",
+              "text": "legally valid designation of the natural or judicial person which is directly responsible for the design, production, packaging and labeling of a product in respect to its being brought into circulation"
+            }
+          ],
+          "idShort": "ManufacturerName"
+        },
+        {
+          "modelType": "MultiLanguageProperty",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA567#009"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAW338#003"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "value": [
+            {
+              "language": "en",
+              "text": "required"
+            }
+          ],
+          "description": [
+            {
+              "language": "en",
+              "text": "short description of the product (short text)"
+            }
+          ],
+          "idShort": "ManufacturerProductDesignation"
+        },
+        {
+          "modelType": "MultiLanguageProperty",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABP464#002 "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "0173-1#02-AAU731#003"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "value": [
+            {
+              "language": "en",
+              "text": "required"
+            }
+          ],
+          "description": [
+            {
+              "language": "en",
+              "text": "2nd level of a 3 level manufacturer specific product hierarchy"
+            }
+          ],
+          "idShort": "ManufacturerProductFamily"
+        },
+        {
+          "modelType": "SubmodelElementCollection",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://adminshell.io/zvei/nameplate/1/0/ContactInformations/AddressIn formation "
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "supplementalSemanticIds": [
+            {
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": " https://admin-shell.io/smtdropin/smt-dropin-use/1/0"
+                },
+                {
+                  "type": "GlobalReference",
+                  "value": "0112/2///61360_7#AAS002#001"
+                }
+              ],
+              "type": "ExternalReference"
+            }
+          ],
+          "description": [
+            {
+              "language": "en",
+              "text": "Collection for real physical address"
+            }
+          ],
+          "idShort": "AddressInformation",
+          "value": [
+            {
+              "modelType": "MultiLanguageProperty",
+              "semanticId": {
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AA0128#002"
+                  }
+                ],
+                "type": "ExternalReference"
+              },
+              "value": [
+                {
+                  "language": "en",
+                  "text": "required"
+                }
+              ],
+              "description": [
+                {
+                  "language": "en",
+                  "text": "Street name and house number"
+                }
+              ],
+              "idShort": "Street"
+            },
+            {
+              "modelType": "MultiLanguageProperty",
+              "semanticId": {
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AA0129#002"
+                  }
+                ],
+                "type": "ExternalReference"
+              },
+              "value": [
+                {
+                  "language": "en",
+                  "text": "required"
+                }
+              ],
+              "description": [
+                {
+                  "language": "en",
+                  "text": "PostalCode"
+                }
+              ],
+              "idShort": "Zipcode"
+            },
+            {
+              "modelType": "MultiLanguageProperty",
+              "semanticId": {
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AA0132#002"
+                  }
+                ],
+                "type": "ExternalReference"
+              },
+              "value": [
+                {
+                  "language": "en",
+                  "text": "required"
+                }
+              ],
+              "description": [
+                {
+                  "language": "en",
+                  "text": "Town or city of the company"
+                }
+              ],
+              "idShort": "CityTown"
+            },
+            {
+              "modelType": "MultiLanguageProperty",
+              "semanticId": {
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AA0134#002"
+                  }
+                ],
+                "type": "ExternalReference"
+              },
+              "value": [
+                {
+                  "language": "en",
+                  "text": "required"
+                }
+              ],
+              "description": [
+                {
+                  "language": "en",
+                  "text": "state/county accord. to DIN EN ISO 31661 alpha-2 codes"
+                }
+              ],
+              "idShort": "NationalCode"
+            }
+          ]
+        },
+        {
+          "modelType": "SubmodelElementList",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61360_7#AAS006#001"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "description": [
+            {
+              "language": "en",
+              "text": ": Element details: [SME type] idShort Note: CE marking is declared as mandatory according to EU Blue Guide"
+            }
+          ],
+          "idShort": "Markings",
+          "orderRelevant": true,
+          "typeValueListElement": "SubmodelElementCollection",
+          "value": [
+            {
+              "modelType": "SubmodelElementCollection",
+              "semanticId": {
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0112/2///61360_7#AAS009#001 "
+                  }
+                ],
+                "type": "ExternalReference"
+              },
+              "supplementalSemanticIds": [
+                {
+                  "keys": [
+                    {
+                      "type": "GlobalReference",
+                      "value": "0173-1#02-ABI564#003"
+                    },
+                    {
+                      "type": "GlobalReference",
+                      "value": "0173-1#01-AHF850#003"
+                    }
+                  ],
+                  "type": "ExternalReference"
+                }
+              ],
+              "description": [
+                {
+                  "language": "en",
+                  "text": "Single marking information "
+                }
+              ],
+              "idShort": "",
+              "value": [
+                {
+                  "modelType": "Property",
+                  "semanticId": {
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "0112/2///61987#ABA231#009 "
+                      }
+                    ],
+                    "type": "ExternalReference"
+                  },
+                  "supplementalSemanticIds": [
+                    {
+                      "keys": [
+                        {
+                          "type": "GlobalReference",
+                          "value": "0173-1#02-ABI190#003"
+                        }
+                      ],
+                      "type": "ExternalReference"
+                    }
+                  ],
+                  "value": "0112/2///61987#ABO409#003",
+                  "valueType": "xs:string",
+                  "description": [
+                    {
+                      "language": "en",
+                      "text": "common IRDI of the marking"
+                    }
+                  ],
+                  "idShort": "MarkingName"
+                },
+                {
+                  "modelType": "File",
+                  "contentType": "image/png",
+                  "value": "/aasx/Nameplate/marking_ce.png",
+                  "semanticId": {
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "0112/2///61987#ABO100#002 "
+                      }
+                    ],
+                    "type": "ExternalReference"
+                  },
+                  "supplementalSemanticIds": [
+                    {
+                      "keys": [
+                        {
+                          "type": "GlobalReference",
+                          "value": "0173-1#02-ABI191#003"
+                        }
+                      ],
+                      "type": "ExternalReference"
+                    }
+                  ],
+                  "description": [
+                    {
+                      "language": "en",
+                      "text": "conformity symbol of the marking"
+                    }
+                  ],
+                  "idShort": "MarkingFile"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "modelType": "Submodel",
+      "kind": "Instance",
+      "semanticId": {
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/custom/submodel/technicaldata/1/0"
+          }
+        ],
+        "type": "ExternalReference"
+      },
+      "id": "https://eng.it/shells/CMU/R3/submodels/technicaldata",
+      "idShort": "TechnicalData",
+      "submodelElements": [
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/AxesCount"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Total rotational/moving axes of the robot."
+            }
+          ],
+          "idShort": "AxesCount"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/MaxPayload"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum weight the robot’s wrist can carry in kg."
+            }
+          ],
+          "idShort": "MaxWristPayload"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/AdditionalArmLoad"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Extra load allowed on the robot’s forearm (non-wrist area) in kg."
+            }
+          ],
+          "idShort": "AdditionalArmLoad"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Reach"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum horizontal distance the robot can extend in mm."
+            }
+          ],
+          "idShort": "MaxHorizontalReach"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint4/Torque"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum torque supported by Joint 4 in Nm."
+            }
+          ],
+          "idShort": "TorqueJoint4"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint5/Torque"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum torque supported by Joint 5 in Nm."
+            }
+          ],
+          "idShort": "TorqueJoint5"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint6/Torque"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum torque supported by Joint 6 in Nm."
+            }
+          ],
+          "idShort": "TorqueJoint6"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint1/Stroke"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum angular/linear travel range of Joint 1 in degrees."
+            }
+          ],
+          "idShort": "StrokeJoint1"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint2/Stroke"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum angular/linear travel range of Joint 2 in degrees."
+            }
+          ],
+          "idShort": "StrokeJoint2"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint3/Stroke"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum angular/linear travel range of Joint 3 in degrees."
+            }
+          ],
+          "idShort": "StrokeJoint3"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint4/Stroke"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum angular/linear travel range of Joint 4 in degrees."
+            }
+          ],
+          "idShort": "StrokeJoint4"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint5/Stroke"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum angular/linear travel range of Joint 5 in degrees."
+            }
+          ],
+          "idShort": "StrokeJoint5"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Joint6/Stroke"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Maximum angular/linear travel range of Joint 6 in degrees."
+            }
+          ],
+          "idShort": "StrokeJoint6"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/Repeatability"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Positional accuracy of the robot (±mm)."
+            }
+          ],
+          "idShort": "Repeatability"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://iso.org/standard/9409.html"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "Mechanical interface standard for attaching tools (e.g., ISO 9409-1-A25)."
+            }
+          ],
+          "idShort": "ToolFlangeStandard"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "ConceptDescription",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/Weight"
+              }
+            ],
+            "type": "ModelReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Total weight of the robot."
+            }
+          ],
+          "idShort": "Weight"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://iec.ch/60529"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "Ingress protection level (e.g., IP54)."
+            }
+          ],
+          "idShort": "ProtectionRating"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "ConceptDescription",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/MountingPosition"
+              }
+            ],
+            "type": "ModelReference"
+          },
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "Allowed mounting configurations (floor, ceiling, wall...)."
+            }
+          ],
+          "idShort": "MountingPosition"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "ConceptDescription",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaA"
+              }
+            ],
+            "type": "ModelReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Dimension of operational zone A in mm."
+            }
+          ],
+          "idShort": "WorkspaceAreaA"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaB"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Dimension of operational zone B in mm."
+            }
+          ],
+          "idShort": "WorkspaceAreaB"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaC"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Dimension of operational zone C in mm."
+            }
+          ],
+          "idShort": "WorkspaceAreaC"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaD"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Dimension of operational zone D in mm."
+            }
+          ],
+          "idShort": "WorkspaceAreaD"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/custom/TechnicalData/1/0/Workspace/AreaE"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Dimension of operational zone E in mm."
+            }
+          ],
+          "idShort": "WorkspaceAreaE"
+        }
+      ]
+    },
+    {
+      "modelType": "Submodel",
+      "kind": "Instance",
+      "semanticId": {
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/custom/OperationalData/1/0"
+          }
+        ],
+        "type": "ExternalReference"
+      },
+      "id": "https://eng.it/shells/CMU/R3/submodels/operationaldata",
+      "idShort": "OperationalData",
+      "submodelElements": [
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/DI/1.1/DeviceStatus"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "operational state of the device (Idle, Ready, Running, Completed)."
+            }
+          ],
+          "idShort": "DeviceStatus"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0173-1#07-ADB876#006"
+              },
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Production/1.0/CurrentOrder"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:string",
+          "description": [
+            {
+              "language": "en",
+              "text": "tracks the currently running production order"
+            }
+          ],
+          "idShort": "CurrentProductionOrder"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0173-1#02-AAB058#006"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "value": "0",
+          "valueType": "xs:integer",
+          "description": [
+            {
+              "language": "en",
+              "text": "tracks the progress during the pick-and-place step"
+            }
+          ],
+          "idShort": "InsertsPlacedCount"
+        },
+        {
+          "modelType": "Property",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0173-1#02-AAB059#007"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "valueType": "xs:string",
+          "idShort": "TargetInsertsCount"
+        },
+        {
+          "modelType": "BasicEventElement",
+          "direction": "input",
+          "observed": {
+            "keys": [
+              {
+                "type": "Submodel",
+                "value": "https://eng.it/shells/CMU/R3/submodels/operationaldata"
+              },
+              {
+                "type": "Property",
+                "value": "CurrentProductionOrder"
+              }
+            ],
+            "type": "ModelReference"
+          },
+          "state": "off",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Production/1.0/OrderReceived"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "description": [
+            {
+              "language": "en",
+              "text": "notifies the arrival of a new production order"
+            }
+          ],
+          "idShort": "ProductionOrderReceived"
+        },
+        {
+          "modelType": "BasicEventElement",
+          "direction": "input",
+          "observed": {
+            "keys": [
+              {
+                "type": "Submodel",
+                "value": "https://eng.it/shells/CMU/R3/submodels/operationaldata"
+              },
+              {
+                "type": "Property",
+                "value": "DeviceStatus"
+              }
+            ],
+            "type": "ModelReference"
+          },
+          "state": "off",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Production/1.0/CycleCompleted"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "description": [
+            {
+              "language": "en",
+              "text": "notifies job cycle completion"
+            }
+          ],
+          "idShort": "CycleCompleted"
+        },
+        {
+          "modelType": "Operation",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Production/1.0/SetProductionOrder"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "inoutputVariables": [
+            {
+              "value": {
+                "modelType": "ReferenceElement",
+                "supplementalSemanticIds": [
+                  {
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "opc.tcp://robot-ip:4840/ns=2;s=Methods/ValidateAndSetOrder"
+                      }
+                    ],
+                    "type": "ExternalReference"
+                  }
+                ],
+                "idShort": "orderRef",
+                "value": {
+                  "keys": [
+                    {
+                      "type": "Submodel",
+                      "value": "https://eng.it/shells/CMU/R3/submodels/operationaldata"
+                    },
+                    {
+                      "type": "Property",
+                      "value": "CurrentProductionOrder"
+                    }
+                  ],
+                  "type": "ModelReference"
+                }
+              }
+            },
+            {
+              "value": {
+                "modelType": "ReferenceElement",
+                "idShort": "targetCountRef",
+                "value": {
+                  "keys": [
+                    {
+                      "type": "Submodel",
+                      "value": "https://eng.it/shells/CMU/R3/submodels/operationaldata"
+                    },
+                    {
+                      "type": "Property",
+                      "value": "TargetInsertsCount"
+                    }
+                  ],
+                  "type": "ModelReference"
+                }
+              }
+            }
+          ],
+          "description": [
+            {
+              "language": "en",
+              "text": "sets a new production order by updating currentProductionOrder"
+            }
+          ],
+          "idShort": "setProductionOrder"
+        },
+        {
+          "modelType": "Operation",
+          "semanticId": {
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://opcfoundation.org/UA/Robotics/1.0/StartTask"
+              }
+            ],
+            "type": "ExternalReference"
+          },
+          "inoutputVariables": [
+            {
+              "value": {
+                "modelType": "ReferenceElement",
+                "supplementalSemanticIds": [
+                  {
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "opc.tcp://robot-ip:4840/ns=2;s=Methods/ChangeStatus"
+                      }
+                    ],
+                    "type": "ExternalReference"
+                  }
+                ],
+                "idShort": "statusRef",
+                "value": {
+                  "keys": [
+                    {
+                      "type": "Submodel",
+                      "value": "https://eng.it/shells/CMU/R3/submodels/operationaldata"
+                    },
+                    {
+                      "type": "Property",
+                      "value": "DeviceStatus"
+                    }
+                  ],
+                  "type": "ModelReference"
+                }
+              }
+            }
+          ],
+          "description": [
+            {
+              "language": "en",
+              "text": "starts execution of the pick-and-place cycle for the current order."
+            }
+          ],
+          "idShort": "startCycle"
+        }
+      ]
+    }
+  ]
+}

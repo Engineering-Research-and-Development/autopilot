@@ -1,0 +1,896 @@
+{
+  "assetAdministrationShells": [
+    {
+      "idShort": "SensorComau",
+      "id": "https://example.com/ids/sm/8302_4181_2052_9803",
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "https://eng.it/aas/sensorComau",
+        "assetType": "Instance"
+      },
+      "submodels": [
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://eng.it/aas/sm/nameplate"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://eng.it/aas/sm/specification"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://eng.it/aas/sm/operationalData"
+            }
+          ]
+        }
+      ],
+      "modelType": "AssetAdministrationShell"
+    }
+  ],
+  "submodels": [
+    {
+      "idShort": "Nameplate",
+      "description": [
+        {
+          "language": "en",
+          "text": "Contains general information about a Comau sensor."
+        }
+      ],
+      "id": "https://eng.it/aas/sm/nameplate",
+      "kind": "Instance",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/zvei/nameplate/2/0/Nameplate"
+          }
+        ]
+      },
+      "submodelElements": [
+        {
+          "idShort": "Manufacturer",
+          "description": [
+            {
+              "language": "en",
+              "text": "Name of the manufacturer"
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0173-1#02-AAO677#002"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "Comau",
+          "modelType": "Property"
+        },
+        {
+          "category": "PARAMETER",
+          "idShort": "PhysicalAddress",
+          "value": [
+            {
+              "category": "PARAMETER",
+              "idShort": "CountryCode",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO259#004"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "StateCounty",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO133#002"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "CityTown",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO132#002"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "Zipcode",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO129#002"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "Street",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO128#002"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            }
+          ],
+          "modelType": "SubmodelElementCollection"
+        },
+        {
+          "idShort": "Model",
+          "description": [
+            {
+              "language": "en",
+              "text": "Code of the exact model"
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/sandbox/zvei/TimeSeriesData/Name/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "modelType": "Property"
+        },
+        {
+          "idShort": "ProductCode",
+          "description": [
+            {
+              "language": "en",
+              "text": "Product article number of manufacturer"
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0173-1#02-AAO676#003"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "modelType": "Property"
+        },
+        {
+          "idShort": "DeviceClass",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0173-1#02-AAU731#001"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "modelType": "Property"
+        }
+      ],
+      "modelType": "Submodel"
+    },
+    {
+      "idShort": "Specification",
+      "description": [
+        {
+          "language": "en",
+          "text": "Contains intrinsic capacities and static information"
+        }
+      ],
+      "id": "https://eng.it/aas/sm/specification",
+      "kind": "Instance",
+      "submodelElements": [
+        {
+          "idShort": "MeasurementCapabilities",
+          "description": [
+            {
+              "language": "en",
+              "text": "Specifies measurement ranges and capabilies of the sensor"
+            }
+          ],
+          "value": [
+            {
+              "idShort": "Temperature",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://eng.it/aas/cd/temperature"
+                  }
+                ]
+              },
+              "value": [
+                {
+                  "idShort": "Range",
+                  "description": [
+                    {
+                      "language": "en",
+                      "text": "Measurement range of temperature supported by the sensor"
+                    }
+                  ],
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://example.com/ids/cd/0375_3181_2052_7888"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property"
+                },
+                {
+                  "idShort": "Unit",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://eng.it/aas/cd/unit"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property"
+                },
+                {
+                  "idShort": "Accuracy",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://eng.it/aas/cd/accuracy"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property"
+                },
+                {
+                  "idShort": "SamplingRate",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://eng.it/aas/cd/samplingRate"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property"
+                }
+              ],
+              "modelType": "SubmodelElementCollection"
+            },
+            {
+              "idShort": "Pressure",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://eng.it/aas/cd/pressure"
+                  }
+                ]
+              },
+              "value": [
+                {
+                  "idShort": "Unit",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://eng.it/aas/cd/unit"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property"
+                }
+              ],
+              "modelType": "SubmodelElementCollection"
+            },
+            {
+              "idShort": "Vibration",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://eng.it/aas/cd/vibration"
+                  }
+                ]
+              },
+              "value": [
+                {
+                  "idShort": "Unit",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://eng.it/aas/cd/unit"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property"
+                }
+              ],
+              "modelType": "SubmodelElementCollection"
+            }
+          ],
+          "modelType": "SubmodelElementCollection"
+        },
+        {
+          "idShort": "Communication",
+          "value": [
+            {
+              "idShort": "Protocol",
+              "description": [
+                {
+                  "language": "en",
+                  "text": "Communcation protocol used"
+                }
+              ],
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://eng.it/aas/cd/protocol"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "DataRate",
+              "description": [
+                {
+                  "language": "en",
+                  "text": "Data transmission rate"
+                }
+              ],
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://eng.it/aas/cd/dataRate"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property"
+            }
+          ],
+          "modelType": "SubmodelElementCollection"
+        }
+      ],
+      "modelType": "Submodel"
+    },
+    {
+      "idShort": "OperationalData",
+      "id": "https://eng.it/aas/sm/operationalData",
+      "kind": "Instance",
+      "submodelElements": [
+        {
+          "idShort": "CurrentTemperature",
+          "description": [
+            {
+              "language": "en",
+              "text": "Current temperature value"
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://eng.it/aas/cd/temperature"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "modelType": "Property"
+        },
+        {
+          "idShort": "CurrentPressure",
+          "description": [
+            {
+              "language": "en",
+              "text": "Current pressure value"
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://eng.it/aas/cd/pressure"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "modelType": "Property"
+        },
+        {
+          "idShort": "CurrentVibration",
+          "description": [
+            {
+              "language": "en",
+              "text": "Current vibration value"
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://eng.it/aas/cd/vibration"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "modelType": "Property"
+        }
+      ],
+      "modelType": "Submodel"
+    }
+  ],
+  "conceptDescriptions": [
+    {
+      "idShort": "DeviceClass",
+      "id": "0173-1#02-AAU731#001",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Manufacturer product family"
+              }
+            ],
+            "dataType": "STRING",
+            "definition": [
+              {
+                "language": "en",
+                "text": "unique product family identifier of the manufacturer"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "ProductCode",
+      "description": [
+        {
+          "language": "en",
+          "text": "product article number of manufacturer"
+        }
+      ],
+      "id": "0173-1#02-AAO676#003",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "product article number of manufacturer"
+              }
+            ],
+            "dataType": "STRING",
+            "definition": [
+              {
+                "language": "en",
+                "text": "unique product identifier of the manufacturer"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Temperature",
+      "id": "https://eng.it/aas/cd/temperature",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Temperature"
+              }
+            ],
+            "unit": "\u00B0C",
+            "dataType": "REAL_MEASURE",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Temperature measurement got from mqtt broker"
+              }
+            ],
+            "valueFormat": "\u00B0C",
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Range",
+      "id": "https://eng.it/aas/cd/range",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Measurement range"
+              }
+            ],
+            "shortName": [
+              {
+                "language": "en",
+                "text": "Range"
+              }
+            ],
+            "dataType": "STRING",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Possible range values got from its technical documents"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Unit",
+      "id": "https://eng.it/aas/cd/unit",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Unit of measure"
+              }
+            ],
+            "shortName": [
+              {
+                "language": "en",
+                "text": "Unit"
+              }
+            ],
+            "dataType": "STRING",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Unit used for measurements got from technical documents"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Pressure",
+      "id": "https://eng.it/aas/cd/pressure",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Pressure"
+              }
+            ],
+            "unit": "Pa",
+            "dataType": "REAL_MEASURE",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Pressure measurement got from mqtt broker"
+              }
+            ],
+            "valueFormat": "Pa",
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Vibration",
+      "id": "https://eng.it/aas/cd/vibration",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Vibration"
+              }
+            ],
+            "unit": "Hz",
+            "dataType": "REAL_MEASURE",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Vibration measurement got from mqtt broker"
+              }
+            ],
+            "valueFormat": "Hz",
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "SamplingRate",
+      "id": "https://eng.it/aas/cd/samplingRate",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "SamplingRate"
+              }
+            ],
+            "dataType": "INTEGER_COUNT",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Sampling rate of the measurements got from its technical documents"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Protocol",
+      "id": "https://eng.it/aas/cd/protocol",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Communication protocol used"
+              }
+            ],
+            "dataType": "STRING",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Protocol used for communication purposes got from technical documents"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "DataRate",
+      "id": "https://eng.it/aas/cd/dataRate",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "DataRate"
+              }
+            ],
+            "dataType": "INTEGER_COUNT",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Data rate of the measurements got from its technical documents"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    },
+    {
+      "idShort": "Accuracy",
+      "id": "https://eng.it/aas/cd/accuracy",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "preferredName": [
+              {
+                "language": "en",
+                "text": "Accuracy"
+              }
+            ],
+            "dataType": "STRING",
+            "definition": [
+              {
+                "language": "en",
+                "text": "Accuracy of the measurements got from technical documents"
+              }
+            ],
+            "modelType": "DataSpecificationIec61360"
+          }
+        }
+      ],
+      "modelType": "ConceptDescription"
+    }
+  ]
+}
