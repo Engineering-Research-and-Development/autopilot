@@ -59,14 +59,14 @@ The demo showcases a complete smart factory scenario where:
 
 4. **Import the Demo Flow:**
 
-[INSERT IMAGE]
-
    - Click the **hamburger menu** (☰) in the top-right corner
    - Select **"Import"**
    - Choose **"select a file to import"**
    - Navigate to and select `nodered_example.json`
    - Click **"Import"**
    - Confirm the import by clicking **"Import"** again
+
+Follow this [GUIDE](https://nodered.org/docs/user-guide/editor/workspace/import-export#importing-flows) for more details.
 
 5. **Access the Dashboard UI:**
    - Navigate directly to: `http://localhost:1880/autopilot/ui`
