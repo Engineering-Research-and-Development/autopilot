@@ -40,7 +40,7 @@ The demo showcases a complete smart factory scenario where:
 
 1. **Clone the repository and navigate to the demo directory:**
    ```bash
-   git clone https://github.com/emiliocimino/autopilot.git
+   git clone https://github.com/Engineering-Research-and-Development/autopilot.git
    cd autopilot/demo
    ```
 
