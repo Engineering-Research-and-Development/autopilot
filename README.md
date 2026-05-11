@@ -38,6 +38,28 @@ This cross-domain synchronization ensures that a bottleneck in *Factory A* doesn
 
 ---
 
+## 🚀 Quick Demo
+
+Experience the AutoPilot MAPE-K loop in action with our interactive **Node-RED based quick demo**. This hands-on demonstration showcases a complete smart factory scenario with:
+
+- **📦 Production Line Simulation** - Realistic packaging line with robot palletizer, camera inspection, and smartwatch inspection systems
+- **🔍 Real-time Analysis** - Quality control monitoring, bottleneck detection, and ML-based speed prediction
+- **🧠 Intelligent Planning** - Rule-based conflict resolution and adaptive strategy selection
+- **⚙️ Autonomous Execution** - Closed-loop control with human-in-the-loop override capabilities
+
+### **Try it Now:**
+```bash
+git clone https://github.com/Engineering-Research-and-Development/autopilot.git
+cd autopilot/demo
+docker-compose up -d
+```
+
+Then visit `http://localhost:1880/autopilot/ui` to access the live dashboard.
+
+📖 **Full Demo Guide:** See [`demo/README.md`](./demo/README.md) for detailed setup instructions and technical documentation.
+
+---
+
 ## Overview
 
 **What problems does AutoPilot solve?**
