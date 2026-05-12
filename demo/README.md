@@ -559,6 +559,9 @@ InfluxDB timestamp. This layout enables Flux queries and Grafana dashboards to s
 (Overall Equipment Effectiveness), rolling scrap rate, cumulative energy per shift, and starvation/blocking frequency
 without re-processing the raw event log.
 
+<img width="2165" height="729" alt="image" src="https://github.com/user-attachments/assets/53e09315-553b-4e97-8abc-9c8db82c0dee" />
+
+
 StreamPipes also exposes its own monitoring dashboards and REST API, so the same pipeline definitions that write to 
 InfluxDB can concurrently feed alerting rules (e.g. a notification when the batch scrap rate exceeds the configured 
 threshold for more than three consecutive windows) or data lake sinks for long-term archival.
