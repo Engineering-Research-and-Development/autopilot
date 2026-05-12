@@ -2,7 +2,6 @@
 
 All endpoints are served by the Node-RED HTTP-in nodes on `localhost:1880` (default port). Every request and response body is `application/json`. Endpoints marked **internal** are used for inter-flow communication and are not intended for external callers.
 
----
 
 ## Table of Contents
 
@@ -32,7 +31,6 @@ All endpoints are served by the Node-RED HTTP-in nodes on `localhost:1880` (defa
 
 Endpoints for inspecting and controlling the simulation or physical production line state.
 
----
 
 ### GET /status
 
@@ -81,7 +79,6 @@ Host: localhost:1880
 | `ready_packages` / `ready_pallets` | `integer` | Remaining material stock |
 | `total_energy_*_kwh` | `float` | Accumulated energy per machine since last reset |
 
----
 
 ### POST /config
 
@@ -125,7 +122,6 @@ Content-Type: application/json
 }
 ```
 
----
 
 ### POST /robot/speed
 
@@ -160,7 +156,6 @@ Content-Type: application/json
 
 **Quality impact:** At speed 7 the sigmoid model yields approximately 96.6 % product quality. Higher values progressively reduce quality toward the 90 % floor at speed 20.
 
----
 
 ### POST /robot/speed/low
 
@@ -185,7 +180,6 @@ No request body required.
 }
 ```
 
----
 
 ### POST /robot/speed/high
 
@@ -210,7 +204,6 @@ No request body required.
 }
 ```
 
----
 
 ### POST /load/speed
 
@@ -243,7 +236,6 @@ Content-Type: application/json
 }
 ```
 
----
 
 
 ### POST /reset
@@ -274,7 +266,7 @@ No request body required.
 
 Endpoints for managing the quality threshold and resetting analysis state.
 
----
+
 
 ### GET /threshold
 
@@ -295,7 +287,7 @@ Host: localhost:1880
 }
 ```
 
----
+
 
 ### POST /threshold
 
@@ -338,7 +330,7 @@ Content-Type: application/json
 }
 ```
 
----
+
 
 ### POST /analysis/package/reset
 
@@ -368,7 +360,7 @@ No request body required.
 
 Endpoints for controlling the automation toggle and reading operator-facing suggestions.
 
----
+
 
 ### GET /automate
 
@@ -393,7 +385,7 @@ Host: localhost:1880
 |---|---|---|
 | `automate` | `boolean` | `true` = closed-loop control active; `false` = suggestions only |
 
----
+
 
 ### POST /automate
 
@@ -417,7 +409,7 @@ No request body required.
 }
 ```
 
----
+
 
 ### GET /suggestions
 
@@ -458,7 +450,7 @@ Host: localhost:1880
 
 These endpoints are used for inter-flow communication within Node-RED. They are documented here for completeness and for integration testing purposes, but external systems should not rely on them directly.
 
----
+
 
 ### POST /planner
 
@@ -501,7 +493,7 @@ Content-Type: application/json
 }
 ```
 
----
+
 
 ### POST /execute
 
