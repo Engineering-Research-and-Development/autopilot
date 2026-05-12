@@ -7,6 +7,7 @@ All endpoints are served by the Node-RED HTTP-in nodes on `localhost:1880` (defa
 
 - [Production Line](#production-line)
   - [GET /status](#get-status)
+  - [GET /line](#get-line)
   - [POST /config](#post-config)
   - [POST /robot/speed](#post-robotspeed)
   - [POST /robot/speed/low](#post-robotspeedlow)
@@ -117,6 +118,155 @@ Host: localhost:1880
 | `n_good` / `n_scrap` | `integer` | Cumulative good and scrap product counts since last reset |
 | `ready_packages` / `ready_pallets` | `integer` | Remaining material stock |
 | `total_energy_*_kwh` | `float` | Accumulated energy per machine since last reset |
+
+---
+
+### GET /line
+
+Returns a map of the **latest event log entry** received from each production stage, keyed by Pulsar topic name. The map is built incrementally by the `build_line_status_payload` node, which overwrites each key on every event emitted by the corresponding machine. The result is therefore a per-stage snapshot of the most recent production activity across the entire line, without any historical depth.
+
+This endpoint is served from the dedicated **Status** tab (`9664e76a0a46d677`) and reads directly from the `line_status` global context variable.
+
+**Request**
+
+```http
+GET /line HTTP/1.1
+Host: localhost:1880
+```
+
+**Response `200 OK`**
+
+```json
+{
+  "initialized": true,
+  "load-pallets": {
+    "case_id": "PLT-00031",
+    "activity": "Pallet Loading",
+    "machine": "PalletLoader",
+    "ts_start": "2025-06-01T08:14:02.310Z",
+    "ts_end": "2025-06-01T08:14:08.310Z",
+    "duration_ms": 6000,
+    "attributes": {
+      "pallet_speed": 10,
+      "machine_status": "producing",
+      "ready_pallets": 69,
+      "power_kw": 1.21,
+      "energy_kwh": 0.00201,
+      "total_energy_pallet_kwh": 0.421
+    }
+  },
+  "load-package": {
+    "case_id": "PKG-00089",
+    "activity": "Package Loading",
+    "machine": "PackageLoader",
+    "ts_start": "2025-06-01T08:14:09.540Z",
+    "ts_end": "2025-06-01T08:14:21.540Z",
+    "duration_ms": 12000,
+    "attributes": {
+      "charger_speed": 5,
+      "machine_status": "producing",
+      "remaining_packages": 411,
+      "power_kw": 1.09,
+      "energy_kwh": 0.00363,
+      "total_energy_load_kwh": 1.102
+    }
+  },
+  "robot": {
+    "case_id": "PKG-00086",
+    "activity": "Robot Processing",
+    "machine": "Robot",
+    "ts_start": "2025-06-01T08:14:05.120Z",
+    "ts_end": "2025-06-01T08:14:20.120Z",
+    "duration_ms": 15000,
+    "attributes": {
+      "robot_speed": 4,
+      "machine_status": "producing",
+      "produced_quality_pct": 95.41,
+      "pallet_id": "PLT-00028",
+      "ready_packages": 3,
+      "ready_pallets": 2,
+      "power_kw": 1.38,
+      "energy_kwh": 0.00574,
+      "total_energy_robot_kwh": 3.847
+    }
+  },
+  "camera": {
+    "case_id": "PKG-00083",
+    "activity": "Camera Inspection",
+    "machine": "Camera",
+    "ts_start": "2025-06-01T08:14:01.000Z",
+    "ts_end": "2025-06-01T08:14:02.000Z",
+    "duration_ms": 1000,
+    "attributes": {
+      "quality_ok": true
+    }
+  },
+  "smartwatch": {
+    "case_id": "PKG-00080",
+    "activity": "Smartwatch Verification",
+    "machine": "Smartwatch",
+    "ts_start": "2025-06-01T08:13:58.000Z",
+    "ts_end": "2025-06-01T08:13:59.000Z",
+    "duration_ms": 1000,
+    "attributes": {
+      "quality_ok": true
+    }
+  },
+  "labeler": {
+    "case_id": "PKG-00077",
+    "activity": "Label Application",
+    "machine": "Labeler",
+    "ts_start": "2025-06-01T08:13:55.000Z",
+    "ts_end": "2025-06-01T08:13:56.000Z",
+    "duration_ms": 1000,
+    "attributes": {
+      "quality_ok": true,
+      "outcome": "good"
+    }
+  },
+  "pick-area": {
+    "case_id": "PKG-00074",
+    "activity": "Pick Area",
+    "machine": "GoodArea",
+    "ts_start": "2025-06-01T08:13:53.000Z",
+    "ts_end": "2025-06-01T08:13:53.000Z",
+    "duration_ms": 0,
+    "attributes": {
+      "n_good": 142,
+      "outcome": "good"
+    }
+  },
+  "scrap-area": {
+    "case_id": "PKG-00071",
+    "activity": "Scrap Area",
+    "machine": "ScrapArea",
+    "ts_start": "2025-06-01T08:13:40.000Z",
+    "ts_end": "2025-06-01T08:13:40.000Z",
+    "duration_ms": 0,
+    "attributes": {
+      "n_scrap": 18,
+      "scrap_reason": "camera_quality_fail",
+      "outcome": "scrap"
+    }
+  }
+}
+```
+
+| Top-level key | Description |
+|---|---|
+| `initialized` | `true` once the `line_status` global has been written to for the first time |
+| `load-pallets` | Latest event from Stage 1.A (Pallet Loader) |
+| `load-package` | Latest event from Stage 1.B (Package Loader) |
+| `robot` | Latest event from Stage 2 (Robot) |
+| `camera` | Latest event from Stage 3 (Camera) |
+| `smartwatch` | Latest event from Stage 4 (Smartwatch) |
+| `labeler` | Latest event from Stage 5 (Labeler) |
+| `pick-area` | Latest event from Stage 6.A (Good Area) |
+| `scrap-area` | Latest event from Stage 6.B (Scrap Area) |
+
+Each entry follows the canonical event log schema (`case_id`, `activity`, `machine`, `ts_start`, `ts_end`, `duration_ms`, `attributes`). A key is absent from the response if that stage has not emitted any event since the last Node-RED deploy or reset.
+
+> **Note:** Because each key holds only the single most recent event, `GET /line` is intended for **live status monitoring** (e.g. a dashboard polling at 1–2 Hz), not for auditing or replay. Historical event data is available via InfluxDB queries against the StreamPipes-populated measurements.
 
 ---
 
