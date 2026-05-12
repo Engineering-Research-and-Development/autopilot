@@ -271,10 +271,10 @@ Event log topic: `scrap-area`. Key attributes: `n_scrap`, `scrap_reason`, `outco
 ### Monitoring
 
 The Monitoring layer provides an alternative data ingestion path for scenarios where production data originates from 
-real physical equipment rather than the Node-RED simulation. In this context, the simulation flow is replaced 
-- partially or entirely - by protocol adapter nodes that read live machine signals, normalize them into the same 
-- event log structure used by the simulation, and forward them to the same downstream Pulsar topics. 
-- The rest of the architecture (Analysis, Planning, Execute and Knowledge Layers) remains unchanged.
+real physical equipment rather than the Node-RED simulation. In this context, the simulation flow is replaced - partially or
+entirely - by protocol adapter nodes that read live machine signals, normalize them into the same  event log structure used by the 
+simulation, and forward them to the same downstream Pulsar topics. 
+The rest of the architecture (Analysis, Planning, Execute and Knowledge Layers) remains unchanged.
 
 #### OPC-UA
 
