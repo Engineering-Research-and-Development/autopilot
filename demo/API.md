@@ -47,27 +47,66 @@ Host: localhost:1880
 
 ```json
 {
-  "robot_status": "producing",
-  "load_status": "producing",
-  "pallet_status": "blocked",
-  "camera_status": "producing",
-  "smartwatch_status": "producing",
-  "labeler_status": "producing",
-  "q_load_out": 3,
-  "q_pallet_out": 20,
-  "q_robot_out": 7,
-  "q_camera_out": 2,
-  "q_watch_out": 1,
-  "n_good": 142,
-  "n_scrap": 18,
-  "ready_packages": 340,
-  "ready_pallets": 12,
-  "robot_speed": 4,
-  "load_speed": 5,
-  "pallet_speed": 10,
-  "total_energy_robot_kwh": 12.47,
-  "total_energy_load_kwh": 3.22,
-  "total_energy_pallet_kwh": 1.89
+    "ts": "2026-05-12T09:55:10.601Z",
+    "summary": {
+        "n_good": 116899,
+        "n_scrap": 20551,
+        "total": 137450,
+        "yield_pct": 85.05
+    },
+    "rates": {
+        "load_speed": 19,
+        "load_interval_ms": 3158,
+        "robot_speed": 19,
+        "robot_interval_ms": 3158,
+        "camera_interval_ms": 20000,
+        "watch_interval_ms": 20000,
+        "labeler_interval_ms": 20000
+    },
+    "machines": {
+        "LoadPackage": {
+            "status": "producing",
+            "locked": false
+        },
+        "Robot": {
+            "status": "producing",
+            "locked": false
+        },
+        "Camera": {
+            "status": "producing",
+            "locked": false
+        },
+        "Smartwatch": {
+            "status": "producing",
+            "locked": false
+        },
+        "Labeler": {
+            "status": "producing",
+            "locked": false
+        }
+    },
+    "queues": {
+        "q_load_out": 20,
+        "q_robot_out": 13,
+        "q_camera_out": 0,
+        "q_watch_out": 0
+    },
+    "pallets": {
+        "ready": 10,
+        "loaded": 13,
+        "max": 8
+    },
+    "robot_quality_pct": 90.57,
+    "config": {
+        "load_speed": 19,
+        "robot_speed": 19,
+        "max_queue_size": 20,
+        "max_loadable_pallet": 8,
+        "ready_packages": -136983,
+        "unlock_threshold": 1,
+        "pulsar_url": "http://localhost:8080",
+        "pallet_speed": 19
+    }
 }
 ```
 
