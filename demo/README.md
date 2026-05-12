@@ -540,11 +540,6 @@ The Knowledge Layer sits downstream of the Pulsar event bus and is responsible f
 queryable, persistent, and semantically structured knowledge that other systems — analytics platforms, digital twins, AI 
 models, and enterprise integrations — can consume without direct coupling to the production flow.
 
-#### PSS-PASS-Broker: The Industrial Data Bridge
-
-The **pss-pass-broker** is the primary ingestion engine for industrial environments, bridging MQTT and OPC-UA protocols into the **Apache Pulsar** backbone. It standardizes raw floor telemetry into a unified message format, ensuring that disparate data sources are immediately compatible with the system's Digital Twin logic. The broker relies on **Pulsar Functions** (specifically Go-based workers) to perform high-frequency AAS transposition: these functions parse incoming topics to execute real-time state updates on **Eclipse BaSyx** submodels via HTTP PATCH requests, while simultaneously routing the same telemetry to **InfluxDB** for time-series persistence. This ensures that the Knowledge Layer maintains a consistent, synchronized representation of the physical assets across both semantic registries and historical databases.
-
-For more details on its architecture, configuration, and deployment, see the [pss-pass-broker repository](https://github.com/Engineering-Research-and-Development/pss-pass-broker).
 
 #### StreamPipes & InfluxDB Integration
 
@@ -572,7 +567,18 @@ StreamPipes also exposes its own monitoring dashboards and REST API, so the same
 InfluxDB can concurrently feed alerting rules (e.g. a notification when the batch scrap rate exceeds the configured 
 threshold for more than three consecutive windows) or data lake sinks for long-term archival.
 
+
 #### AAS Submodel Repository via Pulsar 
+
+Autopilot uses the  **pss-pass-broker** as an ingestion engine for industrial environments, bridging MQTT and OPC-UA 
+protocols into the **Apache Pulsar** backbone. It standardizes raw floor telemetry into a unified message format, 
+ensuring that disparate data sources are immediately compatible with the system's Digital Twin logic. 
+The broker relies on **Pulsar Functions** (specifically Go-based workers) to perform high-frequency AAS transposition: 
+these functions parse incoming topics to execute real-time state updates on **Eclipse BaSyx** submodels via HTTP PATCH 
+requests, while simultaneously routing the same telemetry to **InfluxDB** for time-series persistence. 
+This ensures that the Knowledge Layer maintains a consistent, synchronized representation of the physical assets across 
+both semantic registries and historical databases. For more details on its architecture, configuration, and deployment, see the 
+[pss-pass-broker repository](https://github.com/Engineering-Research-and-Development/pss-pass-broker).
 
 The Asset Administration Shell (AAS) Submodel Repository is updated in near-real time using Pulsar as the transport 
 layer. A Node-RED bridge flow subscribes to all eight Pulsar topics via Pulsar consumers and, on each event, 
