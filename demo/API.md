@@ -644,7 +644,6 @@ Host: localhost:1880
 
 These endpoints are used for inter-flow communication within Node-RED. They are documented here for completeness and for integration testing purposes, but external systems should not rely on them directly.
 
----
 
 ### POST /planner
 
