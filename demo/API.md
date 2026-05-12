@@ -125,7 +125,7 @@ Host: localhost:1880
 
 Returns a map of the **latest event log entry** received from each production stage, keyed by Pulsar topic name. The map is built incrementally by the `build_line_status_payload` node, which overwrites each key on every event emitted by the corresponding machine. The result is therefore a per-stage snapshot of the most recent production activity across the entire line, without any historical depth.
 
-This endpoint is served from the dedicated **Status** tab (`9664e76a0a46d677`) and reads directly from the `line_status` global context variable.
+This endpoint is served from the dedicated **Status** tab and reads directly from the `line_status` global context variable.
 
 **Request**
 
