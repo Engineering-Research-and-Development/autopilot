@@ -1,0 +1,108 @@
+version: '3'
+
+services:
+  # Internal API Gateway to route traffic from the single exposed port
+  stack-proxy:
+    image: caddy:alpine
+    container_name: basyx-proxy
+    ports:
+      - '3090:80'
+    command: ["sh", "-c", "printf ':80 {\n  handle_path /registry/* {\n    reverse_proxy aas-registry:8080\n  }\n  handle_path /sm-registry/* {\n    reverse_proxy sm-registry:8080\n  }\n  handle_path /env/* {\n    reverse_proxy aas-env:8081\n  }\n  handle_path /discovery/* {\n    reverse_proxy aas-discovery:8081\n  }\n  handle_path /dashboard-api/* {\n    reverse_proxy dashboard-api:8085\n  }\n  handle {\n    reverse_proxy aas-web-ui:3000\n  }\n}' > /etc/caddy/Caddyfile && caddy run --config /etc/caddy/Caddyfile"]
+    restart: always
+    depends_on:
+      - aas-web-ui
+      - aas-registry
+      - sm-registry
+      - aas-env
+      - aas-discovery
+      - dashboard-api
+
+  aas-env:
+    image: eclipsebasyx/aas-environment:2.0.0-SNAPSHOT-b115033
+    container_name: aas-env
+    environment:
+      - SERVER_PORT=8081
+      - BASYX_BACKEND=InMemory
+      - BASYX_CORS_ALLOWED_ORIGINS=*
+      - BASYX_CORS_ALLOWED_METHODS=GET,POST,PATCH,DELETE,PUT,OPTIONS,HEAD
+      - BASYX_AASREPOSITORY_FEATURE_REGISTRYINTEGRATION=http://aas-registry:8080
+      - BASYX_SUBMODELREPOSITORY_FEATURE_REGISTRYINTEGRATION=http://sm-registry:8080
+      - BASYX_EXTERNALURL=https://basyx.sicuro.duckdns.org/env
+      - SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=500MB
+      - SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE=500MB
+    restart: always
+    depends_on:
+      - aas-registry
+      - sm-registry
+      
+  aas-registry:
+    image: eclipsebasyx/aas-registry-log-mem:2.0.0-SNAPSHOT-b115033
+    container_name: aas-registry
+    environment:
+      - SERVER_PORT=8080
+      - BASYX_CORS_ALLOWED_ORIGINS=*
+      - BASYX_CORS_ALLOWED_METHODS=GET,POST,PATCH,DELETE,PUT,OPTIONS,HEAD
+    restart: always
+    
+  sm-registry:
+    image: eclipsebasyx/submodel-registry-log-mem:2.0.0-SNAPSHOT-b115033
+    container_name: sm-registry
+    environment:
+      - SERVER_PORT=8080
+      - BASYX_CORS_ALLOWED_ORIGINS=*
+      - BASYX_CORS_ALLOWED_METHODS=GET,POST,PATCH,DELETE,PUT,OPTIONS,HEAD
+    restart: always
+    
+  aas-discovery:
+    image: eclipsebasyx/aas-discovery:2.0.0-SNAPSHOT-b115033
+    container_name: aas-discovery
+    environment:
+      - SERVER_PORT=8081
+      - BASYX_BACKEND=InMemory
+      - BASYX_CORS_ALLOWED_ORIGINS=*
+      - BASYX_CORS_ALLOWED_METHODS=GET,POST,PATCH,DELETE,PUT,OPTIONS,HEAD
+    restart: always
+    
+  aas-web-ui:
+    image: eclipsebasyx/aas-gui:SNAPSHOT-6386517
+    container_name: aas-ui
+    environment:
+      - AAS_REGISTRY_PATH=https://basyx.sicuro.duckdns.org/registry/shell-descriptors
+      - SUBMODEL_REGISTRY_PATH=https://basyx.sicuro.duckdns.org/sm-registry/submodel-descriptors
+      - AAS_REPO_PATH=https://basyx.sicuro.duckdns.org/env/shells
+      - SUBMODEL_REPO_PATH=https://basyx.sicuro.duckdns.org/env/submodels
+      - CD_REPO_PATH=https://basyx.sicuro.duckdns.org/env/concept-descriptions
+      - AAS_DISCOVERY_PATH=https://basyx.sicuro.duckdns.org/discovery/lookup/shells
+      - DASHBOARD_SERVICE_PATH=https://basyx.sicuro.duckdns.org/dashboard-api/api/elements
+    restart: always
+    depends_on:
+      - aas-env
+    
+  dashboard-api:
+    image: aaronzi/basyx-dashboard-api:SNAPSHOT_02
+    container_name: dashboard-api
+    environment:
+      - SERVER_PORT=8085
+      - SPRING_DATA_MONGODB_HOST=mongo
+      - SPRING_DATA_MONGODB_PORT=27017
+      - SPRING_DATA_MONGODB_DATABASE=basyx-dashboard
+      - SPRING_DATA_MONGODB_USERNAME=mongoAdmin
+      - SPRING_DATA_MONGODB_PASSWORD=mongoPassword
+      - BASYX_CORS_ALLOWED_ORIGINS=*
+      - BASYX_CORS_ALLOWED_METHODS=GET,POST,PATCH,DELETE,PUT,OPTIONS,HEAD
+    restart: always
+    depends_on:
+      - mongo
+    
+  mongo:
+    image: mongo:5.0.10
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoAdmin
+      - MONGO_INITDB_ROOT_PASSWORD=mongoPassword
+    restart: always
+    healthcheck:
+      test: mongo
+      interval: 10s
+      timeout: 5s
+      retries: 5
