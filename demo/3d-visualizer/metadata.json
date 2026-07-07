@@ -1,0 +1,6 @@
+{
+  "name": "Digital Twin Packaging Line",
+  "description": "A lightweight 3D digital twin of a packaging line with a conveyor belt and dual camera control points.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
