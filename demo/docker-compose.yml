@@ -1,6 +1,7 @@
 services:
   node-red:
     image: nodered/node-red:latest
+    user: "1009:1009"
     environment:
       - TZ=Europe/Amsterdam
     ports:
