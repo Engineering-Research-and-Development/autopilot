@@ -314,15 +314,6 @@ that maps the JSON response body onto the event log schema, applying the same fi
 pipeline used by the other adapters. Rate limiting and error-retry logic (exponential back-off on 5xx responses) are 
 added via delay and catch nodes to make the polling loop resilient to transient network failures.
 
-#### Modbus TCP
-
-Older PLCs and drives that do not support OPC-UA or MQTT are integrated via Modbus TCP using the 
-`node-red-contrib-modbus` package. A `Modbus-Read` node polls holding registers or input registers at a fixed 
-interval, mapping register addresses to physical quantities (e.g. register 40001 = robot speed in rpm, register 
-40003 = output queue count). A conversion function applies scaling factors and unit conversions, then constructs 
-the event log record. Because Modbus is inherently polled and stateless, the function computes `duration_ms` as the 
-difference between consecutive read timestamps and derives `machine_status` from threshold comparisons on the 
-register values.
 
 #### Unified Normalization Pipeline
 

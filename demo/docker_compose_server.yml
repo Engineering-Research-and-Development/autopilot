@@ -1,0 +1,23 @@
+services:
+  node-red:
+    image: nodered/node-red:latest
+    user: "1009:1009"
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1880:1880"
+    networks:
+      - node-red-net
+    volumes:
+      - /home/developer/Node-RED:/data
+
+  speed_prediction:
+    image: ghcr.io/emiliocimino/autopilotmlservice:v0.1.1
+    container_name: speed_prediction
+    ports:
+      - 8010:8010
+    networks: 
+      - node-red-net
+
+networks:
+  node-red-net:

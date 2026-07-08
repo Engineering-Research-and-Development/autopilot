@@ -45,6 +45,7 @@
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" [checked]="isAutopilotEnabled()" (change)="toggleAutopilot()" class="sr-only peer">
             <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+<<<<<<< HEAD
           </label>  
         </div>  
         <!-- View Mode Switch: 3D / 2D. Uses template ref #view2d, so no app.ts changes are required. -->
@@ -58,6 +59,11 @@
           </label>
         </div>
       </div>  
+=======
+          </label>
+        </div>
+      </div>
+>>>>>>> upstream/main
       <div class="flex items-center gap-6 text-[11px] font-medium">
         <div class="flex flex-col">
           <span class="text-slate-500 text-[9px] uppercase">Location</span>
@@ -75,7 +81,10 @@
     </header>
 
     @if (currentPage() === 'dashboard') {
+<<<<<<< HEAD
     @if (!view2d.checked) {
+=======
+>>>>>>> upstream/main
     <!-- 3D & Data Layout -->
     <div class="flex-1 flex overflow-hidden p-4 gap-4">
       <!-- Primary 3D Viewport Wrapper -->
@@ -422,6 +431,7 @@
         }
       </div>
     </footer>
+<<<<<<< HEAD
     } @else {
       <!-- Embedded 2D simulator: full app_2d.html included via iframe srcdoc. -->
       <div class="flex-1 flex overflow-hidden p-4 bg-[#0c0d10]">
@@ -1083,6 +1093,8 @@
         </iframe>
       </div>
       }
+=======
+>>>>>>> upstream/main
     }
 
     @if (currentPage() === 'marketplace') {
