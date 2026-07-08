@@ -45,9 +45,25 @@
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" [checked]="isAutopilotEnabled()" (change)="toggleAutopilot()" class="sr-only peer">
             <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+<<<<<<< HEAD
+          </label>  
+        </div>  
+        <!-- View Mode Switch: 3D / 2D. Uses template ref #view2d, so no app.ts changes are required. -->
+        <div class="flex items-center gap-2 pl-4 border-l border-slate-700">
+          <span class="text-[9px] uppercase font-bold tracking-tighter text-slate-500">View</span>
+          <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+            <span class="text-[10px] font-mono" [class.text-indigo-400]="!view2d.checked" [class.text-slate-500]="view2d.checked">3D</span>
+            <input #view2d type="checkbox" class="sr-only peer" (change)="$event" />
+            <span class="relative w-12 h-6 rounded-full bg-slate-700 border border-slate-600 transition-colors peer-checked:bg-cyan-700 peer-checked:border-cyan-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:w-5 after:h-5 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-6"></span>
+            <span class="text-[10px] font-mono" [class.text-cyan-400]="view2d.checked" [class.text-slate-500]="!view2d.checked">2D</span>
+          </label>
+        </div>
+      </div>  
+=======
           </label>
         </div>
       </div>
+>>>>>>> upstream/main
       <div class="flex items-center gap-6 text-[11px] font-medium">
         <div class="flex flex-col">
           <span class="text-slate-500 text-[9px] uppercase">Location</span>
@@ -65,6 +81,10 @@
     </header>
 
     @if (currentPage() === 'dashboard') {
+<<<<<<< HEAD
+    @if (!view2d.checked) {
+=======
+>>>>>>> upstream/main
     <!-- 3D & Data Layout -->
     <div class="flex-1 flex overflow-hidden p-4 gap-4">
       <!-- Primary 3D Viewport Wrapper -->
@@ -411,6 +431,670 @@
         }
       </div>
     </footer>
+<<<<<<< HEAD
+    } @else {
+      <!-- Embedded 2D simulator: full app_2d.html included via iframe srcdoc. -->
+      <div class="flex-1 flex overflow-hidden p-4 bg-[#0c0d10]">
+        <iframe
+          title="2D Packaging Line Monitor"
+          class="w-full h-full border border-slate-800 rounded-lg bg-[#0a0c10]"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+          referrerpolicy="no-referrer"
+          srcdoc="&lt;!DOCTYPE html&gt;
+          &lt;html lang=&quot;en&quot;&gt;
+          &lt;head&gt;
+          &lt;meta charset=&quot;UTF-8&quot;/&gt;
+          &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;/&gt;
+          &lt;title&gt;AUTOPILOT — Packaging Line Monitor&lt;/title&gt;
+          &lt;link href=&quot;https://fonts.googleapis.com/css2?family=Share+Tech+Mono&amp;family=Barlow+Condensed:wght@300;400;600;700;900&amp;family=Barlow:wght@300;400;500&amp;display=swap&quot; rel=&quot;stylesheet&quot;/&gt;
+          &lt;style&gt;
+          :root {
+            --bg:#0a0c10; --surface:#111520; --surface2:#161b28;
+            --border:#1e2740; --border-bright:#2a3654;
+            --accent:#00c8ff; --accent2:#0077ff;
+            --good:#00e676; --bad:#ff3d5a; --warn:#ffab00;
+            --text:#c8d8f0; --text-dim:#5a6a8a; --text-bright:#e8f0ff;
+            --mono:&#x27;Share Tech Mono&#x27;,monospace;
+            --head:&#x27;Barlow Condensed&#x27;,sans-serif;
+            --body:&#x27;Barlow&#x27;,sans-serif;
+            --CW:230px;
+          }
+          *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+          html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--body);overflow:hidden;}
+          #app{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
+
+          /* ── TOPBAR ── */
+          #topbar{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:0 24px;height:54px;background:var(--surface);
+            border-bottom:1px solid var(--border);flex-shrink:0;gap:16px;
+          }
+          .logo{display:flex;align-items:center;gap:10px;}
+          .logo-img{
+            height:36px;
+            width:auto;
+            object-fit:contain;
+            border-radius:4px;
+          }
+          .logo-text{font-family:var(--head);font-weight:900;font-size:20px;letter-spacing:4px;color:var(--text-bright);}
+          .logo-sub{font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-top:-3px;}
+          .topbar-mid{display:flex;align-items:center;gap:20px;flex:1;justify-content:center;}
+          .pill{display:flex;align-items:center;gap:7px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:4px 11px;font-family:var(--mono);font-size:10.5px;color:var(--text-dim);}
+          .dot{width:7px;height:7px;border-radius:50%;background:var(--text-dim);flex-shrink:0;}
+          .dot.live{background:var(--good);box-shadow:0 0 5px var(--good);animation:pulse 2s infinite;}
+          .dot.err{background:var(--bad);}
+          @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+          .ap-wrap{display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 14px;}
+          .ap-lbl{font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--text-dim);transition:color .3s;}
+          .ap-lbl.on{color:var(--accent);}
+          .ap-sub{font-family:var(--mono);font-size:8.5px;color:var(--text-dim);margin-top:1px;}
+          .tog{position:relative;width:48px;height:24px;cursor:pointer;flex-shrink:0;}
+          .tog input{opacity:0;width:0;height:0;}
+          .tog-track{position:absolute;inset:0;background:var(--border-bright);border-radius:12px;transition:background .3s;}
+          .tog input:checked+.tog-track{background:var(--accent2);}
+          .tog-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,.5);}
+          .tog input:checked~.tog-knob{transform:translateX(24px);}
+          #clock{font-family:var(--mono);font-size:12px;color:var(--text-dim);letter-spacing:2px;white-space:nowrap;}
+
+          /* ── MAIN AREA ── */
+          #main{display:flex;flex:1;overflow:hidden;flex-direction:column;}
+
+          /* ── PIPELINE + CONTROLS AREA ── */
+          #pipe-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+          #pipe-scroll{flex:1;overflow:auto;display:flex;align-items:center;padding:0 28px;}
+          #pipe-scroll::-webkit-scrollbar{height:6px;width:6px;}
+          #pipe-scroll::-webkit-scrollbar-track{background:var(--bg);}
+          #pipe-scroll::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:3px;}
+
+          #pipeline{
+            display:flex;
+            align-items:center;
+            gap:0;
+            flex-shrink:0;
+            margin:auto;
+            padding:24px 0;
+          }
+
+          .stage-group{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:0;
+            flex-shrink:0;
+          }
+
+          .card-pair{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            align-self:center;
+          }
+
+          /* ── CARDS ── */
+          .scard{
+            width:var(--CW);
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:8px;
+            overflow:hidden;
+            transition:border-color .25s,box-shadow .25s;
+            display:flex;
+            flex-direction:column;
+          }
+          .scard.qok {border-color:#00e67640;box-shadow:0 0 12px #00e67610;}
+          .scard.qbad{border-color:#ff3d5a40;box-shadow:0 0 12px #ff3d5a10;}
+
+          .tbar{height:3px;flex-shrink:0;}
+          .t-loader {background:linear-gradient(90deg,#0077ff,#00c8ff);}
+          .t-robot  {background:linear-gradient(90deg,#7c3aed,#c026d3);}
+          .t-quality{background:linear-gradient(90deg,#ea580c,#facc15);}
+          .t-pick   {background:linear-gradient(90deg,#16a34a,#4ade80);}
+          .t-scrap  {background:linear-gradient(90deg,#9f1239,#f43f5e);}
+
+          .chead{padding:6px 10px 5px;background:var(--surface2);border-bottom:1px solid var(--border);}
+          .cact{font-family:var(--head);font-weight:700;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-bright);line-height:1.2;}
+          .ccid{font-family:var(--mono);font-size:9.5px;color:var(--accent);letter-spacing:.8px;margin-top:1px;}
+
+          .cbody{padding:7px 10px;display:flex;flex-direction:column;gap:3px;flex:1;}
+          .kv{display:flex;align-items:baseline;justify-content:space-between;gap:4px;}
+          .kk{font-family:var(--mono);font-size:9px;color:var(--text-dim);white-space:nowrap;}
+          .kv_{font-family:var(--mono);font-size:10px;font-weight:bold;color:var(--text-bright);text-align:right;white-space:nowrap;}
+          .kv_.g{color:var(--good);} .kv_.b{color:var(--bad);} .kv_.w{color:var(--warn);}
+
+          .qbadge{display:flex;align-items:center;justify-content:center;gap:5px;padding:4px 8px;border-radius:4px;font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:2px;margin-top:3px;}
+          .qbadge.p{background:#00e67614;color:var(--good);border:1px solid #00e67638;}
+          .qbadge.f{background:#ff3d5a14;color:var(--bad); border:1px solid #ff3d5a38;}
+          .qbadge.u{background:#1a2035;   color:var(--text-dim);border:1px solid var(--border);}
+
+          .arrow-conn{
+            display:flex;
+            align-items:center;
+            align-self:center;
+            flex-shrink:0;
+          }
+
+          /* ── CONTROLS BAR ── */
+          #controls{
+            background:var(--surface);border-top:1px solid var(--border);
+            padding:9px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0;flex-wrap:wrap;
+          }
+          .cgrp{display:flex;align-items:center;gap:9px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;}
+          .clbl{font-family:var(--head);font-weight:600;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);white-space:nowrap;}
+          .cval{font-family:var(--mono);font-size:11.5px;color:var(--accent);min-width:30px;text-align:right;}
+          input[type=range]{-webkit-appearance:none;width:95px;height:4px;background:var(--border-bright);border-radius:2px;outline:none;cursor:pointer;}
+          input[type=range]:disabled{opacity:.35;cursor:not-allowed;}
+          input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 5px var(--accent2);}
+          input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer;border:none;}
+          .btn{font-family:var(--head);font-weight:700;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 13px;border-radius:5px;border:1px solid;cursor:pointer;transition:all .18s;white-space:nowrap;}
+          .btn:disabled{opacity:.35;cursor:not-allowed;}
+          .btn-d{background:transparent;border-color:var(--bad);color:var(--bad);}
+          .btn-d:not(:disabled):hover{background:var(--bad);color:#fff;box-shadow:0 0 10px #ff3d5a44;}
+          .btn-p{background:var(--accent2);border-color:var(--accent);color:#fff;}
+          .btn-p:not(:disabled):hover{background:var(--accent);box-shadow:0 0 10px var(--accent);}
+
+          /* ── LOG PANEL — bottom horizontal strip ── */
+          #log-panel{
+            height:200px;
+            min-height:160px;
+            background:var(--surface);
+            border-top:1px solid var(--border);
+            display:flex;
+            flex-direction:column;
+            flex-shrink:0;
+          }
+          .lhdr{
+            padding:7px 15px;
+            border-bottom:1px solid var(--border);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            flex-shrink:0;
+          }
+          .ltitle{font-family:var(--head);font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--text-bright);}
+          .lbadge{font-family:var(--mono);font-size:9.5px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:2px 7px;}
+
+          /* Horizontal scrolling log list */
+          #log-list{
+            flex:1;
+            overflow-x:hidden;
+            overflow-y:auto;
+            padding:8px 10px;
+            display:flex;
+            flex-direction:column;
+            gap:7px;
+            align-items:stretch;
+          }
+          #log-list::-webkit-scrollbar{height:4px;}
+          #log-list::-webkit-scrollbar-track{background:var(--bg);}
+          #log-list::-webkit-scrollbar-thumb{background:var(--border-bright);border-radius:2px;}
+
+          .le{
+            padding:7px 9px;
+            border-radius:5px;
+            border-left:3px solid;
+            background:var(--surface2);
+            animation:li .22s ease;
+            width:100%;
+            box-sizing:border-box;
+          }
+          @keyframes li{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+          .le.op{border-color:var(--accent2);} .le.ap{border-color:var(--warn);} .le.ok{border-color:var(--good);} .le.er{border-color:var(--bad);}
+          .lts{font-family:var(--mono);font-size:8.5px;color:var(--text-dim);margin-bottom:2px;}
+          .ltag{display:inline-block;font-family:var(--mono);font-size:7.5px;letter-spacing:1px;padding:1px 5px;border-radius:3px;margin-bottom:3px;text-transform:uppercase;}
+          .le.op .ltag{background:#0077ff28;color:var(--accent2);border:1px solid #0077ff38;}
+          .le.ap .ltag{background:#ffab0028;color:var(--warn);border:1px solid #ffab0038;}
+          .le.ok .ltag{background:#00e67628;color:var(--good);border:1px solid #00e67638;}
+          .le.er .ltag{background:#ff3d5a28;color:var(--bad);border:1px solid #ff3d5a38;}
+          .lmsg{font-family:var(--body);font-size:11px;color:var(--text);line-height:1.4;}
+
+          /* ── LOADING ── */
+          #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;z-index:9999;transition:opacity .4s;}
+          .spin{width:38px;height:38px;border:2.5px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;}
+          @keyframes sp{to{transform:rotate(360deg)}}
+          body::after{content:&#x27;&#x27;;position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.035) 2px,rgba(0,0,0,.035) 4px);pointer-events:none;z-index:999;}
+          &lt;/style&gt;
+          &lt;/head&gt;
+          &lt;body&gt;
+
+          &lt;div id=&quot;loading&quot;&gt;
+            &lt;div class=&quot;spin&quot;&gt;&lt;/div&gt;
+            &lt;div style=&quot;font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:2px;&quot;&gt;CONNECTING TO LINE…&lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;div id=&quot;app&quot;&gt;
+            &lt;!-- TOPBAR --&gt;
+            &lt;div id=&quot;topbar&quot;&gt;
+              &lt;div class=&quot;logo&quot;&gt;
+                &lt;img
+                  class=&quot;logo-img&quot;
+                  src=&quot;https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/refs/heads/main/docs/imgs/ENG24_LOGO-AVANT_WHITE.png&quot;
+                  alt=&quot;PROJECT logo&quot;
+                  onerror=&quot;this.style.display=&#x27;none&#x27;&quot;
+                /&gt;
+                &lt;img
+                  class=&quot;logo-img&quot;
+                  src=&quot;https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/main/docs/imgs/logo_white.png&quot;
+                  alt=&quot;AUTOPILOT logo&quot;
+                  onerror=&quot;this.style.display=&#x27;none&#x27;;document.getElementById(&#x27;logo-fallback&#x27;).style.display=&#x27;flex&#x27;;&quot;
+                /&gt;
+                &lt;!-- fallback hex badge if image fails to load --&gt;
+                &lt;div id=&quot;logo-fallback&quot; style=&quot;display:none;width:30px;height:30px;background:linear-gradient(135deg,var(--accent2),var(--accent));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);align-items:center;justify-content:center;font-size:11px;font-family:var(--mono);color:#fff;font-weight:bold;&quot;&gt;AP&lt;/div&gt;
+                &lt;div&gt;
+                  &lt;div class=&quot;logo-text&quot;&gt;AUTOPILOT&lt;/div&gt;
+                  &lt;div class=&quot;logo-sub&quot;&gt;PACKAGING LINE MONITOR&lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;topbar-mid&quot;&gt;
+                &lt;div class=&quot;pill&quot;&gt;&lt;div class=&quot;dot&quot; id=&quot;dot&quot;&gt;&lt;/div&gt;&lt;span id=&quot;conn-lbl&quot;&gt;CONNECTING&lt;/span&gt;&lt;/div&gt;
+                &lt;div class=&quot;pill&quot;&gt;&lt;span style=&quot;color:var(--text-dim)&quot;&gt;UPDATED&lt;/span&gt;&amp;nbsp;&lt;span id=&quot;upd&quot; style=&quot;color:var(--text-bright)&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+                &lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;ap-wrap&quot;&gt;
+                &lt;div&gt;&lt;div class=&quot;ap-lbl&quot; id=&quot;ap-lbl&quot;&gt;AUTOPILOT&lt;/div&gt;&lt;div class=&quot;ap-sub&quot; id=&quot;ap-sub&quot;&gt;DISABLED&lt;/div&gt;&lt;/div&gt;
+                &lt;label class=&quot;tog&quot;&gt;
+                  &lt;input type=&quot;checkbox&quot; id=&quot;ap-tog&quot;/&gt;
+                  &lt;div class=&quot;tog-track&quot;&gt;&lt;/div&gt;
+                  &lt;div class=&quot;tog-knob&quot;&gt;&lt;/div&gt;
+                &lt;/label&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;!-- MAIN --&gt;
+            &lt;div id=&quot;main&quot;&gt;
+              &lt;div id=&quot;pipe-wrap&quot;&gt;
+                &lt;!-- PIPELINE: built entirely by JS --&gt;
+                &lt;div id=&quot;pipe-scroll&quot;&gt;
+                  &lt;div id=&quot;pipeline&quot;&gt;&lt;/div&gt;
+                &lt;/div&gt;
+
+                &lt;!-- CONTROLS --&gt;
+                &lt;div id=&quot;controls&quot;&gt;
+                  &lt;button class=&quot;btn btn-d&quot; id=&quot;btn-rst&quot;&gt;⟳ RESET LINE&lt;/button&gt;
+                  &lt;div class=&quot;cgrp&quot;&gt;
+                    &lt;span class=&quot;clbl&quot;&gt;Robot Speed&lt;/span&gt;
+                    &lt;input type=&quot;range&quot; id=&quot;sl-rb&quot; min=&quot;1&quot; max=&quot;20&quot; value=&quot;10&quot;/&gt;
+                    &lt;span class=&quot;cval&quot; id=&quot;v-rb&quot;&gt;10&lt;/span&gt;
+                    &lt;button class=&quot;btn btn-p sm&quot; id=&quot;bt-rb&quot;&gt;SET&lt;/button&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;cgrp&quot;&gt;
+                    &lt;span class=&quot;clbl&quot;&gt;Loader Speed&lt;/span&gt;
+                    &lt;input type=&quot;range&quot; id=&quot;sl-ld&quot; min=&quot;1&quot; max=&quot;20&quot; value=&quot;7&quot;/&gt;
+                    &lt;span class=&quot;cval&quot; id=&quot;v-ld&quot;&gt;7&lt;/span&gt;
+                    &lt;button class=&quot;btn btn-p sm&quot; id=&quot;bt-ld&quot;&gt;SET&lt;/button&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;cgrp&quot;&gt;
+                    &lt;span class=&quot;clbl&quot;&gt;Quality Threshold&lt;/span&gt;
+                    &lt;input type=&quot;range&quot; id=&quot;sl-th&quot; min=&quot;0&quot; max=&quot;1&quot; step=&quot;0.01&quot; value=&quot;0.5&quot;/&gt;
+                    &lt;span class=&quot;cval&quot; id=&quot;v-th&quot;&gt;0.50&lt;/span&gt;
+                    &lt;button class=&quot;btn btn-p sm&quot; id=&quot;bt-th&quot;&gt;SET&lt;/button&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+
+              &lt;!-- LOG — bottom horizontal strip --&gt;
+              &lt;div id=&quot;log-panel&quot;&gt;
+                &lt;div class=&quot;lhdr&quot;&gt;
+                  &lt;div class=&quot;ltitle&quot;&gt;Activity Log&lt;/div&gt;
+                  &lt;div class=&quot;lbadge&quot; id=&quot;lcnt&quot;&gt;0 entries&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;log-list&quot;&gt;&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;script&gt;
+          const BASE=&#x27;https://nodered.sicuro.duckdns.org&#x27;;
+          let autopilot=false, logN=0, lastSug=null;
+
+          /* ── CLOCK ── */
+          function tick(){
+            document.getElementById(&#x27;clock&#x27;).textContent=
+              new Date().toLocaleTimeString(&#x27;en-GB&#x27;,{hour12:false})+&#x27;  &#x27;+
+              new Date().toLocaleDateString(&#x27;en-GB&#x27;,{day:&#x27;2-digit&#x27;,month:&#x27;short&#x27;,year:&#x27;numeric&#x27;}).toUpperCase();
+          }
+          setInterval(tick,1000);tick();
+
+          /* ── LOG ── */
+          function log(type,tag,msg){
+            logN++;
+            const c=document.getElementById(&#x27;log-list&#x27;);
+            const ts=new Date().toLocaleTimeString(&#x27;en-GB&#x27;,{hour12:false});
+            const e=document.createElement(&#x27;div&#x27;);
+            e.className=`le ${type}`;
+            e.innerHTML=`&lt;div class=&quot;lts&quot;&gt;${ts}&lt;/div&gt;&lt;span class=&quot;ltag&quot;&gt;${tag}&lt;/span&gt;&lt;div class=&quot;lmsg&quot;&gt;${msg}&lt;/div&gt;`;
+            // prepend = newest on the left
+            c.appendChild(e);
+            c.scrollTop = c.scrollHeight;
+            document.getElementById(&#x27;lcnt&#x27;).textContent=logN+&#x27; entr&#x27;+(logN===1?&#x27;y&#x27;:&#x27;ies&#x27;);
+          }
+
+          /* ── API ── */
+          async function post(path,body,desc){
+            try{
+              const o={method:&#x27;POST&#x27;,headers:{&#x27;Content-Type&#x27;:&#x27;application/json&#x27;}};
+              if(body!==undefined) o.body=JSON.stringify(body);
+              const r=await fetch(BASE+path,o);
+              log(r.ok?&#x27;ok&#x27;:&#x27;er&#x27;,r.ok?&#x27;OK&#x27;:&#x27;ERR&#x27;,`${desc} → ${r.ok?&#x27;Success (&#x27;+r.status+&#x27;)&#x27;:&#x27;Failed (&#x27;+r.status+&#x27;)&#x27;}`);
+              return r.ok;
+            }catch(e){log(&#x27;er&#x27;,&#x27;ERR&#x27;,`${desc} → ${e.message}`);return false;}
+          }
+
+          /* ── AUTOPILOT ── */
+          document.getElementById(&#x27;ap-tog&#x27;).addEventListener(&#x27;change&#x27;,async e=&gt;{
+            const on=e.target.checked;
+            const ok=await post(&#x27;/automate&#x27;,undefined,`Autopilot ${on?&#x27;ENABLE&#x27;:&#x27;DISABLE&#x27;}`);
+            if(ok){autopilot=on;apUI();}else e.target.checked=!on;
+          });
+          function apUI(){
+            document.getElementById(&#x27;ap-lbl&#x27;).className=&#x27;ap-lbl&#x27;+(autopilot?&#x27; on&#x27;:&#x27;&#x27;);
+            document.getElementById(&#x27;ap-sub&#x27;).textContent=autopilot?&#x27;ENABLED&#x27;:&#x27;DISABLED&#x27;;
+            [&#x27;btn-rst&#x27;,&#x27;sl-rb&#x27;,&#x27;bt-rb&#x27;,&#x27;sl-ld&#x27;,&#x27;bt-ld&#x27;,&#x27;sl-th&#x27;,&#x27;bt-th&#x27;]
+              .forEach(id=&gt;{const el=document.getElementById(id);if(el)el.disabled=autopilot;});
+          }
+
+          /* ── SLIDERS ── */
+          function sl(id,vid,dec){
+            const s=document.getElementById(id),v=document.getElementById(vid);
+            s.addEventListener(&#x27;input&#x27;,()=&gt;{v.textContent=parseFloat(s.value).toFixed(dec);s._u=true;});
+          }
+          sl(&#x27;sl-rb&#x27;,&#x27;v-rb&#x27;,0);sl(&#x27;sl-ld&#x27;,&#x27;v-ld&#x27;,0);sl(&#x27;sl-th&#x27;,&#x27;v-th&#x27;,2);
+
+          document.getElementById(&#x27;btn-rst&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{
+            await post(&#x27;/reset&#x27;,undefined,&#x27;Reset line&#x27;);
+            await post(&#x27;/analysis/package/reset&#x27;,undefined,&#x27;Reset pkg analysis&#x27;);
+          });
+          document.getElementById(&#x27;bt-rb&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{
+            const s=+document.getElementById(&#x27;sl-rb&#x27;).value;
+            await post(&#x27;/robot/speed&#x27;,{speed:s},`Robot speed → ${s}`);
+          });
+          document.getElementById(&#x27;bt-ld&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{
+            const s=+document.getElementById(&#x27;sl-ld&#x27;).value;
+            await post(&#x27;/load/speed&#x27;,{speed:s},`Loader speed → ${s}`);
+          });
+          document.getElementById(&#x27;bt-th&#x27;).addEventListener(&#x27;click&#x27;,async()=&gt;{
+            const t=parseFloat(document.getElementById(&#x27;sl-th&#x27;).value);
+            await post(&#x27;/threshold&#x27;,{threshold:t},`Quality threshold → ${t.toFixed(2)}`);
+          });
+
+          /* ── BUILD PIPELINE ── */
+          function buildPipeline(){
+            const p=document.getElementById(&#x27;pipeline&#x27;);
+            p.innerHTML=&#x27;&#x27;;
+
+            function arrow(label=&#x27;&#x27;,color=&#x27;#2a3654&#x27;,dashed=false){
+              const W=52, H=40;
+              const svg=document.createElementNS(&#x27;http://www.w3.org/2000/svg&#x27;,&#x27;svg&#x27;);
+              svg.setAttribute(&#x27;width&#x27;,W);svg.setAttribute(&#x27;height&#x27;,H);
+              svg.style.flexShrink=&#x27;0&#x27;;svg.style.alignSelf=&#x27;center&#x27;;
+              const mid=H/2;
+              svg.innerHTML=`
+                &lt;line x1=&quot;2&quot; y1=&quot;${mid}&quot; x2=&quot;${W-10}&quot; y2=&quot;${mid}&quot;
+                  stroke=&quot;${color}&quot; stroke-width=&quot;1.5&quot; ${dashed?&#x27;stroke-dasharray=&quot;4 3&quot;&#x27;:&#x27;&#x27;}/&gt;
+                &lt;polygon points=&quot;${W-10},${mid-4} ${W},${mid} ${W-10},${mid+4}&quot; fill=&quot;${color}&quot;/&gt;
+                ${label?`&lt;text x=&quot;${W/2}&quot; y=&quot;${mid-6}&quot; text-anchor=&quot;middle&quot;
+                  fill=&quot;${color}&quot; font-size=&quot;7.5&quot; font-family=&quot;Share Tech Mono,monospace&quot;
+                  letter-spacing=&quot;1&quot;&gt;${label}&lt;/text&gt;`:&#x27;&#x27;}`;
+              const wrap=document.createElement(&#x27;div&#x27;);
+              wrap.className=&#x27;arrow-conn&#x27;;
+              wrap.appendChild(svg);
+              return wrap;
+            }
+
+            function card(id,tbarClass){
+              const el=document.createElement(&#x27;div&#x27;);
+              el.className=&#x27;scard&#x27;;el.id=&#x27;c-&#x27;+id;
+              el.innerHTML=`
+                &lt;div class=&quot;tbar ${tbarClass}&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;chead&quot;&gt;
+                  &lt;div class=&quot;cact&quot; id=&quot;act-${id}&quot;&gt;—&lt;/div&gt;
+                  &lt;div class=&quot;ccid&quot; id=&quot;cid-${id}&quot;&gt;—&lt;/div&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;cbody&quot; id=&quot;body-${id}&quot;&gt;&lt;/div&gt;`;
+              return el;
+            }
+
+            function group(...cards){
+              const g=document.createElement(&#x27;div&#x27;);
+              g.className=&#x27;stage-group&#x27;;
+              const pair=document.createElement(&#x27;div&#x27;);
+              pair.className=&#x27;card-pair&#x27;;
+              cards.forEach(c=&gt;pair.appendChild(c));
+              g.appendChild(pair);
+              return g;
+            }
+
+            const cPkg=card(&#x27;load-package&#x27;,&#x27;t-loader&#x27;);
+            const cPlt=card(&#x27;load-pallet&#x27;,&#x27;t-loader&#x27;);
+            p.appendChild(group(cPkg,cPlt));
+            p.appendChild(arrow());
+
+            const cRob=card(&#x27;robot&#x27;,&#x27;t-robot&#x27;);
+            p.appendChild(group(cRob));
+            p.appendChild(arrow());
+
+            const cCam=card(&#x27;camera&#x27;,&#x27;t-quality&#x27;);
+            p.appendChild(group(cCam));
+            p.appendChild(arrow());
+
+            const cSmt=card(&#x27;smartwatch&#x27;,&#x27;t-quality&#x27;);
+            p.appendChild(group(cSmt));
+            p.appendChild(arrow());
+
+            const cLab=card(&#x27;labeler&#x27;,&#x27;t-quality&#x27;);
+            p.appendChild(group(cLab));
+            p.appendChild(arrow());
+
+            const cPick=card(&#x27;pick-area&#x27;,&#x27;t-pick&#x27;);
+            const cScrap=card(&#x27;scrap-area&#x27;,&#x27;t-scrap&#x27;);
+            p.appendChild(group(cPick,cScrap));
+
+            setBodyDefault();
+          }
+
+          function kv(k,v,vc=&#x27;&#x27;){
+            return `&lt;div class=&quot;kv&quot;&gt;&lt;span class=&quot;kk&quot;&gt;${k}&lt;/span&gt;&lt;span class=&quot;kv_ ${vc}&quot;&gt;${v}&lt;/span&gt;&lt;/div&gt;`;
+          }
+          function qbadge(ok){
+            if(ok===null||ok===undefined) return `&lt;div class=&quot;qbadge u&quot;&gt;— PENDING —&lt;/div&gt;`;
+            return ok?`&lt;div class=&quot;qbadge p&quot;&gt;✓ PASS&lt;/div&gt;`:`&lt;div class=&quot;qbadge f&quot;&gt;✗ FAIL&lt;/div&gt;`;
+          }
+          function stc(s){
+            if(!s)return&#x27;&#x27;;const l=s.toLowerCase();
+            if(l.includes(&#x27;produc&#x27;)||l.includes(&#x27;run&#x27;)||l.includes(&#x27;activ&#x27;))return&#x27;g&#x27;;
+            if(l.includes(&#x27;stop&#x27;)||l.includes(&#x27;idle&#x27;)||l.includes(&#x27;wait&#x27;))return&#x27;w&#x27;;
+            if(l.includes(&#x27;error&#x27;)||l.includes(&#x27;fail&#x27;))return&#x27;b&#x27;;
+            return&#x27;&#x27;;
+          }
+
+          function setBodyDefault(){
+            const b=id=&gt;document.getElementById(&#x27;body-&#x27;+id);
+            const a=id=&gt;document.getElementById(&#x27;act-&#x27;+id);
+            if(a(&#x27;load-package&#x27;))a(&#x27;load-package&#x27;).textContent=&#x27;Load Package&#x27;;
+            if(a(&#x27;load-pallet&#x27;)) a(&#x27;load-pallet&#x27;).textContent=&#x27;Load Pallets&#x27;;
+            if(a(&#x27;robot&#x27;))       a(&#x27;robot&#x27;).textContent=&#x27;Robot Processing&#x27;;
+            if(a(&#x27;camera&#x27;))      a(&#x27;camera&#x27;).textContent=&#x27;Camera Inspection&#x27;;
+            if(a(&#x27;smartwatch&#x27;))  a(&#x27;smartwatch&#x27;).textContent=&#x27;Smartwatch Inspection&#x27;;
+            if(a(&#x27;labeler&#x27;))     a(&#x27;labeler&#x27;).textContent=&#x27;Apply &amp; Verify Label&#x27;;
+            if(a(&#x27;pick-area&#x27;))   a(&#x27;pick-area&#x27;).textContent=&#x27;Pick Area&#x27;;
+            if(a(&#x27;scrap-area&#x27;))  a(&#x27;scrap-area&#x27;).textContent=&#x27;Scrap Area&#x27;;
+
+            if(b(&#x27;load-package&#x27;))b(&#x27;load-package&#x27;).innerHTML=kv(&#x27;Machine Status&#x27;,&#x27;—&#x27;)+kv(&#x27;Charger Speed&#x27;,&#x27;—&#x27;)+kv(&#x27;Power&#x27;,&#x27;— kW&#x27;);
+            if(b(&#x27;load-pallet&#x27;)) b(&#x27;load-pallet&#x27;).innerHTML=kv(&#x27;Machine Status&#x27;,&#x27;—&#x27;)+kv(&#x27;Pallet Speed&#x27;,&#x27;—&#x27;)+kv(&#x27;Power&#x27;,&#x27;— kW&#x27;);
+            if(b(&#x27;robot&#x27;))       b(&#x27;robot&#x27;).innerHTML=kv(&#x27;Machine Status&#x27;,&#x27;—&#x27;)+kv(&#x27;Robot Speed&#x27;,&#x27;—&#x27;)+kv(&#x27;Power&#x27;,&#x27;— kW&#x27;)+kv(&#x27;Ready Pallets&#x27;,&#x27;—&#x27;)+kv(&#x27;Ready Pkgs&#x27;,&#x27;—&#x27;)+kv(&#x27;Prepared Pkgs&#x27;,&#x27;—&#x27;);
+            if(b(&#x27;camera&#x27;))      b(&#x27;camera&#x27;).innerHTML=qbadge(null);
+            if(b(&#x27;smartwatch&#x27;))  b(&#x27;smartwatch&#x27;).innerHTML=qbadge(null);
+            if(b(&#x27;labeler&#x27;))     b(&#x27;labeler&#x27;).innerHTML=qbadge(null);
+            if(b(&#x27;pick-area&#x27;))   b(&#x27;pick-area&#x27;).innerHTML=kv(&#x27;Good Items&#x27;,&#x27;—&#x27;,&#x27;g&#x27;);
+            if(b(&#x27;scrap-area&#x27;))  b(&#x27;scrap-area&#x27;).innerHTML=kv(&#x27;Scrap Items&#x27;,&#x27;—&#x27;,&#x27;b&#x27;)+kv(&#x27;Scrap Reason&#x27;,&#x27;—&#x27;,&#x27;b&#x27;);
+          }
+
+          /* ── UPDATE CARDS FROM DATA ── */
+          function setCard(id,act,cid,html){
+            const ae=document.getElementById(&#x27;act-&#x27;+id);
+            const ce=document.getElementById(&#x27;cid-&#x27;+id);
+            const be=document.getElementById(&#x27;body-&#x27;+id);
+            if(!ae)return;
+            if(act)ae.textContent=act;
+            if(cid)ce.textContent=cid;
+            if(html!==null)be.innerHTML=html;
+          }
+          function setQC(id,ok){
+            const be=document.getElementById(&#x27;body-&#x27;+id);
+            if(be)be.innerHTML=qbadge(ok);
+            const ce=document.getElementById(&#x27;c-&#x27;+id);
+            if(!ce)return;
+            ce.classList.remove(&#x27;qok&#x27;,&#x27;qbad&#x27;);
+            if(ok===true) ce.classList.add(&#x27;qok&#x27;);
+            if(ok===false)ce.classList.add(&#x27;qbad&#x27;);
+          }
+
+          function applyData(d){
+            if(!d)return;
+            const lp=d[&#x27;load-package&#x27;];
+            if(lp){const a=lp.attributes||{};
+              setCard(&#x27;load-package&#x27;,lp.activity,lp.case_id,
+                kv(&#x27;Machine Status&#x27;,a.machine_status||&#x27;—&#x27;,stc(a.machine_status))+
+                kv(&#x27;Charger Speed&#x27;,a.charger_speed??&#x27;—&#x27;)+
+                kv(&#x27;Power&#x27;,(a.power_kw??&#x27;—&#x27;)+&#x27; kW&#x27;));
+              const sl=document.getElementById(&#x27;sl-ld&#x27;);
+              if(sl&amp;&amp;!sl._u&amp;&amp;a.charger_speed!=null){sl.value=a.charger_speed;document.getElementById(&#x27;v-ld&#x27;).textContent=a.charger_speed;}
+            }
+            const lt=d[&#x27;load-pallets&#x27;];
+            if(lt){const a=lt.attributes||{};
+              setCard(&#x27;load-pallet&#x27;,lt.activity,lt.case_id,
+                kv(&#x27;Machine Status&#x27;,a.machine_status||&#x27;—&#x27;,stc(a.machine_status))+
+                kv(&#x27;Pallet Speed&#x27;,a.pallet_speed??&#x27;—&#x27;)+
+                kv(&#x27;Power&#x27;,(a.power_kw??&#x27;—&#x27;)+&#x27; kW&#x27;));
+            }
+            const rb=d[&#x27;robot&#x27;];
+            if(rb){const a=rb.attributes||{};
+              setCard(&#x27;robot&#x27;,rb.activity,rb.case_id,
+                kv(&#x27;Machine Status&#x27;,a.machine_status||&#x27;running&#x27;,stc(a.machine_status||&#x27;running&#x27;))+
+                kv(&#x27;Robot Speed&#x27;,a.robot_speed??&#x27;—&#x27;)+
+                kv(&#x27;Power&#x27;,(a.power_kw??&#x27;—&#x27;)+&#x27; kW&#x27;)+
+                kv(&#x27;Ready Pallets&#x27;,a.ready_pallets??&#x27;—&#x27;)+
+                kv(&#x27;Ready Pkgs&#x27;,a.ready_packages??&#x27;—&#x27;)+
+                kv(&#x27;Prepared Pkgs&#x27;,a.prepared_packages??&#x27;—&#x27;));
+              const sl=document.getElementById(&#x27;sl-rb&#x27;);
+              if(sl&amp;&amp;!sl._u&amp;&amp;a.robot_speed!=null){sl.value=a.robot_speed;document.getElementById(&#x27;v-rb&#x27;).textContent=a.robot_speed;}
+            }
+            const cam=d[&#x27;camera&#x27;];
+            if(cam){setCard(&#x27;camera&#x27;,cam.activity,cam.case_id,null);setQC(&#x27;camera&#x27;,(cam.attributes||{}).quality_ok);}
+            const sw=d[&#x27;smartwatch&#x27;];
+            if(sw){setCard(&#x27;smartwatch&#x27;,sw.activity,sw.case_id,null);setQC(&#x27;smartwatch&#x27;,(sw.attributes||{}).quality_ok);}
+            const lb=d[&#x27;labeler&#x27;];
+            if(lb){setCard(&#x27;labeler&#x27;,lb.activity,lb.case_id,null);setQC(&#x27;labeler&#x27;,(lb.attributes||{}).quality_ok);}
+            const pk=d[&#x27;pick-area&#x27;];
+            if(pk){const a=pk.attributes||{};
+              setCard(&#x27;pick-area&#x27;,pk.activity,pk.case_id,kv(&#x27;Good Items&#x27;,a.n_good!=null?Number(a.n_good).toLocaleString():&#x27;—&#x27;,&#x27;g&#x27;));}
+            const sc=d[&#x27;scrap-area&#x27;];
+            if(sc){const a=sc.attributes||{};
+              setCard(&#x27;scrap-area&#x27;,sc.activity,sc.case_id,
+                kv(&#x27;Scrap Items&#x27;,a.n_scrap!=null?Number(a.n_scrap).toLocaleString():&#x27;—&#x27;,&#x27;b&#x27;)+
+                kv(&#x27;Scrap Reason&#x27;,a.scrap_reason||&#x27;—&#x27;,&#x27;b&#x27;));}
+          }
+
+          /* ── POLL /line ── */
+          let live=false;
+          async function pollLine(){
+            try{
+              const r=await fetch(BASE+&#x27;/line&#x27;,{signal:AbortSignal.timeout(2000)});
+              if(!r.ok)throw new Error(r.status);
+              const d=await r.json();
+              applyData(d);
+              if(!live){
+                live=true;
+                document.getElementById(&#x27;dot&#x27;).className=&#x27;dot live&#x27;;
+                document.getElementById(&#x27;conn-lbl&#x27;).textContent=&#x27;LIVE&#x27;;
+                document.getElementById(&#x27;loading&#x27;).style.opacity=&#x27;0&#x27;;
+                setTimeout(()=&gt;document.getElementById(&#x27;loading&#x27;).style.display=&#x27;none&#x27;,400);
+              }
+              document.getElementById(&#x27;upd&#x27;).textContent=new Date().toLocaleTimeString(&#x27;en-GB&#x27;,{hour12:false});
+            }catch(e){
+              live=false;
+              document.getElementById(&#x27;dot&#x27;).className=&#x27;dot err&#x27;;
+              document.getElementById(&#x27;conn-lbl&#x27;).textContent=&#x27;DISCONNECTED&#x27;;
+            }
+          }
+
+          /* ── POLL /threshold ── */
+          let lastTh=null;
+          async function pollThreshold(){
+            try{
+              const r=await fetch(BASE+&#x27;/threshold&#x27;,{signal:AbortSignal.timeout(2000)});
+              if(!r.ok)return;
+              const d=await r.json();
+              const t=typeof d===&#x27;object&#x27;?d.threshold:d;
+              if(t!=null&amp;&amp;t!==lastTh){
+                lastTh=t;
+                const sl=document.getElementById(&#x27;sl-th&#x27;);
+                if(sl&amp;&amp;!sl._u){sl.value=t;document.getElementById(&#x27;v-th&#x27;).textContent=parseFloat(t).toFixed(2);}
+              }
+            }catch(e){}
+          }
+
+          /* ── POLL /automate ── */
+          let lastAuto=null;
+          async function pollAutomate(){
+            try{
+              const r=await fetch(BASE+&#x27;/automate&#x27;,{signal:AbortSignal.timeout(2000)});
+              if(!r.ok)return;
+              const d=await r.json();
+              const val=typeof d===&#x27;object&#x27;?d.automate:d;
+              if(val==null||val===lastAuto)return;
+              lastAuto=val;
+              const on=val===true||val===1||val===&#x27;true&#x27;||val===&#x27;1&#x27;||val===&#x27;on&#x27;;
+              if(on!==autopilot){
+                autopilot=on;
+                document.getElementById(&#x27;ap-tog&#x27;).checked=on;
+                apUI();
+                log(&#x27;op&#x27;,&#x27;AUTOPILOT&#x27;,`State synced from server: ${on?&#x27;ENABLED&#x27;:&#x27;DISABLED&#x27;}`);
+              }
+            }catch(e){}
+          }
+
+          /* ── POLL /suggestions ── */
+          async function pollSuggestions(){
+            try{
+              const r=await fetch(BASE+&#x27;/suggestions&#x27;,{signal:AbortSignal.timeout(2000)});
+              if(!r.ok)return;
+              const d=await r.json();
+              const msgs=Array.isArray(d)?d:(d.suggestion?[d.suggestion]:[d.message||JSON.stringify(d)]);
+              const latest=msgs[msgs.length-1];
+              if(latest&amp;&amp;latest!==lastSug){lastSug=latest;log(&#x27;ap&#x27;,&#x27;AUTOPILOT&#x27;,latest);}
+            }catch(e){}
+          }
+
+          /* ── INIT ── */
+          buildPipeline();
+          apUI();
+
+          setTimeout(()=&gt;{
+            const l=document.getElementById(&#x27;loading&#x27;);
+            if(l.style.display!==&#x27;none&#x27;){
+              l.style.opacity=&#x27;0&#x27;;setTimeout(()=&gt;l.style.display=&#x27;none&#x27;,400);
+              document.getElementById(&#x27;dot&#x27;).className=&#x27;dot err&#x27;;
+              document.getElementById(&#x27;conn-lbl&#x27;).textContent=&#x27;NO CONNECTION&#x27;;
+              log(&#x27;er&#x27;,&#x27;ERR&#x27;,&#x27;Cannot reach Node-RED at &#x27;+BASE);
+            }
+          },5000);
+
+          pollLine();
+          pollThreshold();
+          pollAutomate();
+          setInterval(pollLine,500);
+          setInterval(pollThreshold,2000);
+          setInterval(pollAutomate,2000);
+          setInterval(pollSuggestions,1000);
+          log(&#x27;op&#x27;,&#x27;SYSTEM&#x27;,&#x27;Interface initialized. Polling every 500 ms.&#x27;);
+          &lt;/script&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;">
+        </iframe>
+      </div>
+      }
+=======
+>>>>>>> upstream/main
     }
 
     @if (currentPage() === 'marketplace') {
