@@ -22,8 +22,16 @@
            [class.border-slate-700]="currentPage() !== 'marketplace'"
            [class.text-slate-400]="currentPage() !== 'marketplace'">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-      </div>
-      <div class="w-10 h-10 rounded bg-slate-800 flex items-center justify-center cursor-pointer border border-slate-700 text-slate-400 hover:bg-slate-700 transition-colors">
+      </div>      <div (click)="currentPage.set('eventlog')"
+           title="Event Stream Full Screen"
+           aria-label="Open Event Stream Full Screen"
+           class="w-10 h-10 rounded flex items-center justify-center cursor-pointer border transition-colors"
+           [class.bg-indigo-900/30]="currentPage() === 'eventlog'"
+           [class.border-indigo-500/50]="currentPage() === 'eventlog'"
+           [class.text-indigo-400]="currentPage() === 'eventlog'"
+           [class.bg-slate-800]="currentPage() !== 'eventlog'"
+           [class.border-slate-700]="currentPage() !== 'eventlog'"
+           [class.text-slate-400]="currentPage() !== 'eventlog'">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </div>
     </div>
@@ -34,8 +42,22 @@
     <!-- Top Navigation Bar -->
     <header class="h-14 border-b border-slate-800 flex items-center justify-between px-6 bg-[#0f1116] shrink-0">
       <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 shrink-0 pr-1" aria-label="AUTOPILOT project logos">
+            <img
+              class="h-8 w-auto object-contain rounded-sm"
+              src="https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/refs/heads/main/docs/imgs/ENG24_LOGO-AVANT_WHITE.png"
+              alt="PROJECT logo"
+              (error)="$any($event.target).style.display='none'"
+            />
+            <img
+              class="h-8 w-auto object-contain rounded-sm"
+              src="https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/main/docs/imgs/logo_white.png"
+              alt="AUTOPILOT logo"
+              (error)="$any($event.target).style.display='none'"
+            />
+          </div>
         <h1 class="text-sm font-bold text-slate-100 uppercase tracking-widest">
-          {{ currentPage() === 'dashboard' ? 'Digital Twin Dashboard' : 'Asset Marketplace' }}
+          {{ currentPage() === 'dashboard' ? 'Digital Twin Dashboard' : currentPage() === 'marketplace' ? 'Asset Marketplace' : 'Event Stream Full Screen' }}
         </h1>
         <div class="flex items-center gap-3 pl-4 border-l border-slate-700">
           <div class="flex flex-col">
@@ -45,7 +67,6 @@
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" [checked]="isAutopilotEnabled()" (change)="toggleAutopilot()" class="sr-only peer">
             <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
-<<<<<<< HEAD
           </label>  
         </div>  
         <!-- View Mode Switch: 3D / 2D. Uses template ref #view2d, so no app.ts changes are required. -->
@@ -59,11 +80,6 @@
           </label>
         </div>
       </div>  
-=======
-          </label>
-        </div>
-      </div>
->>>>>>> upstream/main
       <div class="flex items-center gap-6 text-[11px] font-medium">
         <div class="flex flex-col">
           <span class="text-slate-500 text-[9px] uppercase">Location</span>
@@ -74,17 +90,14 @@
           <span class="text-slate-200">RV-WEB-772-LITE</span>
         </div>
         <div class="flex flex-col items-end">
-          <span class="text-slate-500 text-[9px] uppercase">Data e Ora</span>
-          <span class="text-emerald-400 font-mono">{{ currentTime() }}</span>
+          <span class="text-emerald-400 font-mono">08 Jul 2026 · {{ currentTime() }}</span>
         </div>
       </div>
     </header>
 
     @if (currentPage() === 'dashboard') {
-<<<<<<< HEAD
     @if (!view2d.checked) {
-=======
->>>>>>> upstream/main
+    @if (!view2d.checked) {
     <!-- 3D & Data Layout -->
     <div class="flex-1 flex overflow-hidden p-4 gap-4">
       <!-- Primary 3D Viewport Wrapper -->
@@ -431,7 +444,6 @@
         }
       </div>
     </footer>
-<<<<<<< HEAD
     } @else {
       <!-- Embedded 2D simulator: full app_2d.html included via iframe srcdoc. -->
       <div class="flex-1 flex overflow-hidden p-4 bg-[#0c0d10]">
@@ -652,6 +664,7 @@
           .spin{width:38px;height:38px;border:2.5px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;}
           @keyframes sp{to{transform:rotate(360deg)}}
           body::after{content:&#x27;&#x27;;position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.035) 2px,rgba(0,0,0,.035) 4px);pointer-events:none;z-index:999;}
+          #topbar{display:none!important;height:0!important;padding:0!important;border:0!important;}  
           &lt;/style&gt;
           &lt;/head&gt;
           &lt;body&gt;
@@ -662,43 +675,17 @@
           &lt;/div&gt;
 
           &lt;div id=&quot;app&quot;&gt;
-            &lt;!-- TOPBAR --&gt;
-            &lt;div id=&quot;topbar&quot;&gt;
-              &lt;div class=&quot;logo&quot;&gt;
-                &lt;img
-                  class=&quot;logo-img&quot;
-                  src=&quot;https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/refs/heads/main/docs/imgs/ENG24_LOGO-AVANT_WHITE.png&quot;
-                  alt=&quot;PROJECT logo&quot;
-                  onerror=&quot;this.style.display=&#x27;none&#x27;&quot;
-                /&gt;
-                &lt;img
-                  class=&quot;logo-img&quot;
-                  src=&quot;https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/main/docs/imgs/logo_white.png&quot;
-                  alt=&quot;AUTOPILOT logo&quot;
-                  onerror=&quot;this.style.display=&#x27;none&#x27;;document.getElementById(&#x27;logo-fallback&#x27;).style.display=&#x27;flex&#x27;;&quot;
-                /&gt;
-                &lt;!-- fallback hex badge if image fails to load --&gt;
-                &lt;div id=&quot;logo-fallback&quot; style=&quot;display:none;width:30px;height:30px;background:linear-gradient(135deg,var(--accent2),var(--accent));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);align-items:center;justify-content:center;font-size:11px;font-family:var(--mono);color:#fff;font-weight:bold;&quot;&gt;AP&lt;/div&gt;
-                &lt;div&gt;
-                  &lt;div class=&quot;logo-text&quot;&gt;AUTOPILOT&lt;/div&gt;
-                  &lt;div class=&quot;logo-sub&quot;&gt;PACKAGING LINE MONITOR&lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-              &lt;div class=&quot;topbar-mid&quot;&gt;
-                &lt;div class=&quot;pill&quot;&gt;&lt;div class=&quot;dot&quot; id=&quot;dot&quot;&gt;&lt;/div&gt;&lt;span id=&quot;conn-lbl&quot;&gt;CONNECTING&lt;/span&gt;&lt;/div&gt;
-                &lt;div class=&quot;pill&quot;&gt;&lt;span style=&quot;color:var(--text-dim)&quot;&gt;UPDATED&lt;/span&gt;&amp;nbsp;&lt;span id=&quot;upd&quot; style=&quot;color:var(--text-bright)&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
-                &lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
-              &lt;/div&gt;
-              &lt;div class=&quot;ap-wrap&quot;&gt;
-                &lt;div&gt;&lt;div class=&quot;ap-lbl&quot; id=&quot;ap-lbl&quot;&gt;AUTOPILOT&lt;/div&gt;&lt;div class=&quot;ap-sub&quot; id=&quot;ap-sub&quot;&gt;DISABLED&lt;/div&gt;&lt;/div&gt;
-                &lt;label class=&quot;tog&quot;&gt;
-                  &lt;input type=&quot;checkbox&quot; id=&quot;ap-tog&quot;/&gt;
-                  &lt;div class=&quot;tog-track&quot;&gt;&lt;/div&gt;
-                  &lt;div class=&quot;tog-knob&quot;&gt;&lt;/div&gt;
-                &lt;/label&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-
+            &lt;!-- TOPBAR REMOVED: logos, clock and AUTOPILOT toggle are already provided by the main 3D UI. --&gt;  
+            &lt;!-- Hidden compatibility nodes keep the existing 2D polling script working without rendering a duplicate header. --&gt;  
+            &lt;div id=&quot;topbar&quot; style=&quot;display:none;&quot; aria-hidden=&quot;true&quot;&gt;  
+              &lt;div id=&quot;dot&quot;&gt;&lt;/div&gt;  
+              &lt;span id=&quot;conn-lbl&quot;&gt;CONNECTING&lt;/span&gt;  
+              &lt;span id=&quot;upd&quot;&gt;—&lt;/span&gt;  
+              &lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;  
+              &lt;div id=&quot;ap-lbl&quot; class=&quot;ap-lbl&quot;&gt;AUTOPILOT&lt;/div&gt;  
+              &lt;div id=&quot;ap-sub&quot;&gt;DISABLED&lt;/div&gt;  
+              &lt;input type=&quot;checkbox&quot; id=&quot;ap-tog&quot;/&gt;  
+            &lt;/div&gt;  
             &lt;!-- MAIN --&gt;
             &lt;div id=&quot;main&quot;&gt;
               &lt;div id=&quot;pipe-wrap&quot;&gt;
@@ -1093,8 +1080,58 @@
         </iframe>
       </div>
       }
-=======
->>>>>>> upstream/main
+    }
+
+    @if (currentPage() === 'eventlog') {
+      <div class="flex-1 overflow-hidden p-4 bg-[#0c0d10]">
+        <section class="h-full rounded-lg border border-slate-800 bg-[#0b0d12] flex flex-col overflow-hidden shadow-2xl">
+          <header class="h-16 border-b border-slate-800 bg-[#0f1116] flex items-center justify-between px-5 shrink-0">
+            <div class="flex items-center gap-4">
+              <div>
+                <div class="text-[10px] text-indigo-400 font-mono mt-1">SYSTEM :: RV-WEB PROTOCOL LITE</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-[10px] text-emerald-500 flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Log: Normal</span>
+              <span class="text-[10px] text-slate-500 font-mono">{{ events().length }} entries</span>
+            </div>
+          </header>
+
+          <div class="grid grid-cols-[130px_110px_1fr] gap-4 px-5 py-3 border-b border-slate-800 bg-slate-900/70 text-[10px] font-bold text-slate-500 uppercase tracking-wider shrink-0">
+            <div>Timestamp</div>
+            <div>Type</div>
+            <div>Message</div>
+          </div>
+
+          <div class="flex-1 overflow-y-auto p-3 font-mono text-[11px] space-y-2 bg-slate-950/60">
+            @for (event of events(); track $index) {
+              <div class="grid grid-cols-[130px_110px_1fr] gap-4 w-full p-3 rounded border border-slate-800/70 bg-[#111318] hover:bg-slate-800/60 transition-colors"
+                   [class.opacity-60]="event.type === 'DEBUG'">
+                <span class="text-slate-500 font-bold whitespace-nowrap">[{{ event.timestamp }}]</span>
+                <span class="font-bold tracking-widest shrink-0"
+                      [class.text-indigo-400]="event.type === 'INFO'"
+                      [class.text-emerald-500]="event.type === 'OK'"
+                      [class.text-red-500]="event.type === 'ERROR'"
+                      [class.text-slate-400]="event.type === 'DEBUG'"
+                      [class.text-amber-400]="event.type === 'SUGGESTION'">
+                  {{ event.type }}
+                </span>
+                <span class="text-slate-300 leading-snug break-words" [class.text-slate-500]="event.type === 'DEBUG'">
+                  {{ event.message }}
+                </span>
+              </div>
+            }
+            @if (events().length === 0) {
+              <div class="h-full flex items-center justify-center text-slate-500 italic p-8">
+                <div class="flex items-center gap-3">
+                  <span class="w-4 h-4 border-2 border-slate-700 border-t-indigo-500 rounded-full animate-spin"></span>
+                  Awaiting telemetry from Node-RED stream...
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
     }
 
     @if (currentPage() === 'marketplace') {
