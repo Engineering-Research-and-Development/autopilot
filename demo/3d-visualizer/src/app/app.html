@@ -42,6 +42,22 @@
     <!-- Top Navigation Bar -->
     <header class="h-14 border-b border-slate-800 flex items-center justify-between px-6 bg-[#0f1116] shrink-0">
       <div class="flex items-center gap-4">
+        @if (currentPage() === 'dashboard') {
+          <div class="flex items-center gap-2 shrink-0 pr-1" aria-label="AUTOPILOT project logos">
+            <img
+              class="h-8 w-auto object-contain rounded-sm"
+              src="https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/refs/heads/main/docs/imgs/ENG24_LOGO-AVANT_WHITE.png"
+              alt="PROJECT logo"
+              (error)="$any($event.target).style.display='none'"
+            />
+            <img
+              class="h-8 w-auto object-contain rounded-sm"
+              src="https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/main/docs/imgs/logo_white.png"
+              alt="AUTOPILOT logo"
+              (error)="$any($event.target).style.display='none'"
+            />
+          </div>
+        }
         <h1 class="text-sm font-bold text-slate-100 uppercase tracking-widest">
           {{ currentPage() === 'dashboard' ? 'Digital Twin Dashboard' : currentPage() === 'marketplace' ? 'Asset Marketplace' : 'Event Log Fullscreen' }}
         </h1>
@@ -650,6 +666,7 @@
           .spin{width:38px;height:38px;border:2.5px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite;}
           @keyframes sp{to{transform:rotate(360deg)}}
           body::after{content:&#x27;&#x27;;position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.035) 2px,rgba(0,0,0,.035) 4px);pointer-events:none;z-index:999;}
+          #topbar{display:none!important;height:0!important;padding:0!important;border:0!important;}  
           &lt;/style&gt;
           &lt;/head&gt;
           &lt;body&gt;
@@ -660,43 +677,17 @@
           &lt;/div&gt;
 
           &lt;div id=&quot;app&quot;&gt;
-            &lt;!-- TOPBAR --&gt;
-            &lt;div id=&quot;topbar&quot;&gt;
-              &lt;div class=&quot;logo&quot;&gt;
-                &lt;img
-                  class=&quot;logo-img&quot;
-                  src=&quot;https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/refs/heads/main/docs/imgs/ENG24_LOGO-AVANT_WHITE.png&quot;
-                  alt=&quot;PROJECT logo&quot;
-                  onerror=&quot;this.style.display=&#x27;none&#x27;&quot;
-                /&gt;
-                &lt;img
-                  class=&quot;logo-img&quot;
-                  src=&quot;https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/main/docs/imgs/logo_white.png&quot;
-                  alt=&quot;AUTOPILOT logo&quot;
-                  onerror=&quot;this.style.display=&#x27;none&#x27;;document.getElementById(&#x27;logo-fallback&#x27;).style.display=&#x27;flex&#x27;;&quot;
-                /&gt;
-                &lt;!-- fallback hex badge if image fails to load --&gt;
-                &lt;div id=&quot;logo-fallback&quot; style=&quot;display:none;width:30px;height:30px;background:linear-gradient(135deg,var(--accent2),var(--accent));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);align-items:center;justify-content:center;font-size:11px;font-family:var(--mono);color:#fff;font-weight:bold;&quot;&gt;AP&lt;/div&gt;
-                &lt;div&gt;
-                  &lt;div class=&quot;logo-text&quot;&gt;AUTOPILOT&lt;/div&gt;
-                  &lt;div class=&quot;logo-sub&quot;&gt;PACKAGING LINE MONITOR&lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/div&gt;
-              &lt;div class=&quot;topbar-mid&quot;&gt;
-                &lt;div class=&quot;pill&quot;&gt;&lt;div class=&quot;dot&quot; id=&quot;dot&quot;&gt;&lt;/div&gt;&lt;span id=&quot;conn-lbl&quot;&gt;CONNECTING&lt;/span&gt;&lt;/div&gt;
-                &lt;div class=&quot;pill&quot;&gt;&lt;span style=&quot;color:var(--text-dim)&quot;&gt;UPDATED&lt;/span&gt;&amp;nbsp;&lt;span id=&quot;upd&quot; style=&quot;color:var(--text-bright)&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
-                &lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;
-              &lt;/div&gt;
-              &lt;div class=&quot;ap-wrap&quot;&gt;
-                &lt;div&gt;&lt;div class=&quot;ap-lbl&quot; id=&quot;ap-lbl&quot;&gt;AUTOPILOT&lt;/div&gt;&lt;div class=&quot;ap-sub&quot; id=&quot;ap-sub&quot;&gt;DISABLED&lt;/div&gt;&lt;/div&gt;
-                &lt;label class=&quot;tog&quot;&gt;
-                  &lt;input type=&quot;checkbox&quot; id=&quot;ap-tog&quot;/&gt;
-                  &lt;div class=&quot;tog-track&quot;&gt;&lt;/div&gt;
-                  &lt;div class=&quot;tog-knob&quot;&gt;&lt;/div&gt;
-                &lt;/label&gt;
-              &lt;/div&gt;
-            &lt;/div&gt;
-
+            &lt;!-- TOPBAR REMOVED: logos, clock and AUTOPILOT toggle are already provided by the main 3D UI. --&gt;  
+            &lt;!-- Hidden compatibility nodes keep the existing 2D polling script working without rendering a duplicate header. --&gt;  
+            &lt;div id=&quot;topbar&quot; style=&quot;display:none;&quot; aria-hidden=&quot;true&quot;&gt;  
+              &lt;div id=&quot;dot&quot;&gt;&lt;/div&gt;  
+              &lt;span id=&quot;conn-lbl&quot;&gt;CONNECTING&lt;/span&gt;  
+              &lt;span id=&quot;upd&quot;&gt;—&lt;/span&gt;  
+              &lt;div id=&quot;clock&quot;&gt;&lt;/div&gt;  
+              &lt;div id=&quot;ap-lbl&quot; class=&quot;ap-lbl&quot;&gt;AUTOPILOT&lt;/div&gt;  
+              &lt;div id=&quot;ap-sub&quot;&gt;DISABLED&lt;/div&gt;  
+              &lt;input type=&quot;checkbox&quot; id=&quot;ap-tog&quot;/&gt;  
+            &lt;/div&gt;  
             &lt;!-- MAIN --&gt;
             &lt;div id=&quot;main&quot;&gt;
               &lt;div id=&quot;pipe-wrap&quot;&gt;
