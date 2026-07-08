@@ -9,6 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { DigitalTwinComponent, DigitalTwinStreamEvent } from './digital-twin.component';
+import { MarketplaceComponent } from './marketplace.component';
 import { NodeRedService } from './nodered.service';
 import { DecimalPipe } from '@angular/common';
 
@@ -16,7 +17,7 @@ import { DecimalPipe } from '@angular/common';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  imports: [DigitalTwinComponent, DecimalPipe],
+  imports: [DigitalTwinComponent, MarketplaceComponent, DecimalPipe],
   templateUrl: './app.html',
   styleUrl: './app.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -35,7 +36,7 @@ export class App {
   public qualityThreshold = this.nodeRedService.qualityThreshold;
   public isAutopilotEnabled = this.nodeRedService.isAutopilotEnabled;
 
-  public currentPage = signal<'dashboard' | 'marketplace'>('dashboard');
+  public currentPage = signal<'dashboard' | 'marketplace' | 'eventlog'>('dashboard');
   public robotStyle = signal<'industrial' | 'modern' | 'stealth'>('industrial');
   public showTooltips = signal<boolean>(true);
   public currentTime = signal<string>(new Date().toLocaleTimeString('en-GB', { hour12: false }));
