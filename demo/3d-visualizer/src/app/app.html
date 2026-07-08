@@ -42,6 +42,22 @@
     <!-- Top Navigation Bar -->
     <header class="h-14 border-b border-slate-800 flex items-center justify-between px-6 bg-[#0f1116] shrink-0">
       <div class="flex items-center gap-4">
+        @if (currentPage() === 'dashboard') {
+          <div class="flex items-center gap-2 shrink-0 pr-1" aria-label="AUTOPILOT project logos">
+            <img
+              class="h-8 w-auto object-contain rounded-sm"
+              src="https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/refs/heads/main/docs/imgs/ENG24_LOGO-AVANT_WHITE.png"
+              alt="PROJECT logo"
+              (error)="$any($event.target).style.display='none'"
+            />
+            <img
+              class="h-8 w-auto object-contain rounded-sm"
+              src="https://raw.githubusercontent.com/Engineering-Research-and-Development/autopilot/main/docs/imgs/logo_white.png"
+              alt="AUTOPILOT logo"
+              (error)="$any($event.target).style.display='none'"
+            />
+          </div>
+        }
         <h1 class="text-sm font-bold text-slate-100 uppercase tracking-widest">
           {{ currentPage() === 'dashboard' ? 'Digital Twin Dashboard' : currentPage() === 'marketplace' ? 'Asset Marketplace' : 'Event Log Fullscreen' }}
         </h1>
