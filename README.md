@@ -147,3 +147,7 @@ The knowledge layer provides the unified "source of truth". It integrates time-s
 ![Knowledge](https://kroki.io/d2/svg/eNrNU8GK2zAQvfsrhizsqYZVnHZdFwqBQg85FNqlp1zG1thWI1tGUmrSEug_tKde-m_9gn7CjmMn6yzeXUovBRnkpzdv5mlGF_D7xzdesKpNq0kWBBk2mCqtvCI3nP6HKwgyjc6RS-BrANCU6KjfArgSG_6xlHmsC0096Hf6xABIjZVkQ4tSbVkjPsFaJuDtlgYgN7UPnfrCoSI6YkrrBGYXgkS6SGcD6rw1G-rwWMRZHp_jYaukLxOYj3Uzo43tIuiKrvP8FFGiNO2ojH3Qf9yacHNs1D-4fTFhTtw3F4mr-YS5RSbky-fT5sSkObyO0xxnZ07QWtNOeDkv---yDqhEx2A0SrcPghWLakyps_bn1_efd_M-ewWHSUr6GWLuRozIN6qi0JHtHoPzxmJB69rk0M2eB0-aKvJ2d6dy1qN9sJmPxD5yj4w96BBfkl3X75dvuXOe5T-jhktwVGHtVcYbtFn5sGw0kl0uP4DbppWRpFmtMU5xht26voQ3qlCelW9aVfNRodyjxS5Gqu_ST1zu0XRf7iGFewZyWzWOy0XrVY6Zdw9KBisIX8PhSgfCvdbvB8b8SUb0JGPxCOMWNmy60w==)
 
 ---
+
+## LICENSE
+
+This project is licensed under the Apache License 2.0. See the LICENSE file for details.
