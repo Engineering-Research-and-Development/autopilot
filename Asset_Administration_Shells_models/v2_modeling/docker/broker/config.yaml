@@ -1,0 +1,34 @@
+logging:
+  level: "INFO"
+
+sources:
+  opcua:
+    enabled: false
+    server_url: "opc.tcp://host.docker.internal:53530/OPCUA/SimulationServer"
+    nodes_to_subscribe:
+      - "ns=3;i=1001"
+      - "ns=3;i=1002"
+
+  mqtt:
+    enabled: true
+    broker_host: "mosquitto"
+    broker_port: 1883
+    topic_subscribe: "factory-b/phase3/#"
+    client_id: "broker-id"
+    keepalive: 60
+
+destinations:
+  pulsar:
+    enabled: true
+    service_url: "pulsar://broker:6650"
+    publishing:
+      retry_attempts: 5
+      dlq_topic: "persistent://public/default/pulsar-broker-dlq"
+
+pipelines:
+  - name: "mqtt_to_pulsar"
+    source: "mqtt"
+    destination: "pulsar"
+
+heartbeat:
+  interval_seconds: 30

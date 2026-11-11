@@ -1,0 +1,337 @@
+{
+  "assetAdministrationShells": [
+    {
+      "idShort": "EclipseBasyx",
+      "id": "urn:factory-b:phase3:basyx",
+      "description": [
+        {
+          "language": "en",
+          "text": "Eclipse BaSyx deployment that represents the line's digital twins."
+        }
+      ],
+      "administration": {
+        "version": "1",
+        "revision": "0"
+      },
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "urn:factory-b:phase3:asset:basyx"
+      },
+      "submodels": [
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "urn:factory-b:phase3:submodel:basyx:software-nameplate"
+            }
+          ]
+        }
+      ],
+      "modelType": "AssetAdministrationShell"
+    }
+  ],
+  "submodels": [
+    {
+      "idShort": "SoftwareNameplate",
+      "id": "urn:factory-b:phase3:submodel:basyx:software-nameplate",
+      "kind": "Instance",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0"
+          }
+        ]
+      },
+      "submodelElements": [
+        {
+          "idShort": "SoftwareNameplateType",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType"
+              }
+            ]
+          },
+          "modelType": "SubmodelElementCollection",
+          "value": [
+            {
+              "idShort": "URIOfTheProduct",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAY811#001"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property",
+              "value": "https://eclipse.dev/basyx/"
+            },
+            {
+              "idShort": "ManufacturerName",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO677#002"
+                  }
+                ]
+              },
+              "modelType": "MultiLanguageProperty",
+              "value": [
+                {
+                  "language": "en",
+                  "text": "Eclipse Foundation"
+                }
+              ]
+            },
+            {
+              "idShort": "ManufacturerProductDesignation",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAW338#001"
+                  }
+                ]
+              },
+              "modelType": "MultiLanguageProperty",
+              "value": [
+                {
+                  "language": "en",
+                  "text": "Eclipse BaSyx"
+                }
+              ]
+            },
+            {
+              "idShort": "ManufacturerProductDescription",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/ManufacturerProductDescription"
+                  }
+                ]
+              },
+              "modelType": "MultiLanguageProperty",
+              "value": [
+                {
+                  "language": "en",
+                  "text": "AAS middleware hosting the digital twins of packaging line phase 3."
+                }
+              ]
+            },
+            {
+              "idShort": "Version",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/Version"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property",
+              "value": "2.0.0-milestone-16"
+            },
+            {
+              "idShort": "ReleaseDate",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/ReleaseDate"
+                  }
+                ]
+              },
+              "valueType": "xs:date",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "BuildDate",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/BuildDate"
+                  }
+                ]
+              },
+              "valueType": "xs:date",
+              "modelType": "Property"
+            }
+          ]
+        },
+        {
+          "idShort": "SoftwareNameplateInstance",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance"
+              }
+            ]
+          },
+          "modelType": "SubmodelElementCollection",
+          "value": [
+            {
+              "idShort": "InstalledVersion",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledVersion"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property",
+              "value": "2.0.0-milestone-16"
+            },
+            {
+              "idShort": "InstallationDate",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstallationDate"
+                  }
+                ]
+              },
+              "valueType": "xs:date",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "InstalledModules",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModules"
+                  }
+                ]
+              },
+              "modelType": "SubmodelElementCollection",
+              "value": [
+                {
+                  "idShort": "AasEnvironment",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:eclipse:basyx_aas_environment:2.0.0:milestone-16:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "AasRegistry",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:eclipse:basyx_aas_registry:2.0.0:milestone-16:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "SubmodelRegistry",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:eclipse:basyx_submodel_registry:2.0.0:milestone-16:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "AasDiscovery",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:eclipse:basyx_aas_discovery:2.0.0:milestone-16:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "AasWebUi",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:eclipse:basyx_aas_web_ui:v2-261013:*:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "MongoDb",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:mongodb:mongodb:9.0.4:*:*:*:*:*:*:*"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "modelType": "Submodel",
+      "administration": {
+        "version": "1",
+        "revision": "2",
+        "templateId": "https://admin-shell.io/idta/SubmodelTemplate/SoftwareNameplate/1/0"
+      }
+    }
+  ]
+}

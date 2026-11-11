@@ -1,0 +1,427 @@
+{
+  "assetAdministrationShells": [
+    {
+      "idShort": "PssPassBroker",
+      "id": "urn:factory-b:phase3:pss-pass-broker",
+      "description": [
+        {
+          "language": "en",
+          "text": "PSS-PASS-Broker: AAS bridge between the MQTT/OPC UA bus and Eclipse BaSyx."
+        }
+      ],
+      "administration": {
+        "version": "1",
+        "revision": "0"
+      },
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "urn:factory-b:phase3:asset:pss-pass-broker"
+      },
+      "submodels": [
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "urn:factory-b:phase3:submodel:pss-pass-broker:software-nameplate"
+            }
+          ]
+        }
+      ],
+      "modelType": "AssetAdministrationShell"
+    }
+  ],
+  "submodels": [
+    {
+      "idShort": "SoftwareNameplate",
+      "id": "urn:factory-b:phase3:submodel:pss-pass-broker:software-nameplate",
+      "kind": "Instance",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0"
+          }
+        ]
+      },
+      "submodelElements": [
+        {
+          "idShort": "SoftwareNameplateType",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType"
+              }
+            ]
+          },
+          "modelType": "SubmodelElementCollection",
+          "value": [
+            {
+              "idShort": "URIOfTheProduct",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAY811#001"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property",
+              "value": "https://github.com/Engineering-Research-and-Development/pss-pass-broker"
+            },
+            {
+              "idShort": "ManufacturerName",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAO677#002"
+                  }
+                ]
+              },
+              "modelType": "MultiLanguageProperty",
+              "value": [
+                {
+                  "language": "en",
+                  "text": "PSS-PASS project"
+                }
+              ]
+            },
+            {
+              "idShort": "ManufacturerProductDesignation",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "0173-1#02-AAW338#001"
+                  }
+                ]
+              },
+              "modelType": "MultiLanguageProperty",
+              "value": [
+                {
+                  "language": "en",
+                  "text": "PSS-PASS-Broker"
+                }
+              ]
+            },
+            {
+              "idShort": "ManufacturerProductDescription",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/ManufacturerProductDescription"
+                  }
+                ]
+              },
+              "modelType": "MultiLanguageProperty",
+              "value": [
+                {
+                  "language": "en",
+                  "text": "AAS bridge: forwards MQTT / OPC UA / HTTP data to Apache Pulsar; the basyxupdater Pulsar Function writes it to the BaSyx AAS Environment."
+                }
+              ]
+            },
+            {
+              "idShort": "Version",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/Version"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property",
+              "value": "0.1.0"
+            },
+            {
+              "idShort": "ReleaseDate",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/ReleaseDate"
+                  }
+                ]
+              },
+              "valueType": "xs:date",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "BuildDate",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateType/BuildDate"
+                  }
+                ]
+              },
+              "valueType": "xs:date",
+              "modelType": "Property"
+            }
+          ]
+        },
+        {
+          "idShort": "SoftwareNameplateInstance",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance"
+              }
+            ]
+          },
+          "modelType": "SubmodelElementCollection",
+          "value": [
+            {
+              "idShort": "InstalledVersion",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledVersion"
+                  }
+                ]
+              },
+              "valueType": "xs:string",
+              "modelType": "Property",
+              "value": "0.1.0"
+            },
+            {
+              "idShort": "InstallationDate",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstallationDate"
+                  }
+                ]
+              },
+              "valueType": "xs:date",
+              "modelType": "Property"
+            },
+            {
+              "idShort": "InstalledModules",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModules"
+                  }
+                ]
+              },
+              "modelType": "SubmodelElementCollection",
+              "value": [
+                {
+                  "idShort": "BrokerService",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:pss-pass:pss-pass-broker:0.1.0:*:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "ApachePulsar",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:apache:pulsar:4.1.2:*:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "PulsarFunction",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:pss-pass:basyxupdater:-:*:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "EclipseMosquitto",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:eclipse:mosquitto:2.0.22:*:*:*:*:*:*:*"
+                },
+                {
+                  "idShort": "Dekaf",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/InstalledModule"
+                      }
+                    ]
+                  },
+                  "valueType": "xs:string",
+                  "modelType": "Property",
+                  "value": "cpe:2.3:a:visortelle:dekaf:1.1.0:*:*:*:*:*:*:*"
+                }
+              ]
+            },
+            {
+              "idShort": "ConfigurationPaths",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationPaths"
+                  }
+                ]
+              },
+              "modelType": "SubmodelElementCollection",
+              "value": [
+                {
+                  "idShort": "BrokerConfig",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationPath"
+                      }
+                    ]
+                  },
+                  "modelType": "SubmodelElementCollection",
+                  "value": [
+                    {
+                      "idShort": "ConfigurationURI",
+                      "semanticId": {
+                        "type": "ExternalReference",
+                        "keys": [
+                          {
+                            "type": "GlobalReference",
+                            "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationURI"
+                          }
+                        ]
+                      },
+                      "valueType": "xs:anyURI",
+                      "modelType": "Property",
+                      "value": "https://github.com/Engineering-Research-and-Development/pss-pass-broker/blob/c67d76dd6685d12e52ac0153d8de6cd674b2f8e9/src/config.yaml"
+                    },
+                    {
+                      "idShort": "ConfigurationType",
+                      "semanticId": {
+                        "type": "ExternalReference",
+                        "keys": [
+                          {
+                            "type": "GlobalReference",
+                            "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationType"
+                          }
+                        ]
+                      },
+                      "valueType": "xs:string",
+                      "modelType": "Property",
+                      "value": "YAML"
+                    }
+                  ]
+                },
+                {
+                  "idShort": "UpdaterFunctionConfig",
+                  "semanticId": {
+                    "type": "ExternalReference",
+                    "keys": [
+                      {
+                        "type": "GlobalReference",
+                        "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationPath"
+                      }
+                    ]
+                  },
+                  "modelType": "SubmodelElementCollection",
+                  "value": [
+                    {
+                      "idShort": "ConfigurationURI",
+                      "semanticId": {
+                        "type": "ExternalReference",
+                        "keys": [
+                          {
+                            "type": "GlobalReference",
+                            "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationURI"
+                          }
+                        ]
+                      },
+                      "valueType": "xs:anyURI",
+                      "modelType": "Property",
+                      "value": "https://github.com/Engineering-Research-and-Development/pss-pass-broker/blob/c67d76dd6685d12e52ac0153d8de6cd674b2f8e9/Pulsar-Standard/pulsar-resources/function-config.yaml"
+                    },
+                    {
+                      "idShort": "ConfigurationType",
+                      "semanticId": {
+                        "type": "ExternalReference",
+                        "keys": [
+                          {
+                            "type": "GlobalReference",
+                            "value": "https://admin-shell.io/idta/SoftwareNameplate/1/0/SoftwareNameplate/SoftwareNameplateInstance/ConfigurationType"
+                          }
+                        ]
+                      },
+                      "valueType": "xs:string",
+                      "modelType": "Property",
+                      "value": "YAML"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "modelType": "Submodel",
+      "administration": {
+        "version": "1",
+        "revision": "3",
+        "templateId": "https://admin-shell.io/idta/SubmodelTemplate/SoftwareNameplate/1/0"
+      }
+    }
+  ]
+}

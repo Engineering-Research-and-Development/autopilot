@@ -1,0 +1,17 @@
+tenant: "public"
+namespace: "default"
+name: "basyxupdater"
+inputs:
+  - "factory-b-phase3-package-loader"
+  - "factory-b-phase3-pallet-loader"
+  - "factory-b-phase3-robot"
+  - "factory-b-phase3-camera"
+  - "factory-b-phase3-labeler"
+  - "factory-b-phase3-smartwatch"
+  - "factory-b-phase3-line-scrap-area"
+  - "factory-b-phase3-line-pick-area"
+runtime: GO
+autoAck: true
+parallelism: 1
+userConfig:
+  basyxUrl: "http://aas-env:8081"
