@@ -1,0 +1,17 @@
+{{- if and .Values.nodeRed.persistence.enabled (not .Values.nodeRed.persistence.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "avant-node-red.fullname" . }}-nodered-data
+  labels:
+    {{- include "avant-node-red.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    {{- toYaml .Values.nodeRed.persistence.accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .Values.nodeRed.persistence.size }}
+  {{- if .Values.nodeRed.persistence.storageClassName }}
+  storageClassName: {{ .Values.nodeRed.persistence.storageClassName | quote }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: avant-node-red
+description: Helm chart for Node-RED and the Speed Prediction service
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

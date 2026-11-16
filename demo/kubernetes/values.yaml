@@ -1,0 +1,73 @@
+nodeRed:
+  replicaCount: 1
+  image:
+    repository: nodered/node-red
+    tag: latest
+    pullPolicy: IfNotPresent
+  timezone: Europe/Amsterdam
+  service:
+    type: ClusterIP
+    port: 1880
+  persistence:
+    enabled: true
+    # Set this to an existing PVC if you have already provisioned one.
+    existingClaim: ""
+    accessModes:
+      - ReadWriteOnce
+    size: 1Gi
+    # Leave empty to use the cluster's default StorageClass.
+    storageClassName: ""
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    capabilities:
+      drop:
+        - ALL
+  resources: {}
+  # Example:
+  # resources:
+  #   requests:
+  #     cpu: 100m
+  #     memory: 256Mi
+  #   limits:
+  #     cpu: 500m
+  #     memory: 512Mi
+
+speedPrediction:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/emiliocimino/autopilotmlservice
+    tag: v0.1.1
+    pullPolicy: IfNotPresent
+  service:
+    port: 8010
+  securityContext:
+    # Confirm that the image supports UID 1000 before deployment.
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+  resources: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: node-red.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+networkPolicy:
+  enabled: false
+  # Enable only after confirming the cluster CNI supports Kubernetes NetworkPolicy.
+  # When enabled, permits Node-RED to reach Speed Prediction on TCP/8010.
